@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+     <hr>
+	{% for myo in my_orders %}
+    		<li><div class="article-panel">
+	<p>Статус: {{myo.status}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
+        {% if myo.initial_price %}
+                   | {{myo.initial_price}}
+				{% endif %}
+        </p>
+	<p>Дата поступления заказа: {{myo.time_create|date:"d-m-Y H:i:s"}} <a href="{{ myo.get_absolute_url }}">Смотреть/обработать заказ</a></p>
+    </div>
+ <hr>
+	{% endfor %}
+</ul>
+{% endblock %}
