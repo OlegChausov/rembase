@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
+<!--делаем поиск -->
+<form method='GET'>
+  <input type='text' name='q' value='{{ request.GET.q }}'>
+  <input class="button" type='submit' value="Поиск в заказах">
+</form>
+<!--сделали поиск -->
+
 <ul>
      <hr>
 	{% for myo in my_orders %}
