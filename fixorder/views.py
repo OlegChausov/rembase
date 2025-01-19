@@ -17,10 +17,16 @@ class Show_and_edit_order(UpdateView):
                    'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
                   'work6', 'work_price6', 'work_warranty6']
     template_name = 'fixorder/show_edit_order.html'
-    #context_object_name = 'my_order'
-#     success_url = reverse_lazy('.') #трэба вернуться сюда же
-    success_url = reverse_lazy('order:pk') #трэба вернуться сюда же
+    #success_url = reverse_lazy('orderlist')
+
+    def get_success_url(self):
+        return reverse_lazy('order', args=[self.object.pk])
+
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
+
+    def get_total_price(self):
+        #return sum(self.work_price, self.work_price1, self.work_price2, self.work_price3, self.work_price4, self.work_price5, self.work_price6)
+        return
 
 class Show_orderlist(ListView):
     model = Order

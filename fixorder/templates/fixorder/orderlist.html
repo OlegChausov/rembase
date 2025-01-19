@@ -1,19 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'fixorder/base.html' %}
 {% block content %}
 
 
-<!--делаем поиск -->
+<!--делаем поиск
 <form method='GET'>
   <input type='text' name='q' value='{{ request.GET.q }}'>
   <input class="button" type='submit' value="Поиск в заказах">
 </form>
+-->
+      <form class="d-flex" role="search" method='GET'>
+        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name='q' value='{{ request.GET.q }}'>
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
+      </form>
 <!--сделали поиск -->
 
 <ul>
      <hr>
 	{% for myo in my_orders %}
     		<li><div class="article-panel">
-	<p>Статус: {{myo.status}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
+	<p>Статус: {{myo.get_status_display}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
         {% if myo.initial_price %}
                    | {{myo.initial_price}}
 				{% endif %}
