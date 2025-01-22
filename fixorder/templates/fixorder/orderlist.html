@@ -18,7 +18,7 @@
      <hr>
 	{% for myo in my_orders %}
     		<li><div class="article-panel">
-	<p>Статус: {{myo.get_status_display}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
+	<p>Статус: {{myo.status}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
         {% if myo.initial_price %}
                    | {{myo.initial_price}}
 				{% endif %}

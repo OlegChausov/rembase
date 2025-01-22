@@ -2,6 +2,8 @@
 {% extends 'fixorder/base.html' %}
 
 {% block content %}
+<!--<h1>test {{form.get_total_price}}</h1>-->
+
 
 <form action="" method="post" enctype="multipart/form-data"><!--enctype="multipart/form-data" обязательно для добавления файлов -->
     {% csrf_token %}
@@ -11,7 +13,6 @@
     <div class="form-error">{{ f.errors }}</div>
     {% endfor %}
     <p>Итоговая стоимость{{form.get_total_price}}</p>
-<button type="submit">Отправить</button></p>
-{% endblock %}
-
+<button type="submit" >Сохранить</button></p>
 </form>
+{% endblock %}
