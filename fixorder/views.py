@@ -5,19 +5,19 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView, ListView, CreateView
 
 from fixorder.forms import AddOrderForm
-from fixorder.models import Order
+from fixorder.models import Order, OrderStatus
 
 
-class Show_and_edit_order(UpdateView):
-#class Show_and_edit_order(PermissionRequiredMixin, UpdateView) #потом добавим вход только при авторизации
-    model = Order #в этой модели должен быть определен get_absolute_url
-    fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
-              'time_demand', 'defect',  'device_password', 'device_exterior', 'initial_price',
-              'prepaid', 'notes', 'status', 'total_price', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
-                   'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
-                   'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
-                  'work6', 'work_price6', 'work_warranty6']
-    template_name = 'fixorder/show_edit_order.html'
+# class Show_and_edit_order(UpdateView):
+# #class Show_and_edit_order(PermissionRequiredMixin, UpdateView) #потом добавим вход только при авторизации
+#     model = Order #в этой модели должен быть определен get_absolute_url
+#     fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
+#               'time_demand', 'defect',  'device_password', 'device_exterior', 'initial_price',
+#               'prepaid', 'notes', 'status', 'total_price', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
+#                    'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
+#                    'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
+#                   'work6', 'work_price6', 'work_warranty6']
+#     template_name = 'fixorder/show_edit_order.html'
 
 
 class Show_and_edit_order(UpdateView):
@@ -49,10 +49,27 @@ class Show_orderlist(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        if query:
-            # return Order.objects.filter(client_phone__icontains=query) #должно работать на PosgreSQL
-             return Order.objects.filter(Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(client_telegram__iregex=query)) #для PosgreSQL можно использовать __icontains
-        return super().get_queryset()
+        checky = self.request.GET.get('cb')
+        if not checky:
+            if query:
+                # return Order.objects.filter(client_phone__icontains=query) #должно работать на PosgreSQL
+                return Order.objects.filter(
+                    Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
+                        client_telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
+            return super().get_queryset()
+        else:
+            return Order.objects.filter(status__status='Активен').filter(
+                    Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
+                        client_telegram__iregex=query))
+
+
+
+
+
+
+
+    # def get_POST(self, request):
+    #     a=request.POST
 
 
 

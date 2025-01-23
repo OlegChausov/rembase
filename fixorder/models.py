@@ -9,12 +9,6 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    class Statuses(models.TextChoices):
-        ACTIVE = ('AC', "Активен")
-        READY = ("RD", "Готов")
-        AWAY = ("AW", "Выдан ")
-        NOTPAID = ("NP", "Выдан без оплаты")
-        WARRANTY = ("WR", "Гарантийный")
 
     client_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента')
     client_phone = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
