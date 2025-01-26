@@ -6,5 +6,7 @@ urlpatterns = [
                 path('', views.Show_orderlist.as_view(), name='orderlist'),
                 path('neworder/', views.AddOrder.as_view(), name='neworder'),
                 path('order/<int:pk>/', views.Show_and_edit_order.as_view(), name='order'),
+                path('warrantydoc/<int:pk>/', views.Warrantydoc.as_view(), name='warrantydoc'),
+                path('commingdoc/<int:pk>/', views.Commingdoc.as_view(), name='commingdoc'),
 
 ]

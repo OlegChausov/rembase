@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from django.db.models import Q, Sum
 from django.http import request
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, ListView, CreateView
+from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView
 
 from fixorder.forms import AddOrderForm
 from fixorder.models import Order, OrderStatus
@@ -23,7 +25,7 @@ from fixorder.models import Order, OrderStatus
 class Show_and_edit_order(UpdateView):
     model = Order
     fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
-              'time_demand', 'defect',  'device_password', 'device_exterior', 'initial_price',
+              'time_demand', 'device', 'defect',  'device_password', 'device_exterior', 'initial_price',
               'prepaid', 'notes', 'status', 'total_price', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
                    'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
                    'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
@@ -36,6 +38,9 @@ class Show_and_edit_order(UpdateView):
         return reverse_lazy('order', args=[self.object.pk])
 
     def form_valid(self, form):
+        # if Order.objects.get(pk=self.pk) == 'Выдан':
+            # self.time_away = datetime.now()
+          #  self.time_away = datetime.now()
         self.object = form.save(commit=False)
         self.object.save()
         return super().form_valid(form)
@@ -62,17 +67,6 @@ class Show_orderlist(ListView):
                     Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
                         client_telegram__iregex=query))
 
-
-
-
-
-
-
-    # def get_POST(self, request):
-    #     a=request.POST
-
-
-
 class AddOrder(CreateView):
     # model = Order
     form_class = AddOrderForm
@@ -83,8 +77,35 @@ class AddOrder(CreateView):
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Новый заказ', 'header': 'Добавление заказа'}
 
+class Warrantydoc(DetailView):
+    # model = Order
+    template_name = "fixorder/warrantydoc.html"
+    pk_url_kwarg = 'pk'
+    context_object_name = 'wr'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Акт выполненных работ'
+        # context["time_away"] = datetime.now()
+        return context
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
 
 
+class Commingdoc(DetailView):
+    # model = Order
+    template_name = "fixorder/commingdoc.html"
+    pk_url_kwarg = 'pk'
+    context_object_name = 'cm'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Приемная квитанция'
+        return context
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
 
 
 

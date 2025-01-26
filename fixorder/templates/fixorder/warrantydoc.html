@@ -1,0 +1,37 @@
+
+{% extends 'fixorder/basedoc.html' %}
+
+{% block doccontent %}
+<h1>{{ title }}</h1>
+
+<table class="table caption-top">
+    <caption>Данные о ремонте:</caption>
+    <thead>
+    <tr><td>ФИО заказчика</td><td>{{ wr.client_name }}</td></tr>
+    <tr><td>Телефон заказчика</td><td>{{ wr.client_phone }}</td></tr>
+    <tr><td>Устройство</td><td>{{ wr.device }}</td></tr>
+    <tr><td>Заявленная неисправность</td><td>{{ wr.defect }}</td></tr>
+    <tr><td>Дата и время приемки</td><td>{{ wr.time_create }}</td></tr>
+    <tr><td>Дата и время выдачи</td><td>{{ wr.away }}</td></tr>
+</table>
+{% if wr.work or wr.work1 or wr.work2 or wr.work3 or wr.work4 or wr.work5 or wr.work6 %}
+<table class="table caption-top">
+    <caption>Выполненные работы</caption>
+    <thead>
+    <tr><th>Работа</th><th>Цена, руб.</th><th>Срок гарантии, дней</th></tr>
+    {% if wr.work %} <tr><td>{{ wr.work }}</td><td>{{ wr.work_price }}</td><td>{{ wr.work_warranty }}</td></tr>{% endif %}
+    {% if wr.work1 %} <tr><td>{{ wr.work1 }}</td><td>{{ wr.work_price1 }}</td><td>{{ wr.work_warranty1 }}</td></tr>{% endif %}
+    {% if wr.work2 %} <tr><td>{{ wr.work2 }}</td><td>{{ wr.work_price2 }}</td><td>{{ wr.work_warranty2 }}</td></tr>{% endif %}
+    {% if wr.work3 %} <tr><td>{{ wr.work3 }}</td><td>{{ wr.work_price3 }}</td><td>{{ wr.work_warranty3 }}</td></tr>{% endif %}
+    {% if wr.work4 %} <tr><td>{{ wr.work4 }}</td><td>{{ wr.work_price4 }}</td><td>{{ wr.work_warranty4 }}</td></tr>{% endif %}
+    {% if wr.work5 %} <tr><td>{{ wr.work5 }}</td><td>{{ wr.work_price5 }}</td><td>{{ wr.work_warranty5 }}</td></tr>{% endif %}
+    {% if wr.work6 %} <tr><td>{{ wr.work6 }}</td><td>{{ wr.work_price6 }}</td><td>{{ wr.work_warranty6 }}</td></tr>{% endif %}
+    <tr><td>Итоговая стоимость, руб</td><td>{{ wr.total_price }}</td><td></td></tr>
+    {% if wr.prepaid %}<tr><td>Предоплата:</td><td>{{ wr.prepaid }}</td><td></td></tr>{% endif %}
+</table>
+{% else %}
+<h>Выполненных работ нет</h>
+{% endif %}
+
+<p><input type="submit" value="Печатать" class="btn btn-default" onClick="window.print()"</p>
+{% endblock doccontent %}

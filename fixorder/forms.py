@@ -7,7 +7,7 @@ class AddOrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
+        fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp', 'device',
                        'time_demand', 'defect', 'device_password', 'device_exterior', 'initial_price',
                        'prepaid', 'notes',]
 
