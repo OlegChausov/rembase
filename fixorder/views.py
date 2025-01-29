@@ -47,7 +47,7 @@ class Show_and_edit_order(UpdateView):
 
 class Show_orderlist(ListView):
     model = Order
-    template_name = template_name = 'fixorder/orderlist.html'
+    template_name = 'fixorder/orderlist.html'
     context_object_name = 'my_orders'
     paginate_by = 15
     extra_context = {'title': 'Главная страница', 'header': 'Ваши заказы'}

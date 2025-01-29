@@ -1,18 +1,62 @@
-
 {% extends 'fixorder/base.html' %}
-
 {% block content %}
-<!--<h1>test {{form.get_total_price}}</h1>-->
+    {% load static %}
+    <script src="{% static 'js/undercut.js' %}"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+<h3>{{form.work3.value}}</h3>
 
-
-<form action="" method="post" enctype="multipart/form-data"><!--enctype="multipart/form-data" обязательно для добавления файлов -->
-    {% csrf_token %}
+{% if form.work3.value is not None or form.work4.value is not None or form.work5.value is not None or form.work6.value is not None %}
+<form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <p>Итоговая стоимость{{form.get_total_price}}</p>
-<button type="submit" >Сохранить</button></p>
-</form>
+        {% for f in form %}
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+    <button type="submit">Обновить</button></p>
+    </form>
+
+{% else %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="block-1">
+        <div class="form-error">{{ form.non_field_errors }}</div>
+
+        <!-- Первые 25 элементов формы -->
+        {% for f in form %}
+            {% if forloop.counter0 >= 0 and forloop.counter0 < 25 %}
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                <div class="form-error">{{ f.errors }}</div>
+            {% endif %}
+        {% endfor %}
+              </div>
+
+    <!-- Кнопка для показа скрытого блока -->
+    <button type="button" id="toggle-button">Показать дополнительные поля</button>
+
+    <!-- Второй блок полей -->
+    <div id="block-2" class="hidden">
+        <!-- Поля формы от 25 до 38 -->
+            {% for f in form %}
+                {% if forloop.counter0 >= 25 and forloop.counter0 < 38 %}
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <button type="submit">Обновить</button></p>
+    </form>
+{% endif %}
+
+<script>
+    document.getElementById('toggle-button').addEventListener('click', function () {
+        document.getElementById('block-2').classList.toggle('hidden');
+    });
+    </script>
+
 {% endblock %}
