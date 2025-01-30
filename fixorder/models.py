@@ -26,7 +26,6 @@ class Order(models.Model):
     initial_price = models.CharField(max_length=10, blank=True, null=True, verbose_name='Ориентировочная стоимость ремонта')
     prepaid = models.FloatField(max_length=10, blank=True, null=True, verbose_name='Предоплата')
     notes = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заметки')
-    # status = models.CharField(max_length=2, choices=Statuses.choices, default=Statuses.ACTIVE, verbose_name='Статус ремонта')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0, verbose_name='Итоговая стоимость')
     work = models.CharField(max_length=255, blank=True, null=True, verbose_name='Выполненная работа')
     work_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
@@ -50,7 +49,7 @@ class Order(models.Model):
     work_price6 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
     work_warranty6 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
     status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING, default = 4, related_name='related_order', verbose_name='Статус ремонта')
-
+    # conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
 
     def save(self, *args, **kwargs):
         self.total_price = (
