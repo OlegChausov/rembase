@@ -1,4 +1,5 @@
 {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title>{{title}}</title>
     {% comment %} bootstrap {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 <ul>
@@ -18,6 +20,9 @@
 {% block doccontent %}
 {% endblock doccontent %}
 <p>Подпись исполнителя________________________________  Подпись заказчика________________________________</p>
-<p><input type="submit" value="Печатать" class="btn btn-default" onClick="window.print()"</p>
+
+
+<p><input  id="printPageButton" type="submit" value="Печатать" class="btn btn-outline-success" onClick="window.print();"</p>
+
 </body>
 </html>

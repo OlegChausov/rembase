@@ -49,7 +49,7 @@ class Order(models.Model):
     work_price6 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
     work_warranty6 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
     status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING, default = 4, related_name='related_order', verbose_name='Статус ремонта')
-    # conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
+    conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
 
     def save(self, *args, **kwargs):
         self.total_price = (

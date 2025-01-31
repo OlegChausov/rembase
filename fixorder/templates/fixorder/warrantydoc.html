@@ -32,4 +32,5 @@
 {% else %}
 <h>Выполненных работ нет</h>
 {% endif %}
+{% if wr.conclusion %}<p>Заключение о ремонте: {{ wr.conclusion }}</p>{% endif %}
 {% endblock doccontent %}

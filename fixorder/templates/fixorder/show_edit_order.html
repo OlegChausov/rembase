@@ -1,7 +1,7 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
     {% load static %}
-    <script src="{% static 'js/undercut.js' %}"></script>
+
     <style>
         .hidden {
             display: none;
@@ -13,7 +13,7 @@
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
         {% for f in form %}
-            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
             <div class="form-error">{{ f.errors }}</div>
         {% endfor %}
         <p><button type="submit">Обновить</button></p>
@@ -26,7 +26,7 @@
             <!-- Первые 25 элементов формы -->
             {% for f in form %}
                 {% if forloop.counter0 >= 0 and forloop.counter0 < 25 %}
-                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
                     <div class="form-error">{{ f.errors }}</div>
                 {% endif %}
             {% endfor %}
@@ -38,10 +38,21 @@
 
         <!-- Второй блок полей -->
         <div id="block-2" class="hidden">
-            <!-- Поля формы от 25 до 38 -->
+            <!-- Поля формы от 25 до 36 -->
             {% for f in form %}
-                {% if forloop.counter0 >= 25 and forloop.counter0 < 38 %}
-                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                {% if forloop.counter0 >= 25 and forloop.counter0 < 37 %}
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Третий блок полей -->
+        <div id="block-3">
+            <!-- Поля формы от 37 до 100 -->
+            {% for f in form %}
+                {% if forloop.counter0 >= 37 and forloop.counter0 < 100 %}
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
                     <div class="form-error">{{ f.errors }}</div>
                 {% endif %}
             {% endfor %}
@@ -50,6 +61,7 @@
         <p><button type="submit">Обновить</button></p>
     </form>
 {% endif %}
+
 
 <script>
     document.getElementById('toggle-button').addEventListener('click', function () {

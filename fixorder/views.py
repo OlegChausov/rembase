@@ -29,7 +29,7 @@ class Show_and_edit_order(UpdateView):
               'prepaid', 'notes', 'status', 'total_price', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
                    'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
                    'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
-                  'work6', 'work_price6', 'work_warranty6']
+                  'work6', 'work_price6', 'work_warranty6', 'conclusion']
     template_name = 'fixorder/show_edit_order.html'
     # success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
