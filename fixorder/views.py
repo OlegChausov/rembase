@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db.models import Q, Sum
 from django.http import request
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView
 
 from fixorder.forms import AddOrderForm
@@ -45,6 +45,9 @@ class Show_and_edit_order(UpdateView):
         self.object.save()
         return super().form_valid(form)
 
+
+
+
 class Show_orderlist(ListView):
     model = Order
     template_name = 'fixorder/orderlist.html'
@@ -66,6 +69,7 @@ class Show_orderlist(ListView):
             return Order.objects.filter(status__status='Активен').filter(
                     Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
                         client_telegram__iregex=query))
+
 
 class AddOrder(CreateView):
     # model = Order

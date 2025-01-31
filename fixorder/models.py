@@ -70,6 +70,17 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse('order', kwargs={'pk': self.pk})
 
+    def get_warrantydoc_url(self):
+        return reverse('warrantydoc', kwargs={'pk': self.pk})
+
+    def get_commingdoc_url(self):
+        return reverse('commingdoc', kwargs={'pk': self.pk})
+
+
+
+
+
+
 
 
 

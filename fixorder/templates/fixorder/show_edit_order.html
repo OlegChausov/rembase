@@ -33,7 +33,7 @@
         </div>
 
         <!-- Кнопка для показа скрытого блока -->
-        <button type="button" id="toggle-button">Добавить еще работы</button>
+        <button type="button" id="toggle-button" >Добавить еще работы</button>
         <p></p>
 
         <!-- Второй блок полей -->
@@ -58,10 +58,10 @@
             {% endfor %}
         </div>
 
-        <p><button type="submit">Обновить</button></p>
+        <p><button type="submit" class="btn btn-outline-success" >Обновить</button></p>
     </form>
-{% endif %}
 
+{% endif %}
 
 <script>
     document.getElementById('toggle-button').addEventListener('click', function () {
@@ -77,5 +77,7 @@
     });
 </script>
 
+<p><a href="{% url 'warrantydoc' pk=form.instance.pk %} class="class="btn btn-outline-success"">Посмотреть/распечатать гарантийку</a>
 
+<a href="{% url 'commingdoc' pk=form.instance.pk %} class="class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a></p>
 {% endblock %}
