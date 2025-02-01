@@ -4,7 +4,7 @@ from django.db.models import Q, Sum
 from django.http import request
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView
+from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 
 from fixorder.forms import AddOrderForm
 from fixorder.models import Order, OrderStatus
@@ -26,10 +26,10 @@ class Show_and_edit_order(UpdateView):
     model = Order
     fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
               'time_demand', 'device', 'defect',  'device_password', 'device_exterior', 'initial_price',
-              'prepaid', 'notes', 'status', 'total_price', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
+              'prepaid', 'notes', 'status', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
                    'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
                    'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
-                  'work6', 'work_price6', 'work_warranty6', 'conclusion']
+                  'work6', 'work_price6', 'work_warranty6', 'total_price', 'remain_to_pay', 'conclusion']
     template_name = 'fixorder/show_edit_order.html'
     # success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
@@ -38,9 +38,6 @@ class Show_and_edit_order(UpdateView):
         return reverse_lazy('order', args=[self.object.pk])
 
     def form_valid(self, form):
-        # if Order.objects.get(pk=self.pk) == 'Выдан':
-            # self.time_away = datetime.now()
-          #  self.time_away = datetime.now()
         self.object = form.save(commit=False)
         self.object.save()
         return super().form_valid(form)
@@ -110,6 +107,11 @@ class Commingdoc(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
+
+class Delete_order(DeleteView):
+    model = Order
+    success_url = "/"
+    template_name = "fixorder/confirm_delete.html"
 
 
 

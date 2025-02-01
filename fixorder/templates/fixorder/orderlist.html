@@ -30,7 +30,8 @@
 	<p>Дата поступления заказа: {{myo.time_create|date:"d-m-Y H:i:s"}}
 <a href="{{ myo.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>
 <a href="{{ myo.get_warrantydoc_url }}" class="btn btn-outline-success">Посмотреть/распечатать гарантийку</a>
-<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
+<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист
+    <a href="{{ myo.get_delete_url }}" class="btn btn-outline-danger">Удалить заказ</a>
     </p>
     </div>
  <hr>

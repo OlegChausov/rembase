@@ -8,5 +8,7 @@ urlpatterns = [
                 path('order/<int:pk>/', views.Show_and_edit_order.as_view(), name='order'),
                 path('warrantydoc/<int:pk>/', views.Warrantydoc.as_view(), name='warrantydoc'),
                 path('commingdoc/<int:pk>/', views.Commingdoc.as_view(), name='commingdoc'),
+                path('delete/<int:pk>/', views.Delete_order.as_view(), name='delete'),
+
 
 ]

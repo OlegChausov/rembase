@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
 
 class OrderStatus(models.Model):
     status = models.CharField(max_length=100, unique=True, db_index=True, verbose_name='Статус заказа')
@@ -29,7 +31,7 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0, verbose_name='Итоговая стоимость')
     work = models.CharField(max_length=255, blank=True, null=True, verbose_name='Выполненная работа')
     work_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
-    work_warranty = models.FloatField(max_length=2, blank=True, null=True)
+    work_warranty = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Выполненная работа')
     work1 = models.CharField(max_length=255, blank=True, null=True, verbose_name='Выполненная работа')
     work_price1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
     work_warranty1 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
@@ -50,11 +52,23 @@ class Order(models.Model):
     work_warranty6 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
     status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING, default = 4, related_name='related_order', verbose_name='Статус ремонта')
     conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
+    remain_to_pay = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0,
+                                      verbose_name='Осталось оплатить')
 
     def save(self, *args, **kwargs):
+        old_order = None
+        old_order = Order.objects.get(pk=self.pk)
+        if old_order and old_order.status.status != self.status.status:
+            if self.status.status in ["Выдан", "Выдан без ремонта"]:
+                self.time_away = timezone.now()
+            else:
+                self.time_away = None
+
+
         self.total_price = (
                 (self.work_price or 0) + (self.work_price1 or 0) + (self.work_price2 or 0) + (self.work_price3 or 0) + (
                     self.work_price4 or 0) + (self.work_price5 or 0) + (self.work_price6 or 0))
+        self.remain_to_pay = (self.total_price or 0) - (self.prepaid or 0)
         super(Order, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -75,6 +89,9 @@ class Order(models.Model):
 
     def get_commingdoc_url(self):
         return reverse('commingdoc', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('delete', kwargs={'pk': self.pk})
 
 
 
