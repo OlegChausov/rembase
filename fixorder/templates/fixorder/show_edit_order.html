@@ -77,7 +77,6 @@
     });
 </script>
 
-<p><a href="{% url 'warrantydoc' pk=form.instance.pk %} class="class="btn btn-outline-success"">Посмотреть/распечатать гарантийку</a>
-
-<a href="{% url 'commingdoc' pk=form.instance.pk %} class="class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a></p>
+<p><a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
+<a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-success">Посмотреть/распечатать приемный лист</a></p>
 {% endblock %}
