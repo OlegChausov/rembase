@@ -11,6 +11,10 @@ class AddOrderForm(forms.ModelForm):
                        'time_demand', 'defect', 'device_password', 'device_exterior', 'initial_price',
                        'prepaid', 'notes',]
 
+        widgets = {
+                    'time_demand': forms.DateInput(),
+                    }
+
 
 
 

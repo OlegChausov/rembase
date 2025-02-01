@@ -52,12 +52,13 @@ class Order(models.Model):
     work_warranty6 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
     status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING, default = 4, related_name='related_order', verbose_name='Статус ремонта')
     conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
-    remain_to_pay = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0,
+    remain_to_pay = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0,
                                       verbose_name='Осталось оплатить')
 
     def save(self, *args, **kwargs):
         old_order = None
-        old_order = Order.objects.get(pk=self.pk)
+        old_order = Order.objects.filter(pk=self.pk)[0]
+        print(old_order)
         if old_order and old_order.status.status != self.status.status:
             if self.status.status in ["Выдан", "Выдан без ремонта"]:
                 self.time_away = timezone.now()
