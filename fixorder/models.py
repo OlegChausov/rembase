@@ -56,21 +56,30 @@ class Order(models.Model):
                                       verbose_name='Осталось оплатить')
 
     def save(self, *args, **kwargs):
-        old_order = None
-        old_order = Order.objects.filter(pk=self.pk)[0]
-        print(old_order)
-        if old_order and old_order.status.status != self.status.status:
-            if self.status.status in ["Выдан", "Выдан без ремонта"]:
-                self.time_away = timezone.now()
-            else:
-                self.time_away = None
-
+        # old_order = None
+        # old_order = Order.objects.filter(pk=self.pk)[0]
+        # print(old_order)
+        # if old_order and old_order.status.status != self.status.status:
+        #     if self.status.status in ["Выдан", "Выдан без ремонта"]:
+        #         self.time_away = timezone.now()
+        #     else:
+        #         self.time_away = None
 
         self.total_price = (
                 (self.work_price or 0) + (self.work_price1 or 0) + (self.work_price2 or 0) + (self.work_price3 or 0) + (
                     self.work_price4 or 0) + (self.work_price5 or 0) + (self.work_price6 or 0))
         self.remain_to_pay = (self.total_price or 0) - (self.prepaid or 0)
         super(Order, self).save(*args, **kwargs)
+
+    def save_time(self):
+        old_order = None
+        old_order = Order.objects.get(pk=self.pk)
+        if old_order and old_order.status.status != self.status.status:
+            if self.status.status in ["Выдан", "Выдан без ремонта"]:
+                self.time_away = timezone.now()
+            else:
+                self.time_away = None
+
 
     def __str__(self):
         return f'{self.client_name} {self.device}'

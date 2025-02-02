@@ -21,19 +21,24 @@
 <ul>
      <hr>
 	{% for myo in my_orders %}
-    		<li><div class="article-panel">
-	<p>Статус: {{myo.status}} | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
+    		<li><div>
+	<p>Статус: {% if myo.status.status == "Активен" %}<span class="text-primary"> {{myo.status}}</span>
+         {% elif myo.status.status == "Готов" %}<span class="text-success"> {{myo.status}}</span>
+        {% elif myo.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{myo.status}}</span>
+        {% elif myo.status.status == "Выдан" %}<span class="text-secondary"> {{myo.status}}</span> {% endif %}
+
+                | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} {{myo.client_phone}}
         {% if myo.initial_price %}
                    | {{myo.initial_price}}
-				{% endif %}
-        </p>
+				{% endif %}</p>
+
 	<p>Дата поступления заказа: {{myo.time_create|date:"d-m-Y H:i:s"}}
 <a href="{{ myo.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>
 <a href="{{ myo.get_warrantydoc_url }}" class="btn btn-outline-success">Посмотреть/распечатать гарантийку</a>
-<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист
+<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
     <a href="{{ myo.get_delete_url }}" class="btn btn-outline-danger">Удалить заказ</a>
     </p>
-    </div>
+    </div></li>
  <hr>
 	{% endfor %}
 </ul>
