@@ -12,7 +12,16 @@ class AddOrderForm(forms.ModelForm):
                        'prepaid', 'notes',]
 
         widgets = {
-                    'time_demand': forms.DateInput(),
+
+                    'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+                    'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
+                    'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+                    'time_demand': forms.DateInput(
+                         format=('%d/%m/%Y'),
+                        attrs={
+
+                       'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
+                      }),
                     }
 
 
