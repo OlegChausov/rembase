@@ -13,7 +13,7 @@
         {% csrf_token %}
         <div class="form-error">{{ form.non_field_errors }}</div>
         {% for f in form %}
-            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
+            <label class="form-label" >{{ f.label }}&emsp; </label>{{ f }}
             <div class="form-error">{{ f.errors }}</div>
         {% endfor %}
         <p><button type="submit">Обновить</button></p>
@@ -23,9 +23,9 @@
         {% csrf_token %}
         <div id="block-1">
             <div class="form-error">{{ form.non_field_errors }}</div>
-            <!-- Первые 24 элементов формы -->
+            <!-- Первые 25 элементов формы -->
             {% for f in form %}
-                {% if forloop.counter0 >= 0 and forloop.counter0 < 24 %}
+                {% if forloop.counter0 >= 0 and forloop.counter0 < 25 %}
                     <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
                     <div class="form-error">{{ f.errors }}</div>
                 {% endif %}
@@ -38,9 +38,9 @@
 
         <!-- Второй блок полей -->
         <div id="block-2" class="hidden">
-            <!-- Поля формы от 24 до 36 -->
+            <!-- Поля формы от 25 до 36 -->
             {% for f in form %}
-                {% if forloop.counter0 >= 24 and forloop.counter0 < 36 %}
+                {% if forloop.counter0 >= 25 and forloop.counter0 < 36 %}
                     <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
                     <div class="form-error">{{ f.errors }}</div>
                 {% endif %}

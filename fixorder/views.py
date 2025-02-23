@@ -24,7 +24,7 @@ from fixorder.models import Order, OrderStatus
 
 class Show_and_edit_order(UpdateView):
     model = Order
-    fields = [ 'status', 'client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
+    fields = [ 'status', 'client_name', 'client_phone', 'client_phone1', 'client_telegram', 'client_viber', 'client_whatsapp',
               'time_demand', 'device', 'defect',  'device_password', 'device_exterior', 'initial_price',
               'prepaid', 'notes', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
                    'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',

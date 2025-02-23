@@ -14,6 +14,7 @@ class Order(models.Model):
 
     client_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента')
     client_phone = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
+    client_phone1 = models.CharField(max_length=20, db_index=True, blank=True, verbose_name='Дополнительный номер')
     client_telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram клиента')
     client_viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber клиента')
     client_whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp клиента')
@@ -102,6 +103,13 @@ class Order(models.Model):
 
     def get_delete_url(self):
         return reverse('delete', kwargs={'pk': self.pk})
+
+# class Company(models.Model):
+#     name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Название компании')
+#     unp = models.DecimalField(min_digits=10, max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='УНП')
+#     phone1 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
+#     phone2 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
+#     phone3 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
 
 
 
