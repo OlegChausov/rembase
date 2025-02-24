@@ -104,14 +104,24 @@ class Order(models.Model):
     def get_delete_url(self):
         return reverse('delete', kwargs={'pk': self.pk})
 
-# class Company(models.Model):
-#     name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Название компании')
-#     unp = models.DecimalField(min_digits=10, max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='УНП')
-#     phone1 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
-#     phone2 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
-#     phone3 = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
+class Company(models.Model):
+    brand_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Название компании')
+    official_name = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Юридическое наименование')
+    unp = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='УНП')
+    phone = models.CharField(max_length=20, unique=True, verbose_name='Контактный номер')
+    phone1 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
+    phone2 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
+    telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram')
+    viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber')
+    whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp')
+    email = models.EmailField(max_length=50, blank=True, null=True, verbose_name='Электронная почта')
+    adress = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Адрес')
+    postal_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Почтовый адрес')
+    official_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Юридический адрес')
+    photo = models.ImageField(upload_to="static/img/", blank=True, null=True, verbose_name="Логотип компании")
 
-
+    def __str__(self):
+        return f'{self.brand_name}'
 
 
 

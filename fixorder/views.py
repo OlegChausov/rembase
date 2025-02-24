@@ -7,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 
 from fixorder.forms import AddOrderForm
-from fixorder.models import Order, OrderStatus
+from fixorder.models import Order, OrderStatus, Company
 
 
 # class Show_and_edit_order(UpdateView):
@@ -108,10 +108,25 @@ class Commingdoc(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
 
-class Delete_order(DeleteView):
+class DeleteOrder(DeleteView):
     model = Order
     success_url = "/"
     template_name = "fixorder/confirm_delete.html"
+
+class CompanyView(UpdateView):
+    model = Company
+    fields = '__all__'
+    template_name = 'fixorder/edit_company.html'
+    success_url = reverse_lazy('company')
+    context_object_name = 'form'
+    extra_context = {'title': 'Профиль компании'}
+
+    def get_object(self, queryset=None):
+        pk=1
+        obj = get_object_or_404(Company, pk=pk)
+        return obj
+
+
 
 
 
