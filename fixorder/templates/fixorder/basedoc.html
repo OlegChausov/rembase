@@ -1,5 +1,5 @@
 {% load static %}
-{% load static %}
+{% load fixorder_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+
 <ul>
-    <li>Название компании {{company_name}}</li>
-    <li>контакты {{company_contacts}}</li>
-    <li>адрес {{company_adress}}</li>
-    <li>УНП{{company_UNP}}</li>
-    <li>Исполнитель {{company_executor}}</li>
-    </ul>
+    <img src="{% logo_url %}" alt="FixOrder" height="100">
+    {% filled_fields_verbose 1 as fields_verbose %}
+    {% for verbose_name, value in fields_verbose.items %}
+        <li>{{ verbose_name }}: {{ value }}</li>
+    {% endfor %}
+</ul>
 {% block doccontent %}
 {% endblock doccontent %}
 <p>Подпись исполнителя________________________________  Подпись заказчика________________________________</p>

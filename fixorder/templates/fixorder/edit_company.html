@@ -1,14 +1,49 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
 
+<h1>{{ title }}</h1>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-error">{{ form.non_field_errors }}</div>
     {% for f in form %}
-    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
-    <div class="form-error">{{ f.errors }}</div>
+        <div class="form-group">
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+            {{ f }}
+            <div class="form-error">{{ f.errors }}</div>
+        </div>
     {% endfor %}
-    <p><button type="submit">Отправить</button></p>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
 </form>
+
+<!-- Элемент для предварительного просмотра изображения -->
+<img id="preview" src="#" alt="Предварительный просмотр логотипа" style="display: none; max-width: 200px; margin-top: 20px;">
+
+<script>
+    // Функция для предварительного просмотра изображения
+    function previewImage(input) {
+        var preview = document.getElementById('preview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+
+    // Найти элемент загрузки файла и добавить обработчик события
+    var fileInput = document.querySelector('input[type="file"][name="photo"]');
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            previewImage(this);
+        });
+    }
+</script>
 
 {% endblock %}

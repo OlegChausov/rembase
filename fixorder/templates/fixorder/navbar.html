@@ -1,3 +1,5 @@
+{% load fixorder_tags %}
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -30,7 +32,7 @@
       </ul>
     </div>
     <a class="navbar-brand" href="/">
-      <img src="/static/img/brand.png" alt="" height="60">
+      <img src="{% logo_url %}" alt="FixOrder" height="100">
       FixOrder
     </a>
     </div>

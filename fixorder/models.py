@@ -123,6 +123,17 @@ class Company(models.Model):
     def __str__(self):
         return f'{self.brand_name}'
 
+    def save(self, *args, **kwargs):
+        try:
+            old_instance = Company.objects.get(pk=self.pk)
+            if old_instance.photo and self.photo != old_instance.photo:
+                old_instance.photo.delete(save=False)
+        except Company.DoesNotExist:
+            pass
+
+        self.photo.name = 'logo.png'
+        super(Company, self).save(*args, **kwargs)
+
 
 
 
