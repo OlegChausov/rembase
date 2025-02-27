@@ -118,7 +118,7 @@ class CompanyView(UpdateView):
     fields = '__all__'
     template_name = 'fixorder/edit_company.html'
     success_url = reverse_lazy('company')
-    context_object_name = 'form'
+  #  context_object_name = 'form'
     extra_context = {'title': 'Профиль компании'}
 
     def get_object(self, queryset=None):

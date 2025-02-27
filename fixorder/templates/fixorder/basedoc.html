@@ -11,11 +11,19 @@
 </head>
 <body>
 
-<ul>
+<!--<ul>
     <img src="{% logo_url %}" alt="FixOrder" height="100">
     {% filled_fields_verbose 1 as fields_verbose %}
     {% for verbose_name, value in fields_verbose.items %}
         <li>{{ verbose_name }}: {{ value }}</li>
+    {% endfor %}
+</ul>-->
+
+<ul>
+    <img src="{% logo_url %}" alt="FixOrder" height="100">
+    {% filled_fields_verbose 1 as fields_verbose %}
+    {% for verbose_name, value in fields_verbose.items %}
+        <li>{{ value }}</li>
     {% endfor %}
 </ul>
 {% block doccontent %}

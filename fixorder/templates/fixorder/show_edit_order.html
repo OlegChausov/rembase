@@ -63,19 +63,7 @@
 
 {% endif %}
 
-<script>
-    document.getElementById('toggle-button').addEventListener('click', function () {
-        var hiddenBlock = document.getElementById('block-2');
-        hiddenBlock.classList.toggle('hidden');
-
-        // Проверка состояния блока и изменение текста кнопки
-        if (hiddenBlock.classList.contains('hidden')) {
-            this.textContent = 'Добавить еще работы';
-        } else {
-            this.textContent = 'Скрыть поля работы';
-        }
-    });
-</script>
+<script src="{% static 'js/addnewworkfields.js' %}"></script>
 
 <p><a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
 <a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-success">Посмотреть/распечатать приемный лист</a>

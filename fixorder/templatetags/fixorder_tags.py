@@ -10,6 +10,10 @@ def logo_url():
     return static('img/logo.png')
 
 @register.simple_tag
+def get_company_name():
+    return Company.objects.get(pk=1).brand_name
+
+@register.simple_tag
 def filled_fields_verbose(pk):
     instance = Company.objects.get(pk=pk)
     field_dict = {}
