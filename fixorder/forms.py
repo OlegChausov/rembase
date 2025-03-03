@@ -3,15 +3,16 @@ from .models import Order
 
 
 class AddOrderForm(forms.ModelForm):
-    # status = forms.ModelChoiceField()
+    new_client_name = forms.CharField(required=False, label='Добавить имя клиента')
+    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента')
+
 
     class Meta:
         model = Order
-        fields = ['client_name', 'client_phone', 'client_phone1', 'client_telegram', 'client_viber', 'client_whatsapp', 'device',
-                       'time_demand', 'defect', 'device_password', 'device_exterior', 'initial_price',
-                       'prepaid', 'notes',]
+        fields = ['order_client', 'device','time_demand', 'defect', 'device_password',
+                  'device_exterior', 'initial_price', 'prepaid', 'notes',]
 
-        widgets = {
+        widgets = {'order_client': forms.Select(),
                     'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
                     'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
                     'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),

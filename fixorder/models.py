@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions import NullIf
 from django.urls import reverse
 from django.utils import timezone
 
@@ -9,15 +10,22 @@ class OrderStatus(models.Model):
     def __str__(self):
         return self.status
 
+class Client(models.Model):
+
+    name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента')
+    phone = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
+    phone1 = models.CharField(max_length=20, db_index=True, blank=True, null=True, verbose_name='Дополнительный номер')
+    telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram клиента')
+    viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber клиента')
+    whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp клиента')
+
+    def __str__(self):
+        return self.name
+
 
 class Order(models.Model):
-
-    client_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента')
-    client_phone = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
-    client_phone1 = models.CharField(max_length=20, db_index=True, blank=True, verbose_name='Дополнительный номер')
-    client_telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram клиента')
-    client_viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber клиента')
-    client_whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp клиента')
+    order_client = models.ForeignKey(Client, related_name='client', default=1, on_delete=models.DO_NOTHING, verbose_name='Клиент')
+   #  order_client = models.CharField(max_length=255,blank=True, null=True, verbose_name='Срок')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     time_demand = models.DateField(blank=True, null=True, verbose_name='Срок ремонта')
