@@ -6,8 +6,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 
-from fixorder.forms import AddOrderForm
-from fixorder.models import Order, OrderStatus, Company
+from fixorder.forms import AddOrderForm, AddClientForm
+from fixorder.models import Order, OrderStatus, Company, Client
 
 
 # class Show_and_edit_order(UpdateView):
@@ -58,25 +58,48 @@ class Show_orderlist(ListView):
         if not checky:
             if query:
                 # return Order.objects.filter(client_phone__icontains=query) #должно работать на PosgreSQL
-                return Order.objects.filter(
-                    Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
-                        client_telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
+                return Client.objects.filter(
+                    Q(phone__iregex=query) | Q(name__iregex=query) | Q(
+                        telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
             return super().get_queryset()
         else:
-            return Order.objects.filter(status__status='Активен').filter(
-                    Q(client_phone__iregex=query) | Q(device__iregex=query) | Q(client_name__iregex=query) | Q(
-                        client_telegram__iregex=query))
+            return Client.objects.filter(status__status='Активен').filter(
+                    Q(phone__iregex=query) | Q(name__iregex=query) | Q(
+                        telegram__iregex=query))
 
 
 class AddOrder(CreateView):
     # model = Order
     form_class = AddOrderForm
+    #form_client = AddClientForm(data=request.POST)
     # fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
     #           'time_demand', 'defect', 'device_password', 'device_exterior', 'initial_price',
     #           'prepaid', 'notes',]
     template_name = 'fixorder/neworder.html'
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Новый заказ', 'header': 'Добавление заказа'}
+
+    def form_valid(self, form):
+        client_id = form.cleaned_data.get('client')
+        new_client_name = form.cleaned_data.get('new_client_name')
+        new_client_phone = form.cleaned_data.get('new_client_phone')
+
+        if client_id:
+            client = Client.objects.get(id=client_id)
+            form.instance.client = client
+        elif new_client_name and new_client_phone:
+            client, created = Client.objects.get_or_create(
+                name=new_client_name,
+                phone=new_client_phone
+            )
+            form.instance.client = client
+        else:
+            form.add_error(None, 'Выберите или создайте клиента')
+
+        return super().form_valid(form)
+
+
+
 
 class Warrantydoc(DetailView):
     # model = Order

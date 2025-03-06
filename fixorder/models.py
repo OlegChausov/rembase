@@ -20,7 +20,7 @@ class Client(models.Model):
     whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp клиента')
 
     def __str__(self):
-        return self.name
+        return f'{self.name} {self.phone} {self.phone1}'
 
 
 class Order(models.Model):

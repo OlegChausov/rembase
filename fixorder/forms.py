@@ -1,18 +1,33 @@
+from dal import autocomplete
 from django import forms
-from .models import Order
+from .models import Order,Client
+
+class AddClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['name','phone','phone1',]
 
 
 class AddOrderForm(forms.ModelForm):
-    new_client_name = forms.CharField(required=False, label='Добавить имя клиента')
-    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента')
 
+    client = forms.ChoiceField(
+        choices=[],
+        required=False,
+        label='Выберите клиента',
+        widget=forms.Select(attrs={'class': 'js-example-basic-single',  'id': 'client-select'})
+    )
+
+    new_client_name = forms.CharField(required=False, label='Добавить имя клиента', widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента', widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
 
     class Meta:
         model = Order
-        fields = ['order_client', 'device','time_demand', 'defect', 'device_password',
+        fields = ['client', 'order_client', 'new_client_name', 'new_client_phone', 'device','time_demand', 'defect', 'device_password',
                   'device_exterior', 'initial_price', 'prepaid', 'notes',]
 
-        widgets = {'order_client': forms.Select(),
+        widgets = {'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
                     'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
                     'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
                     'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
@@ -22,5 +37,10 @@ class AddOrderForm(forms.ModelForm):
                       }),
                     }
 
-# class UploadFileForm(forms.Form):
-#     file = forms.ImageField(label="Логотип компании", required=False)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Динамическое заполнение списка клиентов
+        self.fields['client'].choices = [('', 'Клиент/Телефон')] + [
+            (client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()
+        ]
+
