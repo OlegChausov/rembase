@@ -12,25 +12,19 @@
     <button type="submit" class="btn btn-outline-success">Создать</button>
 </form>
 
+<!-- Подключение Select2 через CDN -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         console.log('DOM fully loaded and parsed');
-        const clientSelect = document.getElementById('client-select');
-        const clientName = document.getElementById('client-name');
-        const clientPhone = document.getElementById('client-phone');
-        const clientTelegram = document.getElementById('client-telegram');
-        const clientViber = document.getElementById('client-viber');
-        const clientWhatsapp = document.getElementById('client-whatsapp');
 
-        // Проверяем наличие элементов
-        console.log('clientSelect:', clientSelect);
-        console.log('clientName:', clientName);
-        console.log('clientPhone:', clientPhone);
-        console.log('clientTelegram:', clientTelegram);
-        console.log('clientViber:', clientViber);
-        console.log('clientWhatsapp:', clientWhatsapp);
+        // Инициализация Select2
+        const clientSelect = $('#client-select').select2();
 
-        clientSelect.addEventListener('change', function() {
+        // Добавление события change после инициализации Select2
+        clientSelect.on('change', function() {
             const clientId = this.value;
             console.log(`Selected client ID: ${clientId}`);
             if (clientId) {
@@ -43,21 +37,21 @@
                     })
                     .then(data => {
                         console.log('Received data:', data);
-                        clientName.value = data.name || '';
-                        clientPhone.value = data.phone || '';
-                        clientTelegram.value = data.telegram || '';
-                        clientViber.value = data.viber || '';
-                        clientWhatsapp.value = data.whatsapp || '';
+                        document.getElementById('client-name').value = data.name || '';
+                        document.getElementById('client-phone').value = data.phone || '';
+                        document.getElementById('client-telegram').value = data.telegram || '';
+                        document.getElementById('client-viber').value = data.viber || '';
+                        document.getElementById('client-whatsapp').value = data.whatsapp || '';
                     })
                     .catch(error => {
                         console.error('There was a problem with the fetch operation:', error);
                     });
             } else {
-                clientName.value = '';
-                clientPhone.value = '';
-                clientTelegram.value = '';
-                clientViber.value = '';
-                clientWhatsapp.value = '';
+                document.getElementById('client-name').value = '';
+                document.getElementById('client-phone').value = '';
+                document.getElementById('client-telegram').value = '';
+                document.getElementById('client-viber').value = '';
+                document.getElementById('client-whatsapp').value = '';
             }
         });
     });
