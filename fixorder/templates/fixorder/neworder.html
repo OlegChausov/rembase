@@ -12,5 +12,55 @@
     <div class="form-error">{{ form.non_field_errors }}</div>
     <button type="submit" class="btn btn-outline-success">Создать</button>
 </form>
+<!--
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const clientSelect = document.getElementById('client-select'); // предположим, что поле select имеет id="id_client"
+    const newClientFields = ['new-client-name', 'new-client-phone']; // замените на реальные id полей ФИО и Телефон
+
+    function toggleNewClientFields() {
+        const isDefaultOptionSelected = clientSelect.value === '1'; // предполагаем, что значение по умолчанию пустое
+        console.log("test");
+        console.log(isDefaultOptionSelected);
+        newClientFields.forEach(function(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.disabled = !isDefaultOptionSelected;
+        });
+    }
+   // clientSelect.onchange= e=>alert(e.target.value);
+    clientSelect.addEventListener('change');
+    console.log(clientSelect.value==='1');
+
+    toggleNewClientFields(); // вызвать при загрузке страницы
+});
+</script>
+-->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const clientSelect = document.getElementById('client-select'); // убедись, что id совпадает
+    const newClientFields = ['new-client-name', 'new-client-phone']; // убедись, что id совпадают
+
+    function toggleNewClientFields() {
+        const isDefaultOptionSelected = clientSelect.value === '1'; // проверка на пустое значение
+        console.log("Client Select Value:", clientSelect.value); // Логирование значения
+        console.log("Is Default Option Selected:", isDefaultOptionSelected); // Логирование выбора
+       // newClientFields.forEach(function(fieldId) {
+      //      const field = document.getElementById(fieldId);
+       //     console.log("Field:", fieldId, "Disabled:", !isDefaultOptionSelected); // Логирование состояния полей
+      //      field.disabled != isDefaultOptionSelected;
+      //  });
+        if (clientSelect.value === '1'){ document.getElementById('new-client-name').disabled = true;}
+        else {document.getElementById('new-client-name').disabled = false;}
+        console.log(clientSelect.value);
+    }
+
+    clientSelect.addEventListener('change', toggleNewClientFields);
+    clientSelect.addEventListener('change', console.log('nfhfhhfh'));
+  //  clientSelect.onchange= e=>console.log(e.target.value);
+    console.log("Initial Check:", clientSelect.value === '1');
+    toggleNewClientFields(); // вызов при загрузке страницы
+});
+</script>
+
 {% endblock %}
 

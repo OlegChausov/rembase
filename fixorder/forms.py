@@ -14,17 +14,18 @@ class AddOrderForm(forms.ModelForm):
         choices=[],
         required=False,
         label='Выберите клиента',
-        widget=forms.Select(attrs={'class': 'js-example-basic-single',  'id': 'client-select'})
+        widget=forms.Select(attrs={'class': 'js-example-basic-single',  'id': 'client-select'}),
+        initial='1',
     )
 
-    new_client_name = forms.CharField(required=False, label='Добавить имя клиента', widget=forms.TextInput(attrs={'class': 'form-control'})
+    new_client_name = forms.CharField(required=False, label='Добавить имя клиента', widget=forms.TextInput(attrs={'id': 'new-client-name'})
     )
-    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента', widget=forms.TextInput(attrs={'class': 'form-control'})
+    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента', widget=forms.TextInput(attrs={'id': 'new-client-phone'})
     )
 
     class Meta:
         model = Order
-        fields = ['client', 'order_client', 'new_client_name', 'new_client_phone', 'device','time_demand', 'defect', 'device_password',
+        fields = ['client', 'new_client_name', 'new_client_phone', 'device','time_demand', 'defect', 'device_password',
                   'device_exterior', 'initial_price', 'prepaid', 'notes',]
 
         widgets = {'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
@@ -40,7 +41,5 @@ class AddOrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Динамическое заполнение списка клиентов
-        self.fields['client'].choices = [('', 'Клиент/Телефон')] + [
-            (client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()
-        ]
+        self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]
 
