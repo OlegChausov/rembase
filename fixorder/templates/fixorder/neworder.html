@@ -1,66 +1,65 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
-
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-   <br>
-   <table class="table table-hover table-sm w-auto">
-       {{ form.as_table }}
-   </table>
+    <br>
+    <table class="table table-hover table-sm w-auto">
+        {{ form.as_table }}
+    </table>
 
-    <div class="form-error">{{ f.errors }}</div>
+    <div class="form-error">{{ form.errors }}</div>
     <div class="form-error">{{ form.non_field_errors }}</div>
     <button type="submit" class="btn btn-outline-success">Создать</button>
 </form>
-<!--
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const clientSelect = document.getElementById('client-select'); // предположим, что поле select имеет id="id_client"
-    const newClientFields = ['new-client-name', 'new-client-phone']; // замените на реальные id полей ФИО и Телефон
 
-    function toggleNewClientFields() {
-        const isDefaultOptionSelected = clientSelect.value === '1'; // предполагаем, что значение по умолчанию пустое
-        console.log("test");
-        console.log(isDefaultOptionSelected);
-        newClientFields.forEach(function(fieldId) {
-            const field = document.getElementById(fieldId);
-            field.disabled = !isDefaultOptionSelected;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOM fully loaded and parsed');
+        const clientSelect = document.getElementById('client-select');
+        const clientName = document.getElementById('client-name');
+        const clientPhone = document.getElementById('client-phone');
+        const clientTelegram = document.getElementById('client-telegram');
+        const clientViber = document.getElementById('client-viber');
+        const clientWhatsapp = document.getElementById('client-whatsapp');
+
+        // Проверяем наличие элементов
+        console.log('clientSelect:', clientSelect);
+        console.log('clientName:', clientName);
+        console.log('clientPhone:', clientPhone);
+        console.log('clientTelegram:', clientTelegram);
+        console.log('clientViber:', clientViber);
+        console.log('clientWhatsapp:', clientWhatsapp);
+
+        clientSelect.addEventListener('change', function() {
+            const clientId = this.value;
+            console.log(`Selected client ID: ${clientId}`);
+            if (clientId) {
+                fetch(`/api/clients/${clientId}/`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Received data:', data);
+                        clientName.value = data.name || '';
+                        clientPhone.value = data.phone || '';
+                        clientTelegram.value = data.telegram || '';
+                        clientViber.value = data.viber || '';
+                        clientWhatsapp.value = data.whatsapp || '';
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            } else {
+                clientName.value = '';
+                clientPhone.value = '';
+                clientTelegram.value = '';
+                clientViber.value = '';
+                clientWhatsapp.value = '';
+            }
         });
-    }
-   // clientSelect.onchange= e=>alert(e.target.value);
-    clientSelect.addEventListener('change');
-    console.log(clientSelect.value==='1');
-
-    toggleNewClientFields(); // вызвать при загрузке страницы
-});
+    });
 </script>
--->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const clientSelect = document.getElementById('client-select'); // убедись, что id совпадает
-    const newClientFields = ['new-client-name', 'new-client-phone']; // убедись, что id совпадают
-
-    function toggleNewClientFields() {
-        const isDefaultOptionSelected = clientSelect.value === '1'; // проверка на пустое значение
-        console.log("Client Select Value:", clientSelect.value); // Логирование значения
-        console.log("Is Default Option Selected:", isDefaultOptionSelected); // Логирование выбора
-       // newClientFields.forEach(function(fieldId) {
-      //      const field = document.getElementById(fieldId);
-       //     console.log("Field:", fieldId, "Disabled:", !isDefaultOptionSelected); // Логирование состояния полей
-      //      field.disabled != isDefaultOptionSelected;
-      //  });
-        if (clientSelect.value === '1'){ document.getElementById('new-client-name').disabled = true;}
-        else {document.getElementById('new-client-name').disabled = false;}
-        console.log(clientSelect.value);
-    }
-
-    clientSelect.addEventListener('change', toggleNewClientFields);
-    clientSelect.addEventListener('change', console.log('nfhfhhfh'));
-  //  clientSelect.onchange= e=>console.log(e.target.value);
-    console.log("Initial Check:", clientSelect.value === '1');
-    toggleNewClientFields(); // вызов при загрузке страницы
-});
-</script>
-
 {% endblock %}
-

@@ -1,5 +1,7 @@
 from dal import autocomplete
 from django import forms
+from django.utils import timezone
+
 from .models import Order,Client
 
 class AddClientForm(forms.ModelForm):
@@ -9,37 +11,59 @@ class AddClientForm(forms.ModelForm):
 
 
 class AddOrderForm(forms.ModelForm):
-
     client = forms.ChoiceField(
         choices=[],
         required=False,
         label='Выберите клиента',
-        widget=forms.Select(attrs={'class': 'js-example-basic-single',  'id': 'client-select'}),
-        initial='1',
+        widget=forms.Select(attrs={'class': 'js-example-basic-single', 'id': 'client-select'}),
+        initial='1',  # Устанавливаем значение по умолчанию
     )
 
-    new_client_name = forms.CharField(required=False, label='Добавить имя клиента', widget=forms.TextInput(attrs={'id': 'new-client-name'})
+    name = forms.CharField(
+        required=False,
+        label='Имя клиента',
+        widget=forms.TextInput(attrs={'id': 'client-name'})
     )
-    new_client_phone = forms.CharField(required=False, label='Добавить телефон клиента', widget=forms.TextInput(attrs={'id': 'new-client-phone'})
+    phone = forms.CharField(
+        required=False,
+        label='Телефон клиента',
+        widget=forms.TextInput(attrs={'id': 'client-phone'})
+    )
+    telegram = forms.CharField(
+        required=False,
+        label='Telegram',
+        widget=forms.TextInput(attrs={'id': 'client-telegram'})
+    )
+    viber = forms.CharField(
+        required=False,
+        label='Viber',
+        widget=forms.TextInput(attrs={'id': 'client-viber'})
+    )
+    whatsapp = forms.CharField(
+        required=False,
+        label='WhatsApp',
+        widget=forms.TextInput(attrs={'id': 'client-whatsapp'})
     )
 
     class Meta:
         model = Order
-        fields = ['client', 'new_client_name', 'new_client_phone', 'device','time_demand', 'defect', 'device_password',
-                  'device_exterior', 'initial_price', 'prepaid', 'notes',]
+        fields = ['client', 'name', 'phone', 'telegram', 'viber', 'whatsapp', 'device', 'time_demand', 'defect', 'device_password',
+                  'device_exterior', 'initial_price', 'prepaid', 'notes']
 
-        widgets = {'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
-                    'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
-                    'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
-                    'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
-                    'time_demand': forms.DateInput(
-                         format=('%d/%m/%Y'),
-                        attrs={'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
-                      }),
-                    }
+        widgets = {
+            'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
+            'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+            'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
+            'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+            'time_demand': forms.DateInput(
+                format=('%d/%m/%Y'),
+                attrs={
+                    'type': 'date',
+                    'value': timezone.now().strftime('%Y-%m-%d'),  # Устанавливаем значение по умолчанию
+                }
+            ),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Динамическое заполнение списка клиентов
         self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]
-

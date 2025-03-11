@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.db.models import Q, Sum
-from django.http import request
+from django.http import request, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
@@ -9,6 +9,16 @@ from django.views.generic import UpdateView, ListView, CreateView, TemplateView,
 from fixorder.forms import AddOrderForm, AddClientForm
 from fixorder.models import Order, OrderStatus, Company, Client
 
+def get_client_data(request, client_id):
+    client = Client.objects.get(pk=client_id)
+    data = {
+        'name': client.name,
+        'phone': client.phone,
+        'telegram': client.telegram,
+        'viber': client.viber,
+        'whatsapp': client.whatsapp,
+    }
+    return JsonResponse(data)
 
 # class Show_and_edit_order(UpdateView):
 # #class Show_and_edit_order(PermissionRequiredMixin, UpdateView) #потом добавим вход только при авторизации
@@ -69,32 +79,30 @@ class Show_orderlist(ListView):
 
 
 class AddOrder(CreateView):
-    # model = Order
     form_class = AddOrderForm
-    #form_client = AddClientForm(data=request.POST)
-    # fields = ['client_name', 'client_phone', 'client_telegram', 'client_viber', 'client_whatsapp',
-    #           'time_demand', 'defect', 'device_password', 'device_exterior', 'initial_price',
-    #           'prepaid', 'notes',]
     template_name = 'fixorder/neworder.html'
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Новый заказ', 'header': 'Добавление заказа'}
 
     def form_valid(self, form):
         client_id = form.cleaned_data.get('client')
-        new_client_name = form.cleaned_data.get('new_client_name')
-        new_client_phone = form.cleaned_data.get('new_client_phone')
+        client_name = form.cleaned_data.get('name')
+        client_phone = form.cleaned_data.get('phone')
+        client_telegram = form.cleaned_data.get('telegram')
+        client_viber = form.cleaned_data.get('viber')
+        client_whatsapp = form.cleaned_data.get('whatsapp')
 
         if client_id:
             client = Client.objects.get(id=client_id)
-            form.instance.client = client
-        elif new_client_name and new_client_phone:
-            client, created = Client.objects.get_or_create(
-                name=new_client_name,
-                phone=new_client_phone
-            )
+            client.name = client_name
+            client.phone = client_phone
+            client.telegram = client_telegram
+            client.viber = client_viber
+            client.whatsapp = client_whatsapp
+            client.save()
             form.instance.client = client
         else:
-            form.add_error(None, 'Выберите или создайте клиента')
+            form.add_error(None, 'Выберите клиента')
 
         return super().form_valid(form)
 
