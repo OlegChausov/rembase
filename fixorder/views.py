@@ -4,7 +4,9 @@ from django.db.models import Q, Sum
 from django.http import request, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
+import json
 
 from fixorder.forms import AddOrderForm, AddClientForm
 from fixorder.models import Order, OrderStatus, Company, Client
@@ -20,6 +22,40 @@ def get_client_data(request, client_id):
     }
     return JsonResponse(data)
 
+
+@csrf_exempt
+def create_client(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = data.get('name')
+        phone = data.get('phone')
+        telegram = data.get('telegram')
+        viber = data.get('viber')
+        whatsapp = data.get('whatsapp')
+
+        # Создание нового клиента
+        client = Client.objects.create(
+            name=name,
+            phone=phone,
+            telegram=telegram,
+            viber=viber,
+            whatsapp=whatsapp
+        )
+
+        response_data = {
+            'success': True,
+            'client': {
+                'id': client.id,
+                'name': client.name,
+                'phone': client.phone,
+                'telegram': client.telegram,
+                'viber': client.viber,
+                'whatsapp': client.whatsapp
+            }
+        }
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
 # class Show_and_edit_order(UpdateView):
 # #class Show_and_edit_order(PermissionRequiredMixin, UpdateView) #потом добавим вход только при авторизации
 #     model = Order #в этой модели должен быть определен get_absolute_url

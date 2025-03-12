@@ -1,7 +1,7 @@
 from django.urls import path
 
 from fixorder import views
-from fixorder.views import get_client_data
+from fixorder.views import get_client_data, create_client
 
 urlpatterns = [
                 path('', views.Show_orderlist.as_view(), name='orderlist'),
@@ -12,6 +12,7 @@ urlpatterns = [
                 path('company/', views.CompanyView.as_view(), name='company'),
                 path('delete/<int:pk>/', views.DeleteOrder.as_view(), name='delete'),
                 path('api/clients/<int:client_id>/', get_client_data, name='get_client_data'),
+                path('api/clients/create/', create_client, name='create_client'),
 
 
 ]

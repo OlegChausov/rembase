@@ -1,7 +1,28 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
 {% load static %}
-<link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <a href="#" class="btn btn-outline-primary" id="openModalBtn">Создать клиента</a>
+    <!-- Модальное окно (Modal) -->
+<div id="myModal" class="modal">
+    <!-- Контент модального окна -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Новый клиент</h2>
+        <form id="clientForm">
+            <label for="new-client-name">Имя:</label>
+            <input type="text" id="new-client-name" name="name"><br><br>
+            <label for="new-client-phone">Телефон:</label>
+            <input type="text" id="new-client-phone" name="phone"><br><br>
+            <label for="new-client-telegram">Telegram:</label>
+            <input type="text" id="new-client-telegram" name="telegram"><br><br>
+            <label for="new-client-viber">Viber:</label>
+            <input type="text" id="new-client-viber" name="viber"><br><br>
+            <label for="new-client-whatsapp">WhatsApp:</label>
+            <input type="text" id="new-client-whatsapp" name="whatsapp"><br><br>
+            <button type="button" id="saveClientBtn">Сохранить</button>
+        </form>
+    </div>
+</div>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <br>
@@ -17,7 +38,88 @@
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/select2.min.js' %}"></script>
 
+
+
+
 <script>
+// описываем функциолнал модального окна добавления клиента
+    // Получение модального окна
+        var modal = document.getElementById("myModal");
+
+        // Получение <a> элемента, открывающего модальное окно
+        var btn = document.getElementById("openModalBtn");
+
+        // Получение <span> элемента, закрывающего модальное окно
+        var span = document.getElementsByClassName("close")[0];
+
+        // Когда пользователь нажимает <a> элемент, открывается модальное окно
+        btn.onclick = function(event) {
+            event.preventDefault(); // Предотвращение действия по умолчанию
+            console.log('Open modal button clicked');
+            modal.style.display = "block";
+        }
+
+        // Когда пользователь нажимает на <span> (x), модальное окно закрывается
+        span.onclick = function() {
+            console.log('Close button clicked');
+            modal.style.display = "none";
+        }
+
+           // Обработчик кнопки сохранения формы клиента
+        var saveClientBtn = document.getElementById('saveClientBtn');
+        saveClientBtn.onclick = function() {
+            // Логика сохранения данных клиента
+            console.log('Save client button clicked');
+            modal.style.display = "none";
+        }
+    // Обработчик кнопки сохранения формы клиента
+        var saveClientBtn = document.getElementById('saveClientBtn');
+        saveClientBtn.onclick = function() {
+            // Сбор данных формы
+            var clientData = {
+                'name': document.getElementById('new-client-name').value,
+                'phone': document.getElementById('new-client-phone').value,
+                'telegram': document.getElementById('new-client-telegram').value,
+                'viber': document.getElementById('new-client-viber').value,
+                'whatsapp': document.getElementById('new-client-whatsapp').value,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            };
+
+            // Отправка данных на сервер
+            fetch('{% url "create_client" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': clientData.csrfmiddlewaretoken
+                },
+                body: JSON.stringify(clientData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    // Обновить селект поле клиента с новым клиентом
+                    var newOption = new Option(data.client.name, data.client.id, false, false);
+                    $('#client-select').append(newOption).trigger('change');
+                    modal.style.display = "none"; // Закрыть модальное окно
+                    // Обратная связь для пользователя
+                    document.getElementById('modal-feedback').innerText = 'Клиент успешно сохранен!';
+                } else {
+                    // Обратная связь для пользователя
+                    document.getElementById('modal-feedback').innerText = 'Ошибка сохранения клиента!';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('modal-feedback').innerText = 'Ошибка при сохранении клиента!';
+            });
+        }
+
+</script>
+
+
+<script>
+    // автозаполнение формы при выборе клиента из поля селект
     document.addEventListener('DOMContentLoaded', function () {
         console.log('DOM fully loaded and parsed');
 
@@ -57,7 +159,6 @@
         });
     });
 </script>
-
 
 
 {% endblock %}
