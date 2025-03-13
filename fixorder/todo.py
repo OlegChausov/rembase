@@ -5,7 +5,7 @@ Add some functional to navbar
 Add phone formates
 
 
-2. Делаем так, чтобы создание нового клиента исключало редактирование старого и наоборот.
+
 
 
 

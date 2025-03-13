@@ -153,6 +153,29 @@
             }
         });
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        const clientSelect = $('#client-select').select2();
+
+        clientSelect.on('change', function() {
+            const clientId = this.value;
+            const formFields = document.querySelectorAll('form input, form select, form textarea, form button');
+            if (clientId === '1') {
+                formFields.forEach(field => {
+                    if (field.closest('.modal-content') === null && field.id !== 'client-select') {
+                        field.disabled = true;
+                    }
+                });
+            } else {
+                formFields.forEach(field => {
+                    if (field.closest('.modal-content') === null && field.id !== 'client-select') {
+                        field.disabled = false;
+                    }
+                });
+            }
+        });
+
+        clientSelect.trigger('change');
+    });
 </script>
 
 
