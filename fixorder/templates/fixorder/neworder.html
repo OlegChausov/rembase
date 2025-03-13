@@ -65,13 +65,7 @@
             modal.style.display = "none";
         }
 
-           // Обработчик кнопки сохранения формы клиента
-        var saveClientBtn = document.getElementById('saveClientBtn');
-        saveClientBtn.onclick = function() {
-            // Логика сохранения данных клиента
-            console.log('Save client button clicked');
-            modal.style.display = "none";
-        }
+
     // Обработчик кнопки сохранения формы клиента
         var saveClientBtn = document.getElementById('saveClientBtn');
         saveClientBtn.onclick = function() {
@@ -100,7 +94,8 @@
                 if (data.success) {
                     // Обновить селект поле клиента с новым клиентом
                     var newOption = new Option(data.client.name, data.client.id, false, false);
-                    $('#client-select').append(newOption).trigger('change');
+                    $('#client-select').append(newOption);
+                    $('#client-select').val(data.client.id).trigger('change');//.trigger('change');
                     modal.style.display = "none"; // Закрыть модальное окно
                     // Обратная связь для пользователя
                     document.getElementById('modal-feedback').innerText = 'Клиент успешно сохранен!';
