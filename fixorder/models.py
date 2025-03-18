@@ -91,7 +91,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'{self.client_name} {self.device}'
+        return f'{self.order_client__name} {self.device}'
 
     class Meta:
         verbose_name = 'Заказы'

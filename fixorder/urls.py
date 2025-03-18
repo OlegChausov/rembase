@@ -5,6 +5,7 @@ from fixorder.views import get_client_data, create_client
 
 urlpatterns = [
                 path('', views.Show_orderlist.as_view(), name='orderlist'),
+                path('clientlist/', views.Show_clientlist.as_view(), name='clientlist'),
                 path('neworder/', views.AddOrder.as_view(), name='neworder'),
                 path('order/<int:pk>/', views.Show_and_edit_order.as_view(), name='order'),
                 path('warrantydoc/<int:pk>/', views.Warrantydoc.as_view(), name='warrantydoc'),

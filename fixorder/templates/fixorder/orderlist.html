@@ -27,7 +27,7 @@
         {% elif myo.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{myo.status}}</span>
         {% elif myo.status.status == "Выдан" %}<span class="text-secondary"> {{myo.status}}</span> {% endif %}
 
-                | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.client_name}} | {{myo.client_phone}}
+                | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.order_client}} | {{myo.client_phone}}
         {% if myo.initial_price %}
                    | {{myo.initial_price}}
 				{% endif %}</p>

@@ -1,7 +1,8 @@
 from datetime import datetime
 
+from django.conf.urls import handler404
 from django.db.models import Q, Sum
-from django.http import request, JsonResponse
+from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -88,6 +89,25 @@ class Show_and_edit_order(UpdateView):
         self.object.save()
         return super().form_valid(form)
 
+class Show_clientlist(ListView):
+    model = Client
+    template_name = 'fixorder/clientlist.html'
+    context_object_name = 'my_clients'
+    paginate_by = 15
+    extra_context = {'title': 'Клиенты', 'header': 'Список клиентов'}
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            query = query.replace("\\","")
+            return Client.objects.exclude(id=1).filter(
+                Q(phone__iregex=query) | Q(name__iregex=query) | Q(
+                    telegram__iregex=query) | Q(phone1__iregex=query))  # для PosgreSQL можно использовать __icontains
+
+
+        return super().get_queryset().exclude(id=1)
+
+
 
 
 
@@ -103,15 +123,18 @@ class Show_orderlist(ListView):
         checky = self.request.GET.get('cb')
         if not checky:
             if query:
+                query = query.replace("\\", "")
                 # return Order.objects.filter(client_phone__icontains=query) #должно работать на PosgreSQL
-                return Client.objects.filter(
-                    Q(phone__iregex=query) | Q(name__iregex=query) | Q(
-                        telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
+                return Order.objects.filter(
+                    Q(order_client__phone__iregex=query) | Q(order_client__name__iregex=query) | Q(
+                        order_client__telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
             return super().get_queryset()
         else:
-            return Client.objects.filter(status__status='Активен').filter(
-                    Q(phone__iregex=query) | Q(name__iregex=query) | Q(
-                        telegram__iregex=query))
+            return Order.objects.filter(status__status="Активен").filter(
+                    Q(order_client__phone__iregex=query) | Q(order_client__name__iregex=query) |
+            Q(order_client__telegram__iregex=query))
+
+
 
 
 class AddOrder(CreateView):
@@ -121,7 +144,7 @@ class AddOrder(CreateView):
     extra_context = {'title': 'Новый заказ', 'header': 'Добавление заказа'}
 
     def form_valid(self, form):
-        client_id = form.cleaned_data.get('client')
+        client_id = form.cleaned_data.get('client')[0]
         client_name = form.cleaned_data.get('name')
         client_phone = form.cleaned_data.get('phone')
         client_telegram = form.cleaned_data.get('telegram')
@@ -129,14 +152,16 @@ class AddOrder(CreateView):
         client_whatsapp = form.cleaned_data.get('whatsapp')
 
         if client_id:
-            client = Client.objects.get(id=client_id)
+            client = Client.objects.get(pk=client_id)
             client.name = client_name
             client.phone = client_phone
             client.telegram = client_telegram
             client.viber = client_viber
             client.whatsapp = client_whatsapp
             client.save()
-            form.instance.client = client
+            form.instance.order_client = client
+
+
         else:
             form.add_error(None, 'Выберите клиента')
 

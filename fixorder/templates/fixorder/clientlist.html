@@ -1,0 +1,24 @@
+{% extends 'fixorder/base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+<!--делаем поиск-->
+      <form class="d-flex" role="search" method='GET'>
+        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name='q' value='{{ request.GET.q }}'>
+          <button class="btn btn-outline-success" type="submit">Поиск</button>
+      </form>
+<!--сделали поиск -->
+
+
+    {% for myc in my_clients %}
+<p>
+    {{myc}}
+</p>
+
+    {% endfor %}
+
+
+
+
+
+{% endblock content %}
