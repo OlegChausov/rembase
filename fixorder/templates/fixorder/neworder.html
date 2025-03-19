@@ -13,6 +13,8 @@
             <input type="text" id="new-client-name" name="name"><br><br>
             <label for="new-client-phone">Телефон:</label>
             <input type="text" id="new-client-phone" name="phone"><br><br>
+            <label for="new-client-phone1">Дополнительный телефон:</label>
+            <input type="text" id="new-client-phone1" name="phone1"><br><br>
             <label for="new-client-telegram">Telegram:</label>
             <input type="text" id="new-client-telegram" name="telegram"><br><br>
             <label for="new-client-viber">Viber:</label>
@@ -73,6 +75,7 @@
             var clientData = {
                 'name': document.getElementById('new-client-name').value,
                 'phone': document.getElementById('new-client-phone').value,
+                'phone1': document.getElementById('new-client-phone1').value,
                 'telegram': document.getElementById('new-client-telegram').value,
                 'viber': document.getElementById('new-client-viber').value,
                 'whatsapp': document.getElementById('new-client-whatsapp').value,
@@ -96,6 +99,7 @@
                     var newOption = new Option(data.client.name, data.client.id, false, false);
                     $('#client-select').append(newOption);
                     $('#client-select').val(data.client.id).trigger('change');//.trigger('change');
+                    console.log(data.client.id);
                     modal.style.display = "none"; // Закрыть модальное окно
                     // Обратная связь для пользователя
                     document.getElementById('modal-feedback').innerText = 'Клиент успешно сохранен!';
@@ -137,6 +141,7 @@
                         console.log('Received data:', data);
                         document.getElementById('client-name').value = data.name || '';
                         document.getElementById('client-phone').value = data.phone || '';
+                        document.getElementById('client-phone1').value = data.phone1 || '';
                         document.getElementById('client-telegram').value = data.telegram || '';
                         document.getElementById('client-viber').value = data.viber || '';
                         document.getElementById('client-whatsapp').value = data.whatsapp || '';
@@ -147,6 +152,7 @@
             } else {
                 document.getElementById('client-name').value = '';
                 document.getElementById('client-phone').value = '';
+                document.getElementById('client-phone1').value = '';
                 document.getElementById('client-telegram').value = '';
                 document.getElementById('client-viber').value = '';
                 document.getElementById('client-whatsapp').value = '';

@@ -143,22 +143,32 @@ class AddOrder(CreateView):
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Новый заказ', 'header': 'Добавление заказа'}
 
+
+#создаем переменные, куда получаем данные из полей формы, созданных в форме на лету (отсутствуют в модели)
+#возможно JS создал клиента через модальное окно (path('api/clients/create/', create_client, name='create_client'))
+#то при сохранении основной формы поля будут взяты ОТСЮДА
     def form_valid(self, form):
         client_id = form.cleaned_data.get('client')[0]
         client_name = form.cleaned_data.get('name')
         client_phone = form.cleaned_data.get('phone')
+        client_phone1 = form.cleaned_data.get('phone1')
         client_telegram = form.cleaned_data.get('telegram')
         client_viber = form.cleaned_data.get('viber')
         client_whatsapp = form.cleaned_data.get('whatsapp')
 
+        #изменение данных клиента в базе client.objects...
         if client_id:
             client = Client.objects.get(pk=client_id)
-            client.name = client_name
+            #client.name = client_name
             client.phone = client_phone
+            client.phone1 = client_phone1
             client.telegram = client_telegram
             client.viber = client_viber
             client.whatsapp = client_whatsapp
             client.save()
+    #поле order_client есть у модели order и как следствие у формы, но мы его не выводим на экран
+    #но оно обязательно, поэтому требует что-то подставить, или будет значенеи default
+    #поэтому поле order_client конкретного экземпляра формы form.instance заполняется переменной client
             form.instance.order_client = client
 
 

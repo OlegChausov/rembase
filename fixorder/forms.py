@@ -11,6 +11,10 @@ class AddClientForm(forms.ModelForm):
 
 
 class AddOrderForm(forms.ModelForm):
+    #при создании формы поля 'client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp' создаются
+    #на лету (их нет в модели).
+
+    #Это свойство мы указали здесь и дополнительно переопределили в
     client = forms.ChoiceField(
         choices=[],
         required=False,
@@ -28,6 +32,12 @@ class AddOrderForm(forms.ModelForm):
         required=False,
         label='Телефон клиента',
         widget=forms.TextInput(attrs={'id': 'client-phone'})
+    )
+
+    phone1 = forms.CharField(
+        required=False,
+        label='Дополнительный телефон',
+        widget=forms.TextInput(attrs={'id': 'client-phone1'})
     )
     telegram = forms.CharField(
         required=False,
@@ -47,9 +57,9 @@ class AddOrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['client', 'name', 'phone', 'telegram', 'viber', 'whatsapp', 'device', 'time_demand', 'defect', 'device_password',
+        fields = ['client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp', 'device', 'time_demand', 'defect', 'device_password',
                   'device_exterior', 'initial_price', 'prepaid', 'notes']
-
+#так как связано с моделью, в fields указываем поля модели и наши виртуально созданные при ините поля 'client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp',
         widgets = {
             'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
             'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
@@ -63,7 +73,7 @@ class AddOrderForm(forms.ModelForm):
                 }
             ),
         }
-
+#заполняем наши на лету созданное поле client данными за БД Client.objects...
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]

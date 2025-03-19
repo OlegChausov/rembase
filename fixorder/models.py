@@ -12,7 +12,7 @@ class OrderStatus(models.Model):
 
 class Client(models.Model):
 
-    name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента')
+    name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='ФИО клиента') #unique=True,
     phone = models.CharField(max_length=20, db_index=True, verbose_name='Контактный номер')
     phone1 = models.CharField(max_length=20, db_index=True, blank=True, null=True, verbose_name='Дополнительный номер')
     telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram клиента')
