@@ -1,0 +1,39 @@
+{% extends 'fixorder/base.html' %}
+{% load static %}
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table class="table table-hover table-sm w-auto">
+       {{ form.as_table }}
+   </table>
+
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
+<p>
+
+
+<ul class="list-group">
+       {% for ro in related_orders %}
+         <li class="list-group-item">
+             Устройство: {{ro.device}} | Принят: {{ro.time_create|date:"d-m-Y"}} | Статус: {% if ro.status.status == "Активен" %}<span class="text-primary"> {{ro.status}}</span>
+         {% elif ro.status.status == "Готов" %}<span class="text-success"> {{ro.status}}</span>
+        {% elif ro.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{ro.status}}</span>
+        {% elif ro.status.status == "Выдан" %}<span class="text-secondary"> {{ro.status}}</span> {% endif %}
+         {% if ro.time_away %} Выдан: {ro.time_away|date:"d-m-Y"} {% endif %}<p>
+             <a href="{{ ro.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>
+
+{% endfor %}
+             </ul>
+    </div></li>
+ <hr>
+    </ul>
+
+
+
+
+<!-- Элемент для предварительного просмотра изображения -->
+<img id="preview" src="#" alt="Предварительный просмотр логотипа" style="display: none; max-width: 200px; margin-top: 20px;">
+<script src="{% static 'js/logopreviewer.js'  %}"></script>
+
+{% endblock %}

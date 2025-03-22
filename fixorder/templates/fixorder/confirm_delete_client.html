@@ -10,7 +10,7 @@
 <body>
 <div class="alert alert-primary" role="alert">
 <form method="post">{% csrf_token %}
-<h2>Вы точно хотите удалить этот заказ?<p> Клиента: {{ object.order_client }}<p> Устройство: {{ object.device }} <p>Созданный: {{ object.time_create }}"?</h2>
+<h2>Вы точно хотите удалить {{ object.name }} {{ object.phone }}? Данные о его заказах сохранятся</h2>
     <input type="submit" value="Точно хочу удалить" class="btn btn-outline-danger">
 </form>
 <a href="/" class="btn btn-outline-primary">Отмена</a>

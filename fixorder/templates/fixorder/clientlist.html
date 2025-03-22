@@ -11,14 +11,38 @@
 
 
     {% for myc in my_clients %}
-<p>
-    {{myc}}
-</p>
 
-    {% endfor %}
+<li class="list-group-item">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">{{ myc.name }}</div>
+            <div class="col-2">{{ myc.phone }}</div>
+            {% if myc.phone1 %}
+                <div class="col-2">{{ myc.phone1 }}</div>
+            {% endif %}
+            {% if myc.telegram %}
+                <div class="col-2">{{ myc.telegram }}</div>
+            {% endif %}
+            {% if myc.viber %}
+                <div class="col-2">{{ myc.viber }}</div>
+            {% endif %}
+            {% if myc.whatsapp %}
+                <div class="col-2">{{ myc.whatsapp }}</div>
+            {% endif %}
+            <p>
+            <div class="col-2">
+                <a href="{{ myc.get_absolute_url }}" class="btn btn-outline-primary">Редактировать/заказы</a>
+            </div>
+            <div class="col-2">
+                <a href="{% url 'deleteclient' myc.pk %}" class="btn btn-outline-danger">Удалить</a>
+            </div>
+            </p>
+             <hr>
+        </div>
+    </div>
+</li>
 
 
-
-
+{% endfor %}
 
 {% endblock content %}

@@ -19,6 +19,20 @@ class Client(models.Model):
     viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber клиента')
     whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp клиента')
 
+    class Meta:
+        verbose_name = 'Клиенты'
+        verbose_name_plural = 'Клиенты'
+        ordering = ['name']
+        indexes = [models.Index(fields=['name'])
+                   ]
+
+    def get_absolute_url(self):
+        return reverse('editclient', kwargs={'pk': self.pk})
+
+
+
+
+
     def __str__(self):
         return f'{self.name} {self.phone} {self.phone1}'
 
@@ -40,7 +54,7 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0, verbose_name='Итоговая стоимость')
     work = models.CharField(max_length=255, blank=True, null=True, verbose_name='Выполненная работа')
     work_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
-    work_warranty = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Выполненная работа')
+    work_warranty = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
     work1 = models.CharField(max_length=255, blank=True, null=True, verbose_name='Выполненная работа')
     work_price1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Цена')
     work_warranty1 = models.FloatField(max_length=2, blank=True, null=True, verbose_name='Гарантия')
@@ -90,8 +104,9 @@ class Order(models.Model):
                 self.time_away = None
 
 
+
     def __str__(self):
-        return f'{self.order_client__name} {self.device}'
+        return f'{self.order_client.name} {self.device}'
 
     class Meta:
         verbose_name = 'Заказы'

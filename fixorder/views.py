@@ -71,18 +71,13 @@ def create_client(request):
 
 class Show_and_edit_order(UpdateView):
     model = Order
-    fields = [ 'status', 'client_name', 'client_phone', 'client_phone1', 'client_telegram', 'client_viber', 'client_whatsapp',
-              'time_demand', 'device', 'defect',  'device_password', 'device_exterior', 'initial_price',
-              'prepaid', 'notes', 'time_away', 'work', 'work_price', 'work_warranty', 'work1', 'work_price1', 'work_warranty1',
-                   'work2', 'work_price2', 'work_warranty2', 'work3', 'work_price3', 'work_warranty3',
-                   'work4', 'work_price4', 'work_warranty4','work5', 'work_price5', 'work_warranty5',
-                  'work6', 'work_price6', 'work_warranty6', 'total_price', 'remain_to_pay', 'conclusion']
+    fields = '__all__'
     template_name = 'fixorder/show_edit_order.html'
-    # success_url = reverse_lazy('orderlist')
+    success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
 
-    def get_success_url(self):
-        return reverse_lazy('order', args=[self.object.pk])
+    # def get_success_url(self):
+    #     return reverse_lazy('order', args=[self.object.pk])
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -93,14 +88,14 @@ class Show_clientlist(ListView):
     model = Client
     template_name = 'fixorder/clientlist.html'
     context_object_name = 'my_clients'
-    paginate_by = 15
+    paginate_by =20
     extra_context = {'title': 'Клиенты', 'header': 'Список клиентов'}
 
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
             query = query.replace("\\","")
-            return Client.objects.exclude(id=1).filter(
+            return Client.objects.all().exclude(id=1).filter(
                 Q(phone__iregex=query) | Q(name__iregex=query) | Q(
                     telegram__iregex=query) | Q(phone1__iregex=query))  # для PosgreSQL можно использовать __icontains
 
@@ -213,6 +208,7 @@ class Commingdoc(DetailView):
 class DeleteOrder(DeleteView):
     model = Order
     success_url = "/"
+    pk_url_kwarg = 'pk'
     template_name = "fixorder/confirm_delete.html"
 
 class CompanyView(UpdateView):
@@ -244,10 +240,31 @@ class Commingdoc(DetailView):
         return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
 
 
+class EditClient(UpdateView):
+    model = Client
+    pk_url_kwarg = 'pk'
+    fields = '__all__'
+    template_name = 'fixorder/editclient.html'
+    success_url = reverse_lazy('clientlist')
+    extra_context = {'title': 'Клиент', 'header': 'Просмотреть/редактировать клиента'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.object)  # Для проверки, что объект не None
+        if self.object:
+            context['related_orders'] = Order.objects.filter(order_client=self.object)
+        return context
+
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super().form_valid(form)
 
 
 
-
-
-
-
+class DeleteClient(DeleteView):
+    model = Client
+    pk_url_kwarg = 'pk'
+    success_url = reverse_lazy('clientlist')
+    template_name = "fixorder/confirm_delete_client.html"
