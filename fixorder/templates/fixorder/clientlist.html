@@ -3,10 +3,7 @@
 
 {% block content %}
 <!--делаем поиск-->
-      <form class="d-flex" role="search" method='GET'>
-        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name='q' value='{{ request.GET.q }}'>
-          <button class="btn btn-outline-success" type="submit">Поиск</button>
-      </form>
+{% include 'fixorder/search_without_checkbox.html' %}
 <!--сделали поиск -->
 
 

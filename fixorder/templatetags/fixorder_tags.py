@@ -24,3 +24,5 @@ def filled_fields_verbose(pk):
                 field_dict[field.verbose_name] = value
     return field_dict
 
+
+

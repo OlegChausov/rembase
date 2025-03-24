@@ -10,7 +10,8 @@ from django.views.generic import UpdateView, ListView, CreateView, TemplateView,
 import json
 
 from fixorder.forms import AddOrderForm, AddClientForm
-from fixorder.models import Order, OrderStatus, Company, Client
+from fixorder.models import Order, OrderStatus, Company, Client, Employee
+
 
 def get_client_data(request, client_id):
     client = Client.objects.get(pk=client_id)
@@ -268,3 +269,27 @@ class DeleteClient(DeleteView):
     pk_url_kwarg = 'pk'
     success_url = reverse_lazy('clientlist')
     template_name = "fixorder/confirm_delete_client.html"
+
+
+class Show_Employees(ListView):
+    model = Employee
+    template_name = 'fixorder/employeelist.html'
+    context_object_name = 'my_employees'
+    paginate_by = 20
+    extra_context = {'title': 'Работники', 'header': 'Список работников'}
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        checky = self.request.GET.get('cb')
+        if not checky:
+            if query:
+                query = query.replace("\\", "")
+                # return Employee.objects.filter(phone__icontains=query) #должно работать на PosgreSQL
+                return Employee.objects.filter(
+                    Q(name__iregex=query) | Q(position__iregex=query)) # для PosgreSQL можно использовать __icontains
+            return super().get_queryset()
+        else:
+            return Employee.objects.filter(status=1).filter(
+                Q(name__iregex=query) | Q(position__name__iregex=query))
+
+

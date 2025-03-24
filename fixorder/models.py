@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.functions import NullIf
 from django.urls import reverse
 from django.utils import timezone
+from datetime import date
 
 
 class OrderStatus(models.Model):
@@ -40,8 +41,8 @@ class Client(models.Model):
 class Order(models.Model):
     order_client = models.ForeignKey(Client, related_name='client', default=1, on_delete=models.DO_NOTHING, verbose_name='Клиент')
    #  order_client = models.CharField(max_length=255,blank=True, null=True, verbose_name='Срок')
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата прихода')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     time_demand = models.DateField(blank=True, null=True, verbose_name='Срок ремонта')
     time_away = models.DateTimeField(null=True, blank=True, verbose_name='Дата выдачи')
     device = models.CharField(max_length=255, verbose_name='Устройство')
@@ -156,6 +157,33 @@ class Company(models.Model):
 
         self.photo.name = 'logo.png'
         super(Company, self).save(*args, **kwargs)
+
+class Employee(models.Model):
+    STATUS_CHOICES = [
+        ('1', 'Работает'),
+        ('2', 'Отсутствует'),
+        ('3', 'Не работает'),]
+
+    company = models.ForeignKey(
+        Company,
+        related_name='employees',
+        default = 1,
+        on_delete=models.CASCADE,
+        verbose_name='Компания')
+    name = models.CharField(max_length=255, verbose_name='Имя сотрудника')
+    position = models.CharField(max_length=100, verbose_name='Должность')
+    time_hire = models.DateField(default=date.today, verbose_name='Дата начала работы')
+    time_fire = models.DateField(null=True, blank=True, verbose_name='Дата окончания работы')
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='1',
+        verbose_name='Статус')
+
+    def __str__(self):
+        return f'{self.name} ({self.position})'
+
+
 
 
 

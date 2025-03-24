@@ -14,6 +14,7 @@ urlpatterns = [
                 path('delete/<int:pk>/', views.DeleteOrder.as_view(), name='delete'),
                 path('editclient/<int:pk>/', views.EditClient.as_view(), name='editclient'),
                 path('deleteclient/<int:pk>/', views.DeleteClient.as_view(), name='deleteclient'),
+                path('employees/', views.Show_Employees.as_view(), name='employees'),
                 path('api/clients/<int:client_id>/', get_client_data, name='get_client_data'),
                 path('api/clients/create/', create_client, name='create_client'),
 
