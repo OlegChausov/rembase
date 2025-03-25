@@ -30,10 +30,6 @@ class Client(models.Model):
     def get_absolute_url(self):
         return reverse('editclient', kwargs={'pk': self.pk})
 
-
-
-
-
     def __str__(self):
         return f'{self.name} {self.phone} {self.phone1}'
 
@@ -182,6 +178,9 @@ class Employee(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.position})'
+
+    def get_delete_url(self):
+        return reverse('deleteemployee', kwargs={'pk': self.pk})
 
 
 

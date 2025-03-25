@@ -15,8 +15,17 @@
             <div class="col-2">{{ mye.name }}</div>
             <div class="col-2">{{ mye.phone }}</div>
             {% if mye.phone1 %}
-                <div class="col-2">{{ myc.status }}</div>
+                <div class="col-2">{{ mye.status }}</div>
             {% endif %}
+
+                    <p>
+            <div class="col-2">
+                <a href="{% url 'editemployee' mye.pk %}" class="btn btn-outline-primary">Редактировать</a>
+            </div>
+            <div class="col-2">
+                <a href="{% url 'deleteemployee' mye.pk %}" class="btn btn-outline-danger">Удалить</a>
+            </div>
+            </p>
 
 
         </div>

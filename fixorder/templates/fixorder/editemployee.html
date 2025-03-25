@@ -1,0 +1,22 @@
+{% extends 'fixorder/base.html' %}
+{% load static %}
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table class="table table-hover table-sm w-auto">
+       {{ form.as_table }}
+   </table>
+
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
+
+
+
+
+
+<!-- Элемент для предварительного просмотра изображения -->
+<img id="preview" src="#" alt="Предварительный просмотр логотипа" style="display: none; max-width: 200px; margin-top: 20px;">
+<script src="{% static 'js/logopreviewer.js'  %}"></script>
+
+{% endblock %}

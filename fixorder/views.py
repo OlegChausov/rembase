@@ -293,3 +293,17 @@ class Show_Employees(ListView):
                 Q(name__iregex=query) | Q(position__name__iregex=query))
 
 
+class DeleteEmployee(DeleteView):
+    model = Employee
+    pk_url_kwarg = 'pk'
+    success_url = reverse_lazy('employees')
+    template_name = "fixorder/confirm_delete_employee.html"
+    extra_context = {'title': 'Внимание!', 'header': 'Удалить работника'}
+
+class EditEmployee(UpdateView):
+    model = Employee
+    pk_url_kwarg = 'pk'
+    fields = '__all__'
+    template_name = 'fixorder/editemployee.html'
+    success_url = reverse_lazy('employees')
+    extra_context = {'title': 'Работник', 'header': 'Просмотреть/редактировать работника'}
