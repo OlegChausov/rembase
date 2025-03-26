@@ -35,8 +35,7 @@ class Client(models.Model):
 
 
 class Order(models.Model):
-    order_client = models.ForeignKey(Client, related_name='client', default=1, on_delete=models.DO_NOTHING, verbose_name='Клиент')
-   #  order_client = models.CharField(max_length=255,blank=True, null=True, verbose_name='Срок')
+    order_client = models.ForeignKey(Client, related_name='client', null=True, on_delete=models.SET_NULL, verbose_name='Клиент')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата прихода')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     time_demand = models.DateField(blank=True, null=True, verbose_name='Срок ремонта')
@@ -96,7 +95,7 @@ class Order(models.Model):
         old_order = Order.objects.get(pk=self.pk)
         if old_order and old_order.status.status != self.status.status:
             if self.status.status in ["Выдан", "Выдан без ремонта"]:
-                self.time_away = timezone.now()
+                self.time_away = timezone.now().date()
             else:
                 self.time_away = None
 
@@ -181,6 +180,13 @@ class Employee(models.Model):
 
     def get_delete_url(self):
         return reverse('deleteemployee', kwargs={'pk': self.pk})
+
+    def fire(self):
+        self.status = 3
+        self.time_fire  = None
+        self.save()
+        return reverse('deleteemployee', kwargs={'pk': self.pk})
+
 
 
 

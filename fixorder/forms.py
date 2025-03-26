@@ -2,7 +2,8 @@ from dal import autocomplete
 from django import forms
 from django.utils import timezone
 
-from .models import Order,Client
+from .models import Order, Client, Employee
+
 
 class AddClientForm(forms.ModelForm):
     class Meta:
@@ -77,3 +78,11 @@ class AddOrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]
+
+class AddEmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['name', 'position', 'status', ]
+        widgets = {
+            'time_fire': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }

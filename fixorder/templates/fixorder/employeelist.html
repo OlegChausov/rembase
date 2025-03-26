@@ -2,9 +2,12 @@
 {% block title %}{{title}}{% endblock title %}
 
 {% block content %}
+<p><a href="{% url 'newemployee' %}" class="btn btn-outline-primary">Добавить работника</a></p>
+
 <!--делаем поиск-->
 {% include 'fixorder/search_with_checkbox.html' %}
 <!--сделали поиск -->
+<br>
 
 
     {% for mye in my_employees %}
@@ -23,9 +26,13 @@
                 <a href="{% url 'editemployee' mye.pk %}" class="btn btn-outline-primary">Редактировать</a>
             </div>
             <div class="col-2">
-                <a href="{% url 'deleteemployee' mye.pk %}" class="btn btn-outline-danger">Удалить</a>
+                <a href="{{ mye.get_delete_url }}" class="btn btn-outline-danger">Удалить</a>
+            </div>
+                        <div class="col-2">
+                <a href="{% url 'fireemployee' mye.pk %}" class="btn btn-warning">Уволить</a>
             </div>
             </p>
+             <hr>
 
 
         </div>

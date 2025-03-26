@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.conf.urls import handler404
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, ProtectedError
 from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 import json
 
-from fixorder.forms import AddOrderForm, AddClientForm
+from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm
 from fixorder.models import Order, OrderStatus, Company, Client, Employee
 
 
@@ -270,6 +270,13 @@ class DeleteClient(DeleteView):
     success_url = reverse_lazy('clientlist')
     template_name = "fixorder/confirm_delete_client.html"
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.client.exists():  # Исправление: order_set.exists() или related_name используется корректно
+            raise ProtectedError("Нельзя удалить клиента, у которого есть связанные заказы.",
+                                 self.object.order_set.all())
+        return super().delete(request, *args, **kwargs)
+
 
 class Show_Employees(ListView):
     model = Employee
@@ -290,7 +297,13 @@ class Show_Employees(ListView):
             return super().get_queryset()
         else:
             return Employee.objects.filter(status=1).filter(
-                Q(name__iregex=query) | Q(position__name__iregex=query))
+                Q(name__iregex=query) | Q(position__iregex=query))
+
+class CreateEmployee(CreateView):
+    form_class = AddEmployeeForm
+    template_name = 'fixorder/newemployee.html'
+    success_url = reverse_lazy('employees')
+    extra_context = {'title': 'Новый работник', 'header': 'Добавление работника'}
 
 
 class DeleteEmployee(DeleteView):
@@ -299,6 +312,20 @@ class DeleteEmployee(DeleteView):
     success_url = reverse_lazy('employees')
     template_name = "fixorder/confirm_delete_employee.html"
     extra_context = {'title': 'Внимание!', 'header': 'Удалить работника'}
+
+class FireEmployee(DeleteView):
+    model = Employee
+    pk_url_kwarg = 'pk'
+    success_url = reverse_lazy('employees')
+    template_name = "fixorder/confirm_fire_employee.html"
+    extra_context = {'title': 'Внимание!', 'header': 'Уволить работника'}
+
+    def delete(self, request, *args, **kwargs):
+        employee = self.get_object()  # Получение объекта сотрудника
+        employee.status = '3'  # Установка статуса "Не работает"
+        employee.save()  # Сохранение изменений
+        return super().delete(request, *args, **kwargs)
+
 
 class EditEmployee(UpdateView):
     model = Employee

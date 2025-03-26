@@ -10,8 +10,9 @@
 <body>
 <div class="alert alert-primary" role="alert">
 <form method="post">{% csrf_token %}
-<h2>Вы точно хотите удалить {{ object}}? Информация о нем останется в истории заказов.</h2>
-    <input type="submit" value="Точно хочу удалить" class="btn btn-outline-danger">
+<h2>Вы точно хотите удалить {{ object}}? Он останется в списке со статусом "не работает".</h2>
+    <input type="submit" value="Точно хочу уволить" class="btn btn-outline-danger">
+
 </form>
 <a href="{% url 'orderlist' %}" class="btn btn-outline-primary">Отмена</a>
 </div>
