@@ -11,6 +11,16 @@
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
 </form>
 <br>
+{% if status == "Работает" %}
+    <p>Работает с {{ time_hire }}</p>
+{% elif status == "Не работает" %}
+    <p>Работает с {{ time_fire }}.</p>
+{% elif status == "Отсутствует" %}
+    <p>Сейчас отсутствует</p>
+{% else %}
+    <p>Статус неизвестен.</p>
+{% endif %}
+
            <div class="col-2">
                 <a href="{% url 'deleteemployee'  pk=form.instance.pk  %}" class="btn btn-outline-danger">Удалить</a>
             </div>

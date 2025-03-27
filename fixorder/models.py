@@ -178,14 +178,17 @@ class Employee(models.Model):
     def __str__(self):
         return f'{self.name} ({self.position})'
 
-    def get_delete_url(self):
-        return reverse('deleteemployee', kwargs={'pk': self.pk})
+    def save(self, *args, **kwargs):
+        if self.status == '3':  # Если статус "Не работает"
+            self.time_fire = timezone.now()  # Устанавливаем текущую дату
+        else:
+            self.time_fire = None  # Сбрасываем дату, если статус изменился на другой
+        super().save(*args, **kwargs)  # Вызываем родительский метод save()
 
-    def fire(self):
-        self.status = 3
-        self.time_fire  = None
-        self.save()
-        return reverse('deleteemployee', kwargs={'pk': self.pk})
+
+
+
+
 
 
 

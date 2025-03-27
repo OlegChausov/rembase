@@ -16,17 +16,25 @@
     <div class="container">
         <div class="row">
             <div class="col-2">{{ mye.name }}</div>
-            <div class="col-2">{{ mye.phone }}</div>
-            {% if mye.phone1 %}
-                <div class="col-2">{{ mye.status }}</div>
-            {% endif %}
+            <div class="col-2">{{ mye.position }}</div>
+
+
+{% if mye.status == "1" %}
+    Работает с {{ mye.time_hire }}
+{% elif mye.status == "3" %}
+    Не работает с {{ mye.time_fire }}
+{% elif mye.status == "2" %}
+    Сейчас отсутствует
+{% else %}
+    Статус сотрудника неизвестен
+{% endif %}
 
                     <p>
             <div class="col-2">
                 <a href="{% url 'editemployee' mye.pk %}" class="btn btn-outline-primary">Редактировать</a>
             </div>
             <div class="col-2">
-                <a href="{{ mye.get_delete_url }}" class="btn btn-outline-danger">Удалить</a>
+                <a href="{% url 'deleteemployee' mye.pk %}" class="btn btn-outline-danger">Удалить</a>
             </div>
                         <div class="col-2">
                 <a href="{% url 'fireemployee' mye.pk %}" class="btn btn-warning">Уволить</a>

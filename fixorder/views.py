@@ -2,8 +2,8 @@ from datetime import datetime
 
 from django.conf.urls import handler404
 from django.db.models import Q, Sum, ProtectedError
-from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, get_object_or_404
+from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
@@ -299,6 +299,8 @@ class Show_Employees(ListView):
             return Employee.objects.filter(status=1).filter(
                 Q(name__iregex=query) | Q(position__iregex=query))
 
+
+
 class CreateEmployee(CreateView):
     form_class = AddEmployeeForm
     template_name = 'fixorder/newemployee.html'
@@ -313,24 +315,46 @@ class DeleteEmployee(DeleteView):
     template_name = "fixorder/confirm_delete_employee.html"
     extra_context = {'title': 'Внимание!', 'header': 'Удалить работника'}
 
-class FireEmployee(DeleteView):
+class FireEmployee(UpdateView):
     model = Employee
     pk_url_kwarg = 'pk'
+    fields = []  # Мы не даём пользователю напрямую редактировать поля через форму
     success_url = reverse_lazy('employees')
     template_name = "fixorder/confirm_fire_employee.html"
     extra_context = {'title': 'Внимание!', 'header': 'Уволить работника'}
 
-    def delete(self, request, *args, **kwargs):
-        employee = self.get_object()  # Получение объекта сотрудника
+    def form_valid(self, form):
+        employee = self.get_object()
         employee.status = '3'  # Установка статуса "Не работает"
         employee.save()  # Сохранение изменений
-        return super().delete(request, *args, **kwargs)
+        return HttpResponseRedirect(self.success_url)
+
 
 
 class EditEmployee(UpdateView):
     model = Employee
     pk_url_kwarg = 'pk'
-    fields = '__all__'
+    fields = ['name', 'position', 'status']  # Добавляем поле "status"
     template_name = 'fixorder/editemployee.html'
     success_url = reverse_lazy('employees')
     extra_context = {'title': 'Работник', 'header': 'Просмотреть/редактировать работника'}
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)  # Получаем объект, но ещё не сохраняем его в базу данных
+        if obj.status == '3':  # Если статус "не работает" (или другой код)
+            return redirect('deleteemployee', pk=obj.pk)  # Перенаправляем на удаление
+        return super().form_valid(form)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        context['status'] = dict(self.model.STATUS_CHOICES).get(obj.status)
+        context['time_hire'] = obj.time_hire
+        context['time_fire'] = obj.time_fire
+        return context
+
+
+
+
+
