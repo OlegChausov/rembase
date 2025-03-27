@@ -22,9 +22,9 @@
 {% if mye.status == "1" %}
     Работает с {{ mye.time_hire }}
 {% elif mye.status == "3" %}
-    Не работает с {{ mye.time_fire }}
+    <p class="text-danger">Не работает с {{ mye.time_fire }}</p>
 {% elif mye.status == "2" %}
-    Сейчас отсутствует
+    <p class="text-warning">Сейчас отсутствует</p>
 {% else %}
     Статус сотрудника неизвестен
 {% endif %}

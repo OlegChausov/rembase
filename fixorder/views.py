@@ -342,7 +342,7 @@ class EditEmployee(UpdateView):
     def form_valid(self, form):
         obj = form.save(commit=False)  # Получаем объект, но ещё не сохраняем его в базу данных
         if obj.status == '3':  # Если статус "не работает" (или другой код)
-            return redirect('deleteemployee', pk=obj.pk)  # Перенаправляем на удаление
+            return redirect('fireemployee', pk=obj.pk)  # Перенаправляем на удаление
         return super().form_valid(form)
 
 

@@ -14,9 +14,9 @@
 {% if status == "Работает" %}
     <p>Работает с {{ time_hire }}</p>
 {% elif status == "Не работает" %}
-    <p>Работает с {{ time_fire }}.</p>
+    <p class="text-danger"> Не работает с {{ time_fire }}.</p>
 {% elif status == "Отсутствует" %}
-    <p>Сейчас отсутствует</p>
+    <p class="text-warning">Сейчас отсутствует</p>
 {% else %}
     <p>Статус неизвестен.</p>
 {% endif %}
