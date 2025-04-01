@@ -24,8 +24,7 @@ class Client(models.Model):
         verbose_name = 'Клиенты'
         verbose_name_plural = 'Клиенты'
         ordering = ['name']
-        indexes = [models.Index(fields=['name'])
-                   ]
+        indexes = [models.Index(fields=['name'])]
 
     def get_absolute_url(self):
         return reverse('editclient', kwargs={'pk': self.pk})
@@ -33,9 +32,67 @@ class Client(models.Model):
     def __str__(self):
         return f'{self.name} {self.phone} {self.phone1}'
 
+class Company(models.Model):
+    brand_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Название компании')
+    official_name = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Юридическое наименование')
+    unp = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='УНП')
+    phone = models.CharField(max_length=20, unique=True, verbose_name='Контактный номер')
+    phone1 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
+    phone2 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
+    telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram')
+    viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber')
+    whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp')
+    email = models.EmailField(max_length=50, blank=True, null=True, verbose_name='Электронная почта')
+    adress = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Адрес')
+    postal_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Почтовый адрес')
+    official_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Юридический адрес')
+    photo = models.ImageField(upload_to="static/img/", blank=True, null=True, verbose_name="Логотип компании")
+
+    def __str__(self):
+        return f'{self.brand_name}'
+
+    def save(self, *args, **kwargs):
+        try:
+            old_instance = Company.objects.get(pk=self.pk)
+            if old_instance.photo and self.photo != old_instance.photo:
+                old_instance.photo.delete(save=False)
+        except Company.DoesNotExist:
+            pass
+
+        self.photo.name = 'logo.png'
+        super(Company, self).save(*args, **kwargs)
+
+class Employee(models.Model):
+    STATUS_CHOICES = [
+        ('1', 'Работает'),
+        ('2', 'Отсутствует'),
+        ('3', 'Не работает'),]
+
+    company = models.ForeignKey(Company, related_name='employees', default = 1, on_delete=models.CASCADE, verbose_name='Компания')
+    name = models.CharField(max_length=255, verbose_name='Имя сотрудника')
+    position = models.CharField(max_length=100, verbose_name='Должность')
+    time_hire = models.DateField(default=date.today, verbose_name='Дата начала работы')
+    time_fire = models.DateField(null=True, blank=True, verbose_name='Дата окончания работы')
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='1',
+        verbose_name='Статус')
+
+    def __str__(self):
+        return f'{self.name} ({self.position})'
+
+    def save(self, *args, **kwargs):
+        if self.status == '3':  # Если статус "Не работает"
+            self.time_fire = timezone.now()  # Устанавливаем текущую дату
+        else:
+            self.time_fire = None  # Сбрасываем дату, если статус изменился на другой
+        super().save(*args, **kwargs)  # Вызываем родительский метод save()
+
 
 class Order(models.Model):
     order_client = models.ForeignKey(Client, related_name='client', null=True, on_delete=models.SET_NULL, verbose_name='Клиент')
+    executor = models.ForeignKey(Employee, blank=True, related_name='executor', null=True, on_delete=models.SET_NULL, verbose_name='Исполнитель')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата прихода')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     time_demand = models.DateField(blank=True, null=True, verbose_name='Срок ремонта')
@@ -123,67 +180,9 @@ class Order(models.Model):
     def get_delete_url(self):
         return reverse('delete', kwargs={'pk': self.pk})
 
-class Company(models.Model):
-    brand_name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Название компании')
-    official_name = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Юридическое наименование')
-    unp = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='УНП')
-    phone = models.CharField(max_length=20, unique=True, verbose_name='Контактный номер')
-    phone1 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
-    phone2 = models.CharField(max_length=20, blank=True, null=True, unique=True, verbose_name='Контактный номер')
-    telegram = models.CharField(max_length=40, blank=True, null=True, verbose_name='Telegram')
-    viber = models.CharField(max_length=20, blank=True, null=True, verbose_name='Viber')
-    whatsapp = models.CharField(max_length=20, blank=True, null=True, verbose_name='Whattsapp')
-    email = models.EmailField(max_length=50, blank=True, null=True, verbose_name='Электронная почта')
-    adress = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Адрес')
-    postal_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Почтовый адрес')
-    official_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Юридический адрес')
-    photo = models.ImageField(upload_to="static/img/", blank=True, null=True, verbose_name="Логотип компании")
 
-    def __str__(self):
-        return f'{self.brand_name}'
 
-    def save(self, *args, **kwargs):
-        try:
-            old_instance = Company.objects.get(pk=self.pk)
-            if old_instance.photo and self.photo != old_instance.photo:
-                old_instance.photo.delete(save=False)
-        except Company.DoesNotExist:
-            pass
 
-        self.photo.name = 'logo.png'
-        super(Company, self).save(*args, **kwargs)
-
-class Employee(models.Model):
-    STATUS_CHOICES = [
-        ('1', 'Работает'),
-        ('2', 'Отсутствует'),
-        ('3', 'Не работает'),]
-
-    company = models.ForeignKey(
-        Company,
-        related_name='employees',
-        default = 1,
-        on_delete=models.CASCADE,
-        verbose_name='Компания')
-    name = models.CharField(max_length=255, verbose_name='Имя сотрудника')
-    position = models.CharField(max_length=100, verbose_name='Должность')
-    time_hire = models.DateField(default=date.today, verbose_name='Дата начала работы')
-    time_fire = models.DateField(null=True, blank=True, verbose_name='Дата окончания работы')
-    status = models.CharField(
-        max_length=10,
-        choices=STATUS_CHOICES,
-        default='1',
-        verbose_name='Статус')
-
-    def __str__(self):
-        return f'{self.name} ({self.position})'
-
-    def save(self, *args, **kwargs):
-        if self.status == '3':  # Если статус "Не работает"
-            self.time_fire = timezone.now()  # Устанавливаем текущую дату
-        else:
-            self.time_fire = None  # Сбрасываем дату, если статус изменился на другой
-        super().save(*args, **kwargs)  # Вызываем родительский метод save()
 
 
 

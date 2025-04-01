@@ -58,7 +58,7 @@ class AddOrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp', 'device', 'time_demand', 'defect', 'device_password',
+        fields = ['client', 'executor', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp', 'device', 'time_demand', 'defect', 'device_password',
                   'device_exterior', 'initial_price', 'prepaid', 'notes']
 #так как связано с моделью, в fields указываем поля модели и наши виртуально созданные при ините поля 'client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp',
         widgets = {
@@ -77,6 +77,7 @@ class AddOrderForm(forms.ModelForm):
 #заполняем наши на лету созданное поле client данными за БД Client.objects...
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['executor'].choices = [('', 'Не выбран')] + [(employee.id, str(employee)) for employee in Employee.objects.filter(status='1')]
         self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]
 
 class AddEmployeeForm(forms.ModelForm):

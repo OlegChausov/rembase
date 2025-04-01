@@ -33,4 +33,5 @@
 <h>Выполненных работ нет</h>
 {% endif %}
 {% if wr.conclusion %}<p>Заключение о ремонте: {{ wr.conclusion }}</p>{% endif %}
+<p>Исполнитель {{ wr.executor.name }}_________________  Заказчик {{ wr.order_client.name }}_________________</p>
 {% endblock doccontent %}

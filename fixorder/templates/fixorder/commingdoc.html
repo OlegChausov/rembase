@@ -21,5 +21,5 @@
     {% if cm.notes %}<tr><td>Заметки</td><td>{{ cm.notes }}</td></tr>{% endif %}
     <tr><td>Дата и время приемки</td><td>{{ cm.time_create }}</td></tr>
 </table>
-
+<p>Исполнитель {{ cm.executor.name }}_________________  Заказчик {{ cm.order_client.name }}_________________</p>
 {% endblock doccontent %}
