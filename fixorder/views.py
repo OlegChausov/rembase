@@ -352,6 +352,7 @@ class EditEmployee(UpdateView):
         context['status'] = dict(self.model.STATUS_CHOICES).get(obj.status)
         context['time_hire'] = obj.time_hire
         context['time_fire'] = obj.time_fire
+        context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
 
 
