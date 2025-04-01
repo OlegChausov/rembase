@@ -78,7 +78,7 @@ class AddOrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['executor'].choices = [('', 'Не выбран')] + [(employee.id, str(employee)) for employee in Employee.objects.filter(status='1')]
-        self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") for client in Client.objects.all()]
+        self.fields['client'].choices = [(client.id, f"{client.name} ({client.phone})") if client.phone else (client.id, f"{client.name}") for client in Client.objects.all()]
 
 class AddEmployeeForm(forms.ModelForm):
     class Meta:
