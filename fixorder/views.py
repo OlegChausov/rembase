@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.conf.urls import handler404
 from django.db.models import Q, Sum, ProtectedError
+from django.forms import inlineformset_factory
 from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -9,8 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 import json
 
-from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm
-from fixorder.models import Order, OrderStatus, Company, Client, Employee
+from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
+from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work
+
+WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
 
 
 def get_client_data(request, client_id):
@@ -77,12 +80,25 @@ class Show_and_edit_order(UpdateView):
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
 
-    # def get_success_url(self):
-    #     return reverse_lazy('order', args=[self.object.pk])
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["work_formset"] = WorkFormSet(self.request.POST, instance=self.object)
+        else:
+            context["work_formset"] = WorkFormSet(instance=self.object)
+        return context
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
+        self.object = form.save(commit=False)  # Сохраняем Order, но ещё не пишем в БД
+        self.object.save()  # Теперь сохраняем Order
+        context = self.get_context_data()
+        work_formset = context["work_formset"]
+        if work_formset.is_valid():
+            work_formset.instance = self.object
+            work_formset.save()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))  # Если ошибки, перерисуем форму
+
         return super().form_valid(form)
 
 class Show_clientlist(ListView):

@@ -2,13 +2,18 @@ from dal import autocomplete
 from django import forms
 from django.utils import timezone
 
-from .models import Order, Client, Employee
+from .models import Order, Client, Employee, Work
 
 
 class AddClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ['name','phone','phone1',]
+
+class WorkForm(forms.ModelForm):
+    class Meta:
+        model = Work
+        fields = ["description", "price", "warranty"]
 
 
 class AddOrderForm(forms.ModelForm):
