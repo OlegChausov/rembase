@@ -14,6 +14,9 @@ class WorkForm(forms.ModelForm):
     class Meta:
         model = Work
         fields = ["description", "price", "warranty"]
+        wi
+
+
 
 
 class AddOrderForm(forms.ModelForm):

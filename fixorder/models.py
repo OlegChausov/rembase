@@ -251,6 +251,18 @@ class Work(models.Model):
     def __str__(self):
         return f"{self.description} - {self.price} Руб"
 
+class TypicalWork(models.Model):
+    description = models.CharField(max_length=255, verbose_name='Ваши работы')
+
+    class Meta:
+        ordering = ['description']
+
+    def __str__(self):
+        return f"{self.description}
+
+
+
+
 
 
 
