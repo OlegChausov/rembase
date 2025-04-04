@@ -2,7 +2,7 @@ from dal import autocomplete
 from django import forms
 from django.utils import timezone
 
-from .models import Order, Client, Employee, Work
+from .models import Order, Client, Employee, Work, TypicalWork
 
 
 class AddClientForm(forms.ModelForm):
@@ -11,10 +11,26 @@ class AddClientForm(forms.ModelForm):
         fields = ['name','phone','phone1',]
 
 class WorkForm(forms.ModelForm):
+    description = forms.ChoiceField(
+        widget=forms.Select(attrs={"class": "form-control"}), label="")
+
+    price = forms.DecimalField(
+        min_value=0,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}), label="")
+
+    warranty = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="")
+
     class Meta:
         model = Work
         fields = ["description", "price", "warranty"]
-        wi
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["description"].choices = [('', 'Выбор услуги')] + [
+            (typical_work.description, typical_work.description) for typical_work in TypicalWork.objects.all()
+        ]
+
 
 
 
