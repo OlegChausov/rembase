@@ -12,7 +12,7 @@ class AddClientForm(forms.ModelForm):
 
 class WorkForm(forms.ModelForm):
     description = forms.ChoiceField(
-        widget=forms.Select(attrs={"class": "form-control"}), label="")
+        widget=forms.Select(attrs={"class": "form-control work-select"}), label="")
 
     price = forms.DecimalField(
         min_value=0,

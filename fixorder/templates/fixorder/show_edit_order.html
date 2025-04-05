@@ -3,6 +3,7 @@
     {% load static %}
 <script src="{% static 'js/add_new_work.js' %}"></script>
 
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -28,6 +29,22 @@
 <p><a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
 <a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-success">Посмотреть/распечатать приемный лист</a>
 <a href="{% url 'delete' pk=form.instance.pk %}" class="btn btn-outline-danger">Удалить заказ</a></p>
+
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
+
+<link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+
+<script>
+$(document).ready(function() {
+    $('.work-select').select2({
+        placeholder: "Введите название работы...",
+        allowClear: true
+    });
+});
+
+</script>
+
 {% endblock %}
 
 
