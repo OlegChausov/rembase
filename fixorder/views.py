@@ -160,7 +160,7 @@ class AddOrder(CreateView):
 #возможно JS создал клиента через модальное окно (path('api/clients/create/', create_client, name='create_client'))
 #то при сохранении основной формы поля будут взяты ОТСЮДА
     def form_valid(self, form):
-        client_id = form.cleaned_data.get('client')[0]
+        client_id = form.cleaned_data.get('client')
         client_name = form.cleaned_data.get('name')
         client_phone = form.cleaned_data.get('phone')
         client_phone1 = form.cleaned_data.get('phone1')
