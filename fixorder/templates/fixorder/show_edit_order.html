@@ -12,9 +12,16 @@
     {{ work_formset.management_form }}
 
     <div id="work-forms">
-        {% for form in work_formset %}
-            <div class="work-form">{{ form.as_p }}</div>
-        {% endfor %}
+{% for form in work_formset %}
+    {{ form.as_p }}
+    {% if form.errors %}
+        <ul>
+            {% for error in form.errors.values %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}
     </div>
 
     <button type="button" id="add-work">Добавить работу</button>

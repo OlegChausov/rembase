@@ -13,7 +13,7 @@ import json
 from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
 from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work
 
-WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
+
 
 
 def get_client_data(request, client_id):
@@ -73,6 +73,7 @@ def create_client(request):
 #     template_name = 'fixorder/show_edit_order.html'
 
 
+WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
 class Show_and_edit_order(UpdateView):
     model = Order
     fields = '__all__'
@@ -89,17 +90,23 @@ class Show_and_edit_order(UpdateView):
         return context
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)  # Сохраняем Order, но ещё не пишем в БД
-        self.object.save()  # Теперь сохраняем Order
+        self.object = form.save(commit=False)
+        self.object.save()
+
         context = self.get_context_data()
         work_formset = context["work_formset"]
+
         if work_formset.is_valid():
             work_formset.instance = self.object
             work_formset.save()
         else:
-            return self.render_to_response(self.get_context_data(form=form))  # Если ошибки, перерисуем форму
+            return self.render_to_response(self.get_context_data(form=form))
+
+        return super().form_valid(form) # Покажем ошибки, если они есть
 
         return super().form_valid(form)
+
+
 
 class Show_clientlist(ListView):
     model = Client

@@ -16,10 +16,23 @@ class WorkForm(forms.ModelForm):
 
     price = forms.DecimalField(
         min_value=0,
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}), label="")
+        required=False,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}),
+        label="")
+
+    def clean_price(self):
+        price = self.cleaned_data.get("price")
+        return price if price is not None else 0  # Если пустое, заменяем на 0
 
     warranty = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="")
+        required=False,
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}),
+        label=""
+    )
+
+    def clean_warranty(self):
+        warranty = self.cleaned_data.get("warranty")
+        return None if not warranty.strip() else warranty # Если пустое, заменяем на ""
 
     class Meta:
         model = Work
