@@ -19,6 +19,7 @@ urlpatterns = [
                 path('editemployee/<int:pk>/', views.EditEmployee.as_view(), name='editemployee'),
                 path('deleteemployee/<int:pk>/', views.DeleteEmployee.as_view(), name='deleteemployee'),
                 path('fireemployee/<int:pk>/', views.FireEmployee.as_view(), name='fireemployee'),
+                path("add_service/", views.add_service, name="add_service"),
                 path('api/clients/<int:client_id>/', get_client_data, name='get_client_data'),
                 path('api/clients/create/', create_client, name='create_client'),
 

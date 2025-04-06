@@ -2,58 +2,75 @@
 {% block content %}
     {% load static %}
 <script src="{% static 'js/add_new_work.js' %}"></script>
+    <script src="{% static 'js/add_service.js' %}"></script>
 
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+        <h3>Выполненные работы</h3>
+        {{ work_formset.management_form }}
 
-    <h3>Выполненные работы</h3>
-    {{ work_formset.management_form }}
-
-    <div id="work-forms">
-        <div class="work-form">
-{% for form in work_formset %}
-    {{ form.as_p }}
-    {% if form.errors %}
-        <ul>
-            {% for error in form.errors.values %}
-                <li>{{ error }}</li>
+        <div id="work-forms">
+            {% for form in work_formset %}
+                <div class="work-form">
+                    {{ form.as_p }}
+                    {% if form.errors %}
+                        <ul>
+                            {% for error in form.errors.values %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
             {% endfor %}
-        </ul>
-    {% endif %}
-{% endfor %}
+        </div>
+
+        <button type="button" id="add-work">Добавить работу</button>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <!-- Скрытая пустая форма -->
+    <div id="empty-form" style="display: none;">
+        {{ work_formset.empty_form.as_p }}
     </div>
+
+    <!-- Модальное окно добавления услуги -->
+    <div id="add-service-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить новую услугу</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="new-service-name" class="form-control" placeholder="Название услуги">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save-service-btn" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <button type="button" id="add-work">Добавить работу</button>
-    <button type="submit">Сохранить</button>
-</form>
-
-<!-- Скрытая пустая форма -->
-<div id="empty-form" style="display: none;">
-    {{ work_formset.empty_form.as_p }}
-</div>
-
-<p><a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
-<a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-success">Посмотреть/распечатать приемный лист</a>
-<a href="{% url 'delete' pk=form.instance.pk %}" class="btn btn-outline-danger">Удалить заказ</a></p>
 
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/select2.min.js' %}"></script>
 
-<link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
 
-<script>
-$(document).ready(function() {
-    $('.work-select').select2({
-        placeholder: "Введите название работы...",
-        allowClear: true
-    });
-});
+    <script>
+        $(document).ready(function() {
+            $('.work-select').select2({
+                placeholder: "Введите название работы...",
+                allowClear: true
+            });
 
-</script>
-
+            // Открываем модальное окно, если выбрана "Новая услуга"
+            $('.work-select').on("change", function () {
+                if ($(this).val() === "new") {
+                    $('#add-service-modal').modal('show');
+                }
+            });
+        });
+    </script>
 {% endblock %}
-
-

@@ -40,7 +40,7 @@ class WorkForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["description"].choices = [('', 'Выбор услуги')] + [
+        self.fields["description"].choices = [('', 'Выбор услуги'), ('new', 'Новая услуга')] + [
             (typical_work.description, typical_work.description) for typical_work in TypicalWork.objects.all()
         ]
 

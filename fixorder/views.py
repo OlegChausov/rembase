@@ -11,9 +11,7 @@ from django.views.generic import UpdateView, ListView, CreateView, TemplateView,
 import json
 
 from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
-from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work
-
-
+from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work, TypicalWork
 
 
 def get_client_data(request, client_id):
@@ -369,6 +367,12 @@ class EditEmployee(UpdateView):
         context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
 
+def add_service(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        new_service = TypicalWork.objects.create(description=data["description"])
+        return JsonResponse({"success": True, "id": new_service.id})
+    return JsonResponse({"success": False}, status=400)
 
 
 
