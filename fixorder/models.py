@@ -112,18 +112,14 @@ class Order(models.Model):
     conclusion = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заключение мастера')
     remain_to_pay = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0, verbose_name='Осталось оплатить')
 
-    # def save_time(self):
-    #     old_order = Order.objects.get(pk=self.pk)
-    #     if old_order and old_order.status.status != self.status.status:
-    #         self.time_away = timezone.now().date() if self.status.status in ["Выдан", "Выдан без ремонта"] else None
 
     def calculate_prices(self):
         """ ДЛЯ АПДЕЙТ ВТЮ Подсчёт стоимости всех работ через `aggregate` для оптимизации запросов. """
         self.total_price = self.works.aggregate(total_price=Sum("price"))["total_price"] or 0
+        print(self.works.all())
         self.remain_to_pay = self.total_price - (self.prepaid or 0)
 
     def save(self, *args, **kwargs):
-        old_order = None
         old_order = Order.objects.filter(pk=self.pk).last()
         if old_order and old_order.status.status != self.status.status:
             if self.status.status in ["Выдан", "Выдан без ремонта"]:
@@ -131,6 +127,9 @@ class Order(models.Model):
             else:
                 self.time_away = None
         super().save(*args, **kwargs)
+        # Вызываем метод для подсчёта стоимости после сохранения объекта
+        self.calculate_prices()
+        super().save(update_fields=["total_price", "remain_to_pay"])  # Сохраняем обновлённые значения
 
     def __str__(self):
         return f"{self.order_client.name} — {self.device}"
