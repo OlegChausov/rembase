@@ -17,20 +17,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         function updateFieldState() {
-            const isDisabled = descriptionField.value === "" || descriptionField.value === "Выбор услуги";
+            const isDisabled = !descriptionField.value || descriptionField.value === "Выбор услуги";
             priceField.disabled = isDisabled;
             warrantyField.disabled = isDisabled;
         }
 
-        // Применяем состояние сразу после загрузки
-        updateFieldState();
-
-        // Добавляем обработчик событий для будущих изменений
+        updateFieldState(); // Применяем блокировку при загрузке страницы
         descriptionField.addEventListener("change", updateFieldState);
+
+        // Если Select2 используется, добавляем обработчик для выбора элемента
+        $(descriptionField).on("select2:select", updateFieldState);
     }
 
-    // Применяем ко всем существующим формам
-    document.querySelectorAll(".work-form").forEach(toggleFields);
+    // Обрабатываем первую форму после загрузки
+    setTimeout(() => {
+        document.querySelectorAll(".work-form").forEach(toggleFields);
+    }, 50);
 
     addWorkButton.addEventListener("click", function () {
         let newFormHtml = emptyFormTemplate.replace(/__prefix__/g, formCount);
@@ -42,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         formCount++;
         totalFormsInput.value = formCount;
 
-        // Убеждаемся, что `toggleFields()` применяется после рендеринга формы
         setTimeout(() => toggleFields(newForm), 50);
     });
 });

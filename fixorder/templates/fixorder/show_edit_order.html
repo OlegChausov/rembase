@@ -12,6 +12,7 @@
     {{ work_formset.management_form }}
 
     <div id="work-forms">
+        <div class="work-form">
 {% for form in work_formset %}
     {{ form.as_p }}
     {% if form.errors %}
@@ -22,6 +23,7 @@
         </ul>
     {% endif %}
 {% endfor %}
+    </div>
     </div>
 
     <button type="button" id="add-work">Добавить работу</button>
