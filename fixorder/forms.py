@@ -100,9 +100,9 @@ class AddOrderForm(forms.ModelForm):
 #так как связано с моделью, в fields указываем поля модели и наши виртуально созданные при ините поля 'client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp',
         widgets = {
             'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
-            'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
-            'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
-            'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+            'defect': forms.Textarea(attrs={'cols': 30, 'rows': 2}),
+            'device_exterior': forms.Textarea(attrs={'cols': 20, 'rows': 1}),
+            'notes': forms.Textarea(attrs={'cols': 30, 'rows': 2}),
             'time_demand': forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={
