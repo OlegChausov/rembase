@@ -24,14 +24,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         updateFieldState(); // Применяем блокировку при загрузке страницы
         descriptionField.addEventListener("change", updateFieldState);
-
-        // Если Select2 используется, добавляем обработчик для выбора элемента
         $(descriptionField).on("select2:select", updateFieldState);
     }
 
-    // Обрабатываем первую форму после загрузки
     setTimeout(() => {
         document.querySelectorAll(".work-form").forEach(toggleFields);
+        $(".work-select").select2({
+            placeholder: "Введите название работы...",
+            allowClear: true
+        }).on("change", function () {
+            if ($(this).val() === "new") {
+                $('#add-service-modal').modal('show');
+            }
+        });
     }, 50);
 
     addWorkButton.addEventListener("click", function () {
@@ -44,6 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
         formCount++;
         totalFormsInput.value = formCount;
 
-        setTimeout(() => toggleFields(newForm), 50);
+        setTimeout(() => {
+            toggleFields(newForm);
+            $(newForm).find('.work-select').select2({
+                placeholder: "Введите название работы...",
+                allowClear: true
+            }).on("change", function () {
+                if ($(this).val() === "new") {
+                    $('#add-service-modal').modal('show');
+                }
+            });
+        }, 50);
     });
 });
