@@ -7,6 +7,7 @@ from django.http import request, JsonResponse, HttpResponse, HttpResponseNotFoun
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 import json
 
@@ -62,36 +63,39 @@ def create_client(request):
 
 
 
-WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
+WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=0)
 class Show_and_edit_order(UpdateView):
     model = Order
     fields = '__all__'
     template_name = 'fixorder/show_edit_order.html'
     success_url = reverse_lazy('orderlist')
-    extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        typical_works = TypicalWork.objects.all()  # Загружаем один раз
+        context["typical_works"] = typical_works  # Передаём в контекст
         if self.request.POST:
-            context["work_formset"] = WorkFormSet(self.request.POST, instance=self.object)
+            context["work_formset"] = WorkFormSet(self.request.POST, instance=self.object,
+                                                  form_kwargs={"typical_works": typical_works})
         else:
-            context["work_formset"] = WorkFormSet(instance=self.object)
+            context["work_formset"] = WorkFormSet(instance=self.object, form_kwargs={"typical_works": typical_works})
         return context
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
+        # Сохраняем основной объект
+        self.object = form.save()
 
-        context = self.get_context_data()
-        work_formset = context["work_formset"]
+        # Получаем данные формсета
+        work_formset = WorkFormSet(self.request.POST, instance=self.object)
 
         if work_formset.is_valid():
-            work_formset.instance = self.object
-            work_formset.save()
+            work_formset.save()  # Сохраняем изменения, включая удаление
+            print("🔸 Формсет успешно сохранён.")
         else:
+            print("❌ Ошибки в формсете:", work_formset.errors)
             return self.render_to_response(self.get_context_data(form=form))
 
-        return super().form_valid(form) # Покажем ошибки, если они есть
+        return super().form_valid(form)
 
         return super().form_valid(form)
 
@@ -367,13 +371,80 @@ class EditEmployee(UpdateView):
         context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
 
-def add_service(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        new_service = TypicalWork.objects.create(description=data["description"])
-        return JsonResponse({"success": True, "id": new_service.id})
-    return JsonResponse({"success": False}, status=400)
+from django.http import JsonResponse
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from decimal import Decimal
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
+@require_http_methods(["POST"])  # Только POST-запросы
+def add_work(request, order_id):
+    """
+    Функция для добавления работы к заказу
+    """
+    # Получаем объект заказа
+    order = get_object_or_404(Order, pk=order_id)
+
+    # Получаем данные из POST-запроса
+    description = request.POST.get("description", "").strip()
+    price = request.POST.get("price", "").strip()
+    warranty = request.POST.get("warranty", "").strip()
+
+    # Логирование полученных данных
+    print("✅ Полученные данные:", {"description": description, "price": price, "warranty": warranty})
+
+    # Проверка обязательных полей
+    if not description:
+        return JsonResponse({"error": "Описание услуги обязательно."}, status=400)
+    if not price:
+        return JsonResponse({"error": "Цена обязательна."}, status=400)
+
+    try:
+        # Преобразование цены в Decimal
+        price = Decimal(price)
+        if price < 0:
+            return JsonResponse({"error": "Цена должна быть положительной."}, status=400)
+    except:
+        return JsonResponse({"error": "Цена должна быть числом."}, status=400)
+
+    # Создание новой работы
+    work = Work.objects.create(
+        order=order,
+        description=description,
+        price=price,
+        warranty=warranty
+    )
+
+    # Логирование успешного создания объекта
+    print("✅ Работа создана:", work)
+
+    # Возвращаем успешный ответ
+    return JsonResponse({
+        "message": "Работа успешно добавлена.",
+        "work_id": work.id,
+        "description": work.description,
+        "price": float(work.price),  # Преобразование для JSON
+        "warranty": work.warranty
+    })
+
+
+@csrf_exempt
+def delete_work_view(request, work_id):
+    """
+    Обработка запроса на удаление объекта Work с заданным ID.
+    """
+    if request.method == "POST":
+        try:
+            # Получаем объект Work с указанным work_id
+            work = get_object_or_404(Work, pk=work_id)
+            work.delete()  # Удаляем объект из базы данных
+            return JsonResponse({"message": f"Объект с ID {work_id} успешно удалён."}, status=200)
+        except Work.DoesNotExist:
+            return JsonResponse({"error": "Объект не найден."}, status=404)
+    else:
+        # Если метод запроса не POST
+        return JsonResponse({"error": "Неверный метод запроса."}, status=405)
 
 
 

@@ -1,11 +1,8 @@
-{% extends 'fixorder/base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-    {% load static %}
-<script src="{% static 'js/add_new_work.js' %}"></script>
-    <script src="{% static 'js/add_service.js' %}"></script>
-
     <form method="post">
         {% csrf_token %}
+        <h3>Информация о заказе</h3>
         {{ form.as_p }}
 
         <h3>Выполненные работы</h3>
@@ -13,64 +10,37 @@
 
         <div id="work-forms">
             {% for form in work_formset %}
-                <div class="work-form">
-                    {{ form.as_p }}
-                    {% if form.errors %}
-                        <ul>
-                            {% for error in form.errors.values %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+                <div class="work-form" {% if form.instance.id %}data-work-id="{{ form.instance.id }}"{% endif %}>
+                    <select name="{{ form.prefix }}-description" class="form-control work-select">
+                        <option value="" {% if not form.description.value %}selected{% endif %}>Выберите услугу</option>
+                        {% for typical_work in typical_works %}
+                            <option value="{{ typical_work.description }}" {% if form.description.value == typical_work.description %}selected{% endif %}>
+                                {{ typical_work.description }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="{{ form.prefix }}-price" value="{{ form.price.value|default:0 }}" class="form-control" placeholder="Введите цену">
+                    <input type="text" name="{{ form.prefix }}-warranty" value="{{ form.warranty.value|default:'' }}" class="form-control" placeholder="Гарантия">
+                    <button type="button" class="btn btn-danger delete-work mt-2">Удалить работу</button>
                 </div>
             {% endfor %}
         </div>
 
-        <button type="button" id="add-work">Добавить работу</button>
-        <button type="submit">Сохранить</button>
-    </form>
-
-    <!-- Скрытая пустая форма -->
-    <div id="empty-form" style="display: none;">
-        {{ work_formset.empty_form.as_p }}
-    </div>
-
-    <!-- Модальное окно добавления услуги -->
-    <div id="add-service-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Добавить новую услугу</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" id="new-service-name" class="form-control" placeholder="Название услуги">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="save-service-btn" class="btn btn-primary">Сохранить</button>
-                </div>
+        <div id="empty-form" style="display:none;">
+            <div class="work-form">
+                <select name="description" class="form-control work-select">
+                    <option value="">Выберите услугу</option>
+                    {% for typical_work in typical_works %}
+                        <option value="{{ typical_work.description }}">{{ typical_work.description }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="price" value="0" class="form-control" placeholder="Введите цену">
+                <input type="text" name="warranty" value="" class="form-control" placeholder="Гарантия">
+                <button type="button" class="btn btn-danger delete-work mt-2">Удалить работу</button>
             </div>
         </div>
-    </div>
 
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/select2.min.js' %}"></script>
-
-    <link href="{% static 'css/select2.min.css' %}" rel="stylesheet" />
-
-    <script>
-        $(document).ready(function() {
-            $('.work-select').select2({
-                placeholder: "Введите название работы...",
-                allowClear: true
-            });
-
-            // Открываем модальное окно, если выбрана "Новая услуга"
-            $('.work-select').on("change", function () {
-                if ($(this).val() === "new") {
-                    $('#add-service-modal').modal('show');
-                }
-            });
-        });
-    </script>
+        <button id="add-work" type="button" class="btn btn-primary mt-3">Добавить работу</button>
+        <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+    </form>
 {% endblock %}
