@@ -15,13 +15,16 @@ class WorkForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-control work-select"}), label=""
     )
 
+
     price = forms.DecimalField(
         min_value=0,
         required=False,
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}),
+        widget=forms.NumberInput(attrs={
+            "class": "form-control",
+            "placeholder": "Введите цену"
+        }),
         label=""
     )
-
     warranty = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}),
@@ -33,11 +36,12 @@ class WorkForm(forms.ModelForm):
         fields = ["description", "price", "warranty"]
 
     def __init__(self, *args, **kwargs):
-        typical_works = kwargs.pop("typical_works", TypicalWork.objects.none())  # ✅ Получаем переданные данные, но не загружаем снова
+        typical_works = TypicalWork.objects.all() # ✅ Получаем переданные данные, но не загружаем снова
         super().__init__(*args, **kwargs)
         self.fields["description"].choices = [('', 'Выбор услуги'), ('new', 'Новая услуга')] + [
             (tw.description, tw.description) for tw in typical_works
         ]
+
 
 
 
@@ -95,9 +99,9 @@ class AddOrderForm(forms.ModelForm):
 #так как связано с моделью, в fields указываем поля модели и наши виртуально созданные при ините поля 'client', 'name', 'phone', 'phone1', 'telegram', 'viber', 'whatsapp',
         widgets = {
             'order_client': forms.Select(attrs={'class': 'js-example-basic-single'}),
-            'defect': forms.Textarea(attrs={'cols': 30, 'rows': 2}),
-            'device_exterior': forms.Textarea(attrs={'cols': 20, 'rows': 1}),
-            'notes': forms.Textarea(attrs={'cols': 30, 'rows': 2}),
+            'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
+            'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1}),
+            'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2}),
             'time_demand': forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={

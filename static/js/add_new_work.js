@@ -1,56 +1,78 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("JavaScript подключён!");
+
     const addWorkButton = document.getElementById("add-work");
-    const emptyFormTemplate = document.getElementById("empty-form").innerHTML;
     const workFormsContainer = document.getElementById("work-forms");
+    const emptyFormTemplate = document.getElementById("empty-form").innerHTML;
     const totalFormsInput = document.getElementById("id_works-TOTAL_FORMS");
 
-    let formCount = parseInt(totalFormsInput.value, 10);
+    if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput) {
+        console.error("Ошибка: Один из необходимых элементов не найден.");
+        return;
+    }
 
-    // Добавление новой формы
-    addWorkButton.addEventListener("click", function () {
-        const newFormDiv = document.createElement("div");
-        newFormDiv.classList.add("work-form");
-        newFormDiv.innerHTML = emptyFormTemplate;
+    addWorkButton.addEventListener("click", () => {
+        console.log("Кнопка 'Добавить работу' нажата!");
 
-        const descriptionField = newFormDiv.querySelector('select[name="description"]');
-        const priceField = newFormDiv.querySelector('input[name="price"]');
-        const warrantyField = newFormDiv.querySelector('input[name="warranty"]');
+        const currentIndex = totalFormsInput.value;
 
-        descriptionField.name = `works-${formCount}-description`;
-        priceField.name = `works-${formCount}-price`;
-        warrantyField.name = `works-${formCount}-warranty`;
+        // Заменяем префикс в шаблоне на текущий индекс
+        const newWorkFormHTML = emptyFormTemplate.replace(/__prefix__/g, currentIndex);
+        const newWorkForm = document.createElement("div");
+        newWorkForm.classList.add("work-form");
+        newWorkForm.innerHTML = newWorkFormHTML;
 
-        workFormsContainer.appendChild(newFormDiv);
-        formCount++;
-        totalFormsInput.value = formCount;
+        workFormsContainer.appendChild(newWorkForm);
+        console.log("Добавлена новая форма:", newWorkForm);
+
+        // Увеличиваем значение TOTAL_FORMS
+        totalFormsInput.value = parseInt(totalFormsInput.value, 10) + 1;
+        console.log("Новый TOTAL_FORMS:", totalFormsInput.value);
+
+        // Инициализируем обработчик для новой формы
+        initWorkForm(newWorkForm);
     });
 
-    // Удаление формы
-    document.body.addEventListener("click", function (event) {
-        if (event.target.classList.contains("delete-work")) {
-            const workDiv = event.target.closest(".work-form");
-            const workId = workDiv.dataset.workId;
+    // Инициализация формы: активация полей при изменении выбора
+    function initWorkForm(formElement) {
+        console.log("Инициализация формы:", formElement.innerHTML);
 
-            if (workId) {
-                fetch(`/delete-work/${workId}/`, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
-                    },
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            workDiv.remove();
-                            formCount--;
-                            totalFormsInput.value = formCount;
-                        }
-                    })
-                    .catch((error) => console.error("Ошибка при удалении:", error));
-            } else {
-                workDiv.remove();
-                formCount--;
-                totalFormsInput.value = formCount;
-            }
+        const descriptionField = formElement.querySelector("select[name*='description']");
+        const priceField = formElement.querySelector("input[name*='price']");
+        const warrantyField = formElement.querySelector("input[name*='warranty']");
+
+        if (!descriptionField) {
+            console.error("Поле 'description' не найдено в форме:", formElement);
         }
+        if (!priceField) {
+            console.error("Поле 'price' не найдено в форме:", formElement);
+        }
+        if (!warrantyField) {
+            console.error("Поле 'warranty' не найдено в форме:", formElement);
+        }
+
+        if (descriptionField && priceField && warrantyField) {
+            descriptionField.addEventListener("change", () => {
+                const selectedValue = descriptionField.value;
+                const isDisabled = selectedValue === "";
+                priceField.disabled = isDisabled;
+                warrantyField.disabled = isDisabled;
+                console.log(`Выбрано описание: ${selectedValue}. Цена disabled: ${priceField.disabled}, Гарантия disabled: ${warrantyField.disabled}`);
+            });
+        }
+    }
+
+    // Инициализация всех уже существующих форм на странице
+    const existingForms = workFormsContainer.querySelectorAll(".work-form");
+    existingForms.forEach(initWorkForm);
+
+    // Перед отправкой формы убираем disabled для всех input
+    const orderForm = document.getElementById("order-form");
+    orderForm.addEventListener("submit", function () {
+        const disabledInputs = orderForm.querySelectorAll("input[disabled]");
+        disabledInputs.forEach(function (input) {
+            input.disabled = false;
+        });
+        console.log("Перед отправкой формы удалены все disabled-атрибуты.");
     });
 });
