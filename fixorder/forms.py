@@ -12,19 +12,15 @@ class AddClientForm(forms.ModelForm):
 
 class WorkForm(forms.ModelForm):
     description = forms.ChoiceField(
-        widget=forms.Select(attrs={"class": "form-control work-select"}), label=""
-    )
-
-
-    price = forms.DecimalField(
-        min_value=0,
-        required=False,
-        widget=forms.NumberInput(attrs={
-            "class": "form-control",
-            "placeholder": "Введите цену"
-        }),
+        widget=forms.Select(attrs={"class": "form-control work-select"}),
         label=""
     )
+    price = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}),
+        label="")
+
+
     warranty = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}),

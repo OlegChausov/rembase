@@ -83,13 +83,21 @@ class Show_and_edit_order(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        print("Объект заказа сохранён:", self.object)
+
+        # Инициализация формсета
         work_formset = WorkFormSet(self.request.POST, instance=self.object)
+        print("POST данные:", self.request.POST)
+
         if work_formset.is_valid():
+            print("Formset валиден. Сохраняем работы...")
             work_formset.save()
+            for work_form in work_formset.forms:
+                print("Сохранённая работа:", work_form.cleaned_data)
         else:
-            # Выводим ошибки и пропускаем пустые формы
             print("Ошибки formset:", work_formset.errors)
             print("Non-form errors:", work_formset.non_form_errors())
+
         return super().form_valid(form)
 
 

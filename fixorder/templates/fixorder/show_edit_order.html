@@ -14,6 +14,9 @@
         <div id="work-forms">
             {% for form in work_formset %}
                 <div class="work-form">
+                    <!-- Скрытое поле для ID -->
+                    <input type="hidden" name="{{ form.id.html_name }}" value="{{ form.instance.pk }}">
+
                     <select name="{{ form.description.html_name }}" id="{{ form.description.id }}" class="form-control work-select">
                         <option value="">Выбор услуги</option>
                         {% for typical_work in typical_works %}
@@ -25,11 +28,10 @@
                     </select>
 
                     <input type="number" name="{{ form.price.html_name }}" id="{{ form.price.id }}" class="form-control" placeholder="Введите цену"
-                           value="{{ form.instance.price }}" min="0" step="any"
-                           {% if not form.instance.description %}disabled{% endif %}>
+                           value="{{ form.instance.price }}" min="0" step="any">
 
                     <input type="text" name="{{ form.warranty.html_name }}" id="{{ form.warranty.id }}" class="form-control" placeholder="Гарантия"
-                           value="{{ form.instance.warranty }}" {% if not form.instance.description %}disabled{% endif %}>
+                           value="{{ form.instance.warranty }}">
 
                     <button type="button" class="btn btn-danger delete-work mt-2">Удалить работу</button>
                 </div>
@@ -39,6 +41,9 @@
         <!-- Шаблон для динамически добавляемых форм -->
         <div id="empty-form" style="display: none;">
             <div class="work-form">
+                <!-- Скрытое поле для ID новых форм -->
+                <input type="hidden" name="works-__prefix__-id" value="">
+
                 <select name="works-__prefix__-description" id="id_works-__prefix__-description" class="form-control work-select">
                     <option value="">Выбор услуги</option>
                     {% for typical_work in typical_works %}
@@ -48,8 +53,6 @@
 
                 <input type="number" name="works-__prefix__-price" id="id_works-__prefix__-price" class="form-control" placeholder="Введите цену" min="0" step="any" disabled>
                 <input type="text" name="works-__prefix__-warranty" id="id_works-__prefix__-warranty" class="form-control" placeholder="Гарантия" disabled>
-
-                <button type="button" class="btn btn-danger delete-work mt-2">Удалить работу</button>
             </div>
         </div>
 
