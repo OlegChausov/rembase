@@ -1,68 +1,42 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
-    {% load static %}
+{% load static %}
 
-    <form method="post" id="order-form">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ header }}</h1>
+    <form method="post">
         {% csrf_token %}
-        <!-- Основная форма -->
-        <h3>Основная информация</h3>
         {{ form.as_p }}
 
-        <!-- Контейнер для formset -->
-        <h3>Выполненные работы</h3>
-        {{ work_formset.management_form }}
-        <div id="work-forms">
-            {% for form in work_formset %}
-                <div class="work-form">
-                    <!-- Скрытое поле для ID -->
-                    <input type="hidden" name="{{ form.id.html_name }}" value="{{ form.instance.pk }}">
-
-                    <select name="{{ form.description.html_name }}" id="{{ form.description.id }}" class="form-control work-select">
-                        <option value="">Выбор услуги</option>
-                        {% for typical_work in typical_works %}
-                            <option value="{{ typical_work.description }}"
-                                {% if typical_work.description == form.instance.description %}selected{% endif %}>
-                                {{ typical_work.description }}
-                            </option>
-                        {% endfor %}
-                    </select>
-
-                    <input type="number" name="{{ form.price.html_name }}" id="{{ form.price.id }}" class="form-control" placeholder="Введите цену"
-                           value="{{ form.instance.price }}" min="0" step="any">
-
-                    <input type="text" name="{{ form.warranty.html_name }}" id="{{ form.warranty.id }}" class="form-control" placeholder="Гарантия"
-                           value="{{ form.instance.warranty }}">
-
-                    <button type="button" class="btn btn-danger delete-work mt-2">Удалить работу</button>
-                </div>
+        <h3>Работы</h3>
+        {{ formset.management_form }}
+        <div id="work-formset">
+            {% for form in formset.forms %}
+                {% if form.instance.pk %}
+                    <div class="work-form">
+                        {{ form.as_p }}
+                        <button type="button" class="remove-work">Удалить работу</button>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
 
-        <!-- Шаблон для динамически добавляемых форм -->
         <div id="empty-form" style="display: none;">
-            <div class="work-form">
-                <!-- Скрытое поле для ID новых форм -->
-                <input type="hidden" name="works-__prefix__-id" value="">
-
-                <select name="works-__prefix__-description" id="id_works-__prefix__-description" class="form-control work-select">
-                    <option value="">Выбор услуги</option>
-                    {% for typical_work in typical_works %}
-                        <option value="{{ typical_work.description }}">{{ typical_work.description }}</option>
-                    {% endfor %}
-                </select>
-
-                <input type="number" name="works-__prefix__-price" id="id_works-__prefix__-price" class="form-control" placeholder="Введите цену" min="0" step="any" disabled>
-                <input type="text" name="works-__prefix__-warranty" id="id_works-__prefix__-warranty" class="form-control" placeholder="Гарантия" disabled>
-            </div>
+            {{ formset.empty_form.as_p }}
         </div>
 
-        <!-- Кнопки управления -->
-        <div class="d-flex gap-2 mt-3">
-            <button id="add-work" type="button" class="btn btn-primary">Добавить работу</button>
-            <button type="submit" class="btn btn-success">Сохранить</button>
-        </div>
+        <button type="button" id="add-work-btn">Добавить работу</button>
+        <button type="submit">Сохранить</button>
     </form>
 
-    <!-- Подключение JavaScript -->
     <script src="{% static 'js/add_new_work.js' %}"></script>
+</body>
+</html>
+
 {% endblock %}

@@ -62,8 +62,14 @@ def create_client(request):
 
 
 
-WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=0)
 
+WorkFormSet = inlineformset_factory(
+    Order,          # модель-родитель
+    Work,           # модель, связанная с родительской
+    form=WorkForm,  # кастомная форма для Work
+    extra=1,        # количество дополнительных пустых форм
+    can_delete=True # разрешение на удаление записей
+)
 class Show_and_edit_order(UpdateView):
     model = Order
     fields = '__all__'
@@ -73,32 +79,26 @@ class Show_and_edit_order(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = self.get_form()  # Основная форма для Order
-        context["work_formset"] = WorkFormSet(instance=self.object)  # Формсет выполненных работ
-        context["typical_works"] = TypicalWork.objects.all()  # Список типовых работ
-
-
-
+        if self.request.method == 'POST':
+            context['formset'] = WorkFormSet(self.request.POST, instance=self.object, prefix='works')
+        else:
+            context['formset'] = WorkFormSet(instance=self.object, prefix='works')
+        # Флаг для проверки наличия работ
+        context['works_exist'] = self.object.works.exists()
         return context
 
     def form_valid(self, form):
-        self.object = form.save()
-        print("Объект заказа сохранён:", self.object)
-
-        # Инициализация формсета
-        work_formset = WorkFormSet(self.request.POST, instance=self.object)
-        print("POST данные:", self.request.POST)
-
-        if work_formset.is_valid():
-            print("Formset валиден. Сохраняем работы...")
-            work_formset.save()
-            for work_form in work_formset.forms:
-                print("Сохранённая работа:", work_form.cleaned_data)
+        context = self.get_context_data()
+        formset = context['formset']
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return response
         else:
-            print("Ошибки formset:", work_formset.errors)
-            print("Non-form errors:", work_formset.non_form_errors())
+            return self.form_invalid(form)
 
-        return super().form_valid(form)
+
 
 
 
@@ -371,33 +371,7 @@ class EditEmployee(UpdateView):
         context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
 
-def delete_work(request, work_id):
-    if request.method == "DELETE":
-        try:
-            work = Work.objects.get(id=work_id)
-            work.delete()
-            return JsonResponse({"success": True})
-        except Work.DoesNotExist:
-            return JsonResponse({"success": False, "error": "Работа не найдена"}, status=404)
-    return JsonResponse({"success": False}, status=400)
 
-def reset_work_fields(request, work_id):
-    if request.method == "POST":
-        work = Work.objects.filter(id=work_id).first()
-
-        if work:
-            new_description = request.POST.get("description", "").strip()
-            if new_description == "":  # Если выбран "Выбор услуги"
-                work.warranty = None  # Переводим warranty в NULL
-                work.price = 0  # Устанавливаем price в дефолтное значение
-                work.save()
-                return JsonResponse({"success": True, "reset": True})
-
-            work.description = new_description  # Обновляем description
-            work.save()
-            return JsonResponse({"success": True, "reset": False})
-
-    return JsonResponse({"success": False}, status=400)
 
 
 
