@@ -12,32 +12,24 @@ class AddClientForm(forms.ModelForm):
 
 class WorkForm(forms.ModelForm):
     description = forms.ChoiceField(
-        widget=forms.Select(attrs={"class": "form-control work-select"}),
-        label=""
-    )
-    price = forms.DecimalField(
-        required=False,
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}),
-        label="")
+        widget=forms.Select(attrs={"class": "form-control"}), label="")
 
+    price = forms.DecimalField(
+        min_value=0,
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}), label="")
 
     warranty = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}),
-        label=""
-    )
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="")
 
     class Meta:
         model = Work
         fields = ["description", "price", "warranty"]
 
     def __init__(self, *args, **kwargs):
-        typical_works = TypicalWork.objects.all() # ✅ Получаем переданные данные, но не загружаем снова
         super().__init__(*args, **kwargs)
         self.fields["description"].choices = [('', 'Выбор услуги'), ('new', 'Новая услуга')] + [
-            (tw.description, tw.description) for tw in typical_works
+            (typical_work.description, typical_work.description) for typical_work in TypicalWork.objects.all()
         ]
-
 
 
 

@@ -11,7 +11,9 @@ from django.views.generic import UpdateView, ListView, CreateView, TemplateView,
 import json
 
 from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
-from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work, TypicalWork
+from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work
+
+WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
 
 
 def get_client_data(request, client_id):
@@ -61,15 +63,7 @@ def create_client(request):
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 
-
-
-WorkFormSet = inlineformset_factory(
-    Order,          # модель-родитель
-    Work,           # модель, связанная с родительской
-    form=WorkForm,  # кастомная форма для Work
-    extra=1,        # количество дополнительных пустых форм
-    can_delete=True # разрешение на удаление записей
-)
+WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=0)
 class Show_and_edit_order(UpdateView):
     model = Order
     fields = '__all__'
@@ -79,28 +73,24 @@ class Show_and_edit_order(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.method == 'POST':
-            context['formset'] = WorkFormSet(self.request.POST, instance=self.object, prefix='works')
+        if self.request.POST:
+            context["work_formset"] = WorkFormSet(self.request.POST, instance=self.object)
         else:
-            context['formset'] = WorkFormSet(instance=self.object, prefix='works')
-        # Флаг для проверки наличия работ
-        context['works_exist'] = self.object.works.exists()
+            context["work_formset"] = WorkFormSet(instance=self.object)
         return context
 
     def form_valid(self, form):
+        self.object = form.save(commit=False)  # Сохраняем Order, но ещё не пишем в БД
+        self.object.save()  # Теперь сохраняем Order
         context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
-            response = super().form_valid(form)
-            formset.instance = self.object
-            formset.save()
-            return response
+        work_formset = context["work_formset"]
+        if work_formset.is_valid():
+            work_formset.instance = self.object
+            work_formset.save()
         else:
-            return self.form_invalid(form)
+            return self.render_to_response(self.get_context_data(form=form))  # Если ошибки, перерисуем форму
 
-
-
-
+        return super().form_valid(form)
 
 class Show_clientlist(ListView):
     model = Client
@@ -161,7 +151,7 @@ class AddOrder(CreateView):
 #возможно JS создал клиента через модальное окно (path('api/clients/create/', create_client, name='create_client'))
 #то при сохранении основной формы поля будут взяты ОТСЮДА
     def form_valid(self, form):
-        client_id = form.cleaned_data.get('client')
+        client_id = form.cleaned_data.get('client')[0]
         client_name = form.cleaned_data.get('name')
         client_phone = form.cleaned_data.get('phone')
         client_phone1 = form.cleaned_data.get('phone1')
@@ -268,6 +258,7 @@ class EditClient(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        print(self.object)  # Для проверки, что объект не None
         if self.object:
             context['related_orders'] = Order.objects.filter(order_client=self.object)
         return context
@@ -370,9 +361,6 @@ class EditEmployee(UpdateView):
         context['time_fire'] = obj.time_fire
         context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
-
-
-
 
 
 

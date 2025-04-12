@@ -1,42 +1,30 @@
 {% extends 'fixorder/base.html' %}
 {% block content %}
-{% load static %}
+    {% load static %}
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ header }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<form method="post" id="work-form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-        <h3>Работы</h3>
-        {{ formset.management_form }}
-        <div id="work-formset">
-            {% for form in formset.forms %}
-                {% if form.instance.pk %}
-                    <div class="work-form">
-                        {{ form.as_p }}
-                        <button type="button" class="remove-work">Удалить работу</button>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+    <h3>Выполненные работы</h3>
+    {{ work_formset.management_form }}
 
-        <div id="empty-form" style="display: none;">
-            {{ formset.empty_form.as_p }}
-        </div>
+    <div id="work-forms">
+        {% for form in work_formset %}
+            <div class="work-form">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
 
-        <button type="button" id="add-work-btn">Добавить работу</button>
-        <button type="submit">Сохранить</button>
-    </form>
+    <button type="button" id="add-work-button" class="btn btn-primary">Добавить работу</button>
+    <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+</form>
+
+<div id="empty-form" style="display: none;">
+    {{ work_formset.empty_form.as_p }}
+</div>
+
 
     <script src="{% static 'js/add_new_work.js' %}"></script>
-</body>
-</html>
-
 {% endblock %}
