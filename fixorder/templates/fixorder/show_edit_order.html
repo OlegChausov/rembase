@@ -2,6 +2,12 @@
 {% block content %}
     {% load static %}
 
+<style>
+    .hidden {
+        display: none; /* Полностью скрывает элемент */
+    }
+</style>
+
 <form method="post" id="work-form-container">
     {% csrf_token %}
     {{ form.as_p }}
