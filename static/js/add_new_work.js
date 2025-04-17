@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("Страница загружена, скрипт активирован."); // Лог запуска скрипта
+    console.log("Страница загружена, скрипт активирован.");
 
-    // Кнопка добавления работы и контейнеры
     const addWorkButton = document.getElementById('add-work-button');
     const workFormsContainer = document.getElementById('work-forms');
     const emptyFormTemplate = document.getElementById('empty-form');
     const totalFormsInput = document.querySelector('#id_works-TOTAL_FORMS');
 
-    // Проверка наличия необходимых элементов
     if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput) {
         console.error("Ошибка: Один из необходимых элементов не найден!");
         return;
@@ -15,14 +13,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log("Все необходимые элементы найдены.");
 
-    // Функция для инициализации Select2 на видимых полях description
-    function initializeSelect2() {
-        $('.work-form:not(.hidden) .form-control[id$="-description"]').select2();
-        console.log("Select2 инициализирован для видимых полей description.");
+    // Функция для инициализации Select2 на заданном элементе <select>
+function initializeSelect2(selectElement) {
+    if (selectElement) {
+        $(selectElement).select2({
+            width: '600px' // Явно устанавливаем ширину в 600 пикселей
+        });
+        console.log("Select2 инициализирован для элемента:", selectElement, "с шириной 600px.");
+    } else {
+        console.error("Элемент <select> не найден для инициализации Select2.");
     }
+}
 
     // Инициализация Select2 при загрузке страницы для существующих форм
-    initializeSelect2();
+    const initialSelectFields = document.querySelectorAll('.work-form:not(.hidden) .form-control[id$="-description"]');
+    initialSelectFields.forEach(initializeSelect2);
+    console.log("Select2 инициализирован для существующих полей description при загрузке.");
 
     // Добавление новой формы
     addWorkButton.addEventListener('click', function () {
@@ -31,20 +37,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentFormCount = parseInt(totalFormsInput.value, 10);
         console.log("Текущее количество форм:", currentFormCount);
 
+        // Заменяем префикс на текущий индекс формы
         const newFormHtml = emptyFormTemplate.innerHTML.replace(/__prefix__/g, currentFormCount);
 
-        totalFormsInput.value = currentFormCount + 1; // Увеличиваем счётчик форм
+        totalFormsInput.value = currentFormCount + 1;
         console.log("Обновлено значение TOTAL_FORMS:", totalFormsInput.value);
 
         const newFormDiv = document.createElement('div');
         newFormDiv.classList.add('work-form');
         newFormDiv.innerHTML = newFormHtml;
 
-        workFormsContainer.appendChild(newFormDiv); // Добавляем новую форму
+        workFormsContainer.appendChild(newFormDiv);
         console.log("Новая форма добавлена в контейнер:", newFormDiv);
 
-        // Инициализация Select2 для новой формы после ее добавления
-        setTimeout(initializeSelect2, 100); // Небольшая задержка, чтобы DOM обновился
+        // Инициализация Select2 ТОЛЬКО для <select> элемента description в НОВОЙ форме
+        const newSelectField = newFormDiv.querySelector('.form-control[id$="-description"]');
+        initializeSelect2(newSelectField);
     });
 
     // Отслеживание изменения чекбоксов удаления
@@ -53,40 +61,27 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Чекбокс удаления изменён. Элемент:", e.target);
 
             const formContainer = e.target.closest('.work-form');
-            console.log("Пытаемся найти контейнер формы. Результат:", formContainer);
+            console.log("Контейнер формы:", formContainer);
 
             if (formContainer) {
-                // Скрываем весь контейнер формы
-                formContainer.classList.toggle('hidden', e.target.checked);
-                console.log(
-                    "Контейнер формы обновлён. Добавлен класс hidden:",
-                    formContainer.classList.contains('hidden')
-                );
+                const isChecked = e.target.checked;
+                formContainer.classList.toggle('hidden', isChecked);
+                console.log("Контейнер формы скрыт:", isChecked);
 
-                // Скрываем отдельные поля формы по ID
-                const fieldSelectors = [
-                    '[id^="id_works-"][id$="-description"]',
-                    '[id^="id_works-"][id$="-price"]',
-                    '[id^="id_works-"][id$="-warranty"]'
-                ];
-                fieldSelectors.forEach((selector) => {
-                    const fields = document.querySelectorAll(selector);
-                    fields.forEach((field) => {
-                        if (field.closest('.work-form') === formContainer) {
-                            field.classList.toggle('hidden', e.target.checked);
-                            console.log(`Поле ${field.id} теперь скрыто:`, e.target.checked);
-                        }
-                    });
-                });
+                // Получаем <select> элемент description в текущей форме
+                const descriptionField = formContainer.querySelector('.form-control[id$="-description"]');
 
-                // Переинициализация Select2 после отображения скрытой формы (если удаление отменено)
-                if (!e.target.checked) {
-                    setTimeout(function() {
-                        $(formContainer).find('.form-control[id$="-description"]').select2();
-                        console.log("Select2 переинициализирован для отображенной формы description.");
-                    }, 100);
+                if (isChecked) {
+                    // Если чекбокс установлен, уничтожаем Select2, чтобы избежать проблем
+                    if ($(descriptionField).hasClass('select2-hidden-accessible')) {
+                        $(descriptionField).select2('destroy');
+                        console.log("Select2 уничтожен для скрытой формы description.");
+                    }
+                } else {
+                    // Если чекбокс снят, инициализируем Select2 заново
+                    initializeSelect2(descriptionField);
+                    console.log("Select2 инициализирован заново для отображенной формы description.");
                 }
-
             } else {
                 console.error("Контейнер формы не найден для чекбокса:", e.target);
             }
