@@ -31,6 +31,11 @@
     {{ work_formset.empty_form.as_p }}
 </div>
 
+<!-- Модальное окно -->
+<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border: 1px solid #ccc;">
+  <p>Модальное окно</p>
+  <button id="closeModal">Закрыть</button>
+</div>
 
     <script src="{% static 'js/add_new_work.js' %}"></script>
 {% endblock %}

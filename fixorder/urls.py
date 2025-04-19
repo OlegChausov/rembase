@@ -1,7 +1,7 @@
 from django.urls import path
 
 from fixorder import views
-from fixorder.views import get_client_data, create_client
+from fixorder.views import get_client_data, create_client, typical_work_create
 
 urlpatterns = [
                 path('', views.Show_orderlist.as_view(), name='orderlist'),
@@ -19,6 +19,7 @@ urlpatterns = [
                 path('editemployee/<int:pk>/', views.EditEmployee.as_view(), name='editemployee'),
                 path('deleteemployee/<int:pk>/', views.DeleteEmployee.as_view(), name='deleteemployee'),
                 path('fireemployee/<int:pk>/', views.FireEmployee.as_view(), name='fireemployee'),
+                path('api/typical_work_create', typical_work_create, name='typical_work_create'),
                 path('api/clients/<int:client_id>/', get_client_data, name='get_client_data'),
                 path('api/clients/create/', create_client, name='create_client'),
 

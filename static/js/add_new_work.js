@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const workFormsContainer = document.getElementById('work-forms');
     const emptyFormTemplate = document.getElementById('empty-form');
     const totalFormsInput = document.querySelector('#id_works-TOTAL_FORMS');
+    const modal = document.getElementById("modal");
 
-    if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput) {
+    if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput || !modal) {
         console.error("Ошибка: Один из необходимых элементов не найден!");
         return;
     }
@@ -14,20 +15,24 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Все необходимые элементы найдены.");
 
     // Функция для инициализации Select2 на заданном элементе <select>
-function initializeSelect2(selectElement) {
-    if (selectElement) {
-        $(selectElement).select2({
-            width: '600px' // Явно устанавливаем ширину в 600 пикселей
-        });
-        console.log("Select2 инициализирован для элемента:", selectElement, "с шириной 600px.");
-    } else {
-        console.error("Элемент <select> не найден для инициализации Select2.");
+    function initializeSelect2WithEvents(selectElement) {
+        if (selectElement) {
+            $(selectElement).select2({
+                width: '600px' // Устанавливаем ширину
+            }).on('select2:select', function (e) {
+                const selectedValue = e.params.data.id; // Получаем значение
+                console.log(`Выбрано значение: ${selectedValue} в select с ID: ${this.id}`);
+                handleSelectChange(this, selectedValue);
+            });
+            console.log("Select2 инициализирован для элемента:", selectElement);
+        } else {
+            console.error("Элемент <select> не найден для инициализации Select2.");
+        }
     }
-}
 
     // Инициализация Select2 при загрузке страницы для существующих форм
     const initialSelectFields = document.querySelectorAll('.work-form:not(.hidden) .form-control[id$="-description"]');
-    initialSelectFields.forEach(initializeSelect2);
+    initialSelectFields.forEach(initializeSelect2WithEvents);
     console.log("Select2 инициализирован для существующих полей description при загрузке.");
 
     // Добавление новой формы
@@ -50,9 +55,9 @@ function initializeSelect2(selectElement) {
         workFormsContainer.appendChild(newFormDiv);
         console.log("Новая форма добавлена в контейнер:", newFormDiv);
 
-        // Инициализация Select2 ТОЛЬКО для <select> элемента description в НОВОЙ форме
+        // Инициализация Select2 для нового элемента description
         const newSelectField = newFormDiv.querySelector('.form-control[id$="-description"]');
-        initializeSelect2(newSelectField);
+        initializeSelect2WithEvents(newSelectField);
     });
 
     // Отслеживание изменения чекбоксов удаления
@@ -79,7 +84,7 @@ function initializeSelect2(selectElement) {
                     }
                 } else {
                     // Если чекбокс снят, инициализируем Select2 заново
-                    initializeSelect2(descriptionField);
+                    initializeSelect2WithEvents(descriptionField);
                     console.log("Select2 инициализирован заново для отображенной формы description.");
                 }
             } else {
@@ -87,4 +92,15 @@ function initializeSelect2(selectElement) {
             }
         }
     });
+
+    // Обработка изменения значения (при выборе "new")
+    function handleSelectChange(selectElement, selectedValue) {
+        if (selectedValue === "new") {
+            modal.style.display = "block"; // Показываем модальное окно
+            console.log("Модальное окно открыто.");
+        } else {
+            modal.style.display = "none"; // Скрываем модальное окно
+            console.log("Модальное окно скрыто.");
+        }
+    }
 });

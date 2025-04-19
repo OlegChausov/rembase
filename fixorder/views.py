@@ -11,7 +11,7 @@ from django.views.generic import UpdateView, ListView, CreateView, TemplateView,
 import json
 
 from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
-from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work
+from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work, TypicalWork
 
 WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
 
@@ -61,6 +61,28 @@ def create_client(request):
         return JsonResponse(response_data)
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+
+
+@csrf_exempt
+def typical_work_create(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        description = data.get('description')
+
+        # Создание нового клиента
+        typicwork = TypicalWork.objects.create(description=description)
+        response_data = {
+            'success': True,
+            'typicwork': {'typicwork': typicwork.id, 'description': typicwork.description}}
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+
+
 
 
 WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=0)
