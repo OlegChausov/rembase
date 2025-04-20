@@ -103,4 +103,68 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Модальное окно скрыто.");
         }
     }
+// Обработчик закрытия модального окна
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('modal').style.display = 'none';
+    });
+
+    document.getElementById('submitModal').addEventListener('click', function () {
+        console.log("Кнопка 'Сохранить' нажата.");
+    
+        const descriptionInput = document.getElementById('new_work_description_name');
+        if (!descriptionInput) {
+            console.error("Поле ввода описания (new_work_description_name) не найдено.");
+            return;
+        }
+    
+        const description = descriptionInput.value.trim();
+        if (!description) {
+            alert("Пожалуйста, введите описание работы.");
+            console.warn("Поле описания пустое.");
+            return;
+        }
+    
+        // Отправка данных на сервер через fetch
+        console.log("Начинается отправка данных на сервер...");
+        fetch('/api/typical_work_create/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ description: description })
+        })
+        .then(response => {
+            console.log("Ответ от сервера получен. Статус ответа:", response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.log("Данные от сервера:", data);
+    
+            if (data.success) {
+                alert("Услуга успешно добавлена!");
+                console.log("Объект TypicalWork создан с ID:", data.typicwork.id);
+    
+                // Очистка поля ввода
+                descriptionInput.value = "";
+    
+                // Закрытие модального окна
+                document.getElementById('modal').style.display = 'none';
+                console.log("Модальное окно скрыто.");
+            } else {
+                alert("Ошибка: " + data.error);
+                console.warn("Ошибка от API:", data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Произошла ошибка при запросе:", error);
+            alert("Ошибка связи с сервером.");
+        });
+    });
+
+
+    
+
 });
+
+    

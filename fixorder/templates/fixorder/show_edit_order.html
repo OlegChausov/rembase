@@ -32,10 +32,17 @@
 </div>
 
 <!-- Модальное окно -->
-<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border: 1px solid #ccc;">
-  <p>Модальное окно</p>
-  <button id="closeModal">Закрыть</button>
+<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; width: 77.66vw; height: 27.33vh; border: 1px solid #ccc;">
+    {% csrf_token %}
+    <!-- Поле ввода на 2 строки -->
+    <textarea class="form-control" id="new_work_description_name" name="description"
+              placeholder="Описание новой работы" required></textarea>
+    <br>
+    <button id="submitModal" type="submit" class="btn btn-outline-success">Сохранить</button>
+  </form>
+  <button id="closeModal" class="btn btn-outline-danger">Закрыть</button>
 </div>
+
 
     <script src="{% static 'js/add_new_work.js' %}"></script>
 {% endblock %}
