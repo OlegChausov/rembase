@@ -21,6 +21,7 @@ class WorkForm(forms.ModelForm):
     warranty = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="")
 
+
     class Meta:
         model = Work
         fields = ["description", "price", "warranty"]

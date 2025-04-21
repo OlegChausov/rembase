@@ -80,7 +80,14 @@ def typical_work_create(request):
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-
+def get_typical_work_data(request):
+    if request.method == 'GET':
+        data = [('', 'Выбор услуги'), ('new', 'Новая услуга')] + [
+            (typical_work.description, typical_work.description) for typical_work in TypicalWork.objects.all()]
+        if not TypicalWork.objects.exists():
+            return JsonResponse({'error': 'Нет доступных данных'}, status=404)
+        return JsonResponse(data, safe=False) # Safe=False обязателен, если в JsonResponse передать не словарь
+    return JsonResponse({'error': 'Метод не поддерживается'}, status=405)
 
 
 
