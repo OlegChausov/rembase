@@ -246,7 +246,7 @@ class Work(models.Model):
     order = models.ForeignKey(Order, related_name='works', on_delete=models.CASCADE, verbose_name='Заказ')
     description = models.CharField(max_length=255, verbose_name='Описание работы')
     price = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True, verbose_name='Цена')
-    warranty = models.CharField(max_length=20, verbose_name='Гарантия')
+    warranty = models.CharField(blank=True, null=True, max_length=20, verbose_name='Гарантия')
 
 
     def __str__(self):

@@ -16,10 +16,10 @@ class WorkForm(forms.ModelForm):
 
     price = forms.DecimalField(
         min_value=0,
-        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}), label="")
+        widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Введите цену"}), label="", required=False)
 
     warranty = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="")
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Гарантия"}), label="", required=False)
 
 
     class Meta:

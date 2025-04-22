@@ -104,22 +104,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('submitModal').addEventListener('click', function () {
         console.log("Кнопка 'Сохранить' нажата.");
-    
+        
         const priceField = document.querySelector('#id_price');
         const warrantyField = document.querySelector('#id_warranty');
-    
+        
         console.log("Перед отправкой формы:");
         console.log("price:", priceField ? priceField.value : "Элемент не найден");
         console.log("warranty:", warrantyField ? warrantyField.value : "Элемент не найден");
-    
+        
         const requestData = {
             description: document.getElementById('new_work_description_name').value.trim(),
             price: priceField && priceField.value ? priceField.value : null,
             warranty: warrantyField && warrantyField.value ? warrantyField.value : null
         };
-    
+        
         console.log("Данные, отправляемые в запрос:", requestData);
-    
+        
         fetch('/api/typical_work_create/', {
             method: 'POST',
             headers: {
@@ -131,11 +131,23 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log("Ответ от сервера:", data);
+    
+            if (data.success) {
+                // Закрываем модальное окно
+                document.getElementById('modal').style.display = 'none';
+                console.log("Модальное окно закрыто.");
+                
+                // Обновляем select-поля
+                updateSelectFields();
+            } else {
+                console.error("Ошибка от сервера:", data.error);
+            }
         })
         .catch(error => {
             console.error("Ошибка при отправке данных:", error);
         });
     });
+    
 
     function updateSelectFields() {
         console.log("Запуск обновления всех select-полей...");
