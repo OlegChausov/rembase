@@ -14,6 +14,7 @@ urlpatterns = [
                 path('delete/<int:pk>/', views.DeleteOrder.as_view(), name='delete'),
                 path('editclient/<int:pk>/', views.EditClient.as_view(), name='editclient'),
                 path('deleteclient/<int:pk>/', views.DeleteClient.as_view(), name='deleteclient'),
+                path('typical_works/', views.TypicalWorks.as_view(), name='typical_works'),
                 path('newemployee/', views.CreateEmployee.as_view(), name='newemployee'),
                 path('employees/', views.Show_Employees.as_view(), name='employees'),
                 path('editemployee/<int:pk>/', views.EditEmployee.as_view(), name='editemployee'),

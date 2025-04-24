@@ -1,0 +1,33 @@
+{% extends 'fixorder/base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+<!--делаем поиск-->
+{% include 'fixorder/search_without_checkbox.html' %}
+<!--сделали поиск -->
+
+<p>
+<form method="POST" action="{% url 'typical_works' %}">
+    <button type="submit" class="btn btn-outline-danger">Удалить выбранные</button>
+    <hr>
+  {% csrf_token %}
+    {% for mw in my_works %}
+
+<li class="list-group-item">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">{{ mw.description }}</div>
+              <input class="form-check-input" type="checkbox" name="delete_ids" value="{{ mw.pk }}" id="{{ mw.pk }}_checkbox">Выбрать
+        </div>
+    </div>
+    <hr>
+{% endfor %}
+</li>
+<button type="submit" class="btn btn-outline-danger">Удалить выбранные</button>
+</form>
+<hr>
+
+
+
+
+{% endblock content %}

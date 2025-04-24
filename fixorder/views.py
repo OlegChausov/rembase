@@ -392,6 +392,26 @@ class EditEmployee(UpdateView):
         return context
 
 
+class TypicalWorks(ListView):
+    model = TypicalWork
+    template_name = 'fixorder/typical_work_list.html'
+    context_object_name = 'my_works'
+    paginate_by = 15
+    extra_context = {'title': 'Виды работ', 'header': 'Ваши работы'}
 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            query = query.replace("\\","")
+            return TypicalWork.objects.filter(description__icontains=query)# для PosgreSQL можно использовать __icontains
+        return TypicalWork.objects.all()
 
+    def post(self, request, *args, **kwargs):
+        # Получаем список ID для удаления
+        delete_ids = request.POST.getlist('delete_ids')
+        if delete_ids:
+            # Удаляем выбранные объекты
+            self.model.objects.filter(pk__in=delete_ids).delete()
+        # Перенаправляем на тот же список или другую страницу
+        return redirect('typical_works')  # Замените 'my_list' на ваше имя URL
 
