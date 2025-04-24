@@ -415,3 +415,9 @@ class TypicalWorks(ListView):
         # Перенаправляем на тот же список или другую страницу
         return redirect('typical_works')  # Замените 'my_list' на ваше имя URL
 
+class СreateTypicalWork(CreateView):
+    model = TypicalWork
+    fields = '__all__'
+    template_name = 'fixorder/new_typical_work.html'
+    success_url = reverse_lazy('typical_works')
+    extra_context = {'title': 'Добавить новую работу', 'header': 'Добавление новой работы'}

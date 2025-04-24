@@ -9,6 +9,7 @@
 <p>
 <form method="POST" action="{% url 'typical_works' %}">
     <button type="submit" class="btn btn-outline-danger">Удалить выбранные</button>
+    <a href="{% url 'create_typical_work' %}" class="btn btn-outline-primary">Добавить работу</a>
     <hr>
   {% csrf_token %}
     {% for mw in my_works %}

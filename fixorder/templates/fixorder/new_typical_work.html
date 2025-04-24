@@ -1,0 +1,17 @@
+{% extends 'fixorder/base.html' %}
+{% block content %}
+{% load static %}
+
+<form action="" method="post" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <br>
+    <table class="table table-hover table-sm w-auto" >
+        {{ form.as_table }}
+    </table>
+
+    <div class="form-error">{{ form.errors }}</div>
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    <button type="submit" class="btn btn-outline-success">Создать</button>
+</form>
+
+{% endblock %}

@@ -247,10 +247,10 @@ class Work(models.Model):
         return f"{self.description} - {self.price} Руб"
 
 class TypicalWork(models.Model):
-    description = models.CharField(max_length=255, verbose_name='Ваши работы')
+    description = models.CharField(max_length=255, verbose_name='Вид работы')
 
     class Meta:
-        ordering = ['description']
+        ordering = ['pk']
 
     def __str__(self):
         return f"{self.description}"
