@@ -9,11 +9,11 @@
 </style>
 
 
-
+<div class="class=form-control">
 <form method="post" id="work-form-container" >
     {% csrf_token %}
     {{ form.as_p }}
-
+</div>
     <h3>Выполненные работы</h3>
     {{ work_formset.management_form }}
 
@@ -24,7 +24,7 @@
             </div>
         {% endfor %}
     </div>
-
+</div>
     <button type="button" id="add-work-button" class="btn btn-primary">Добавить работу</button>
     <button type="submit" class="btn btn-success mt-3">Сохранить</button>
 </form>

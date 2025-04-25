@@ -112,3 +112,26 @@ class AddEmployeeForm(forms.ModelForm):
         widgets = {
             'time_fire': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = '__all__'
+        widgets = {
+            'time_demand': forms.DateInput(format=('%d/%m/%Y'), attrs={'type': 'date', 'class': 'form-control'}),  # Календарный виджет
+            'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}), # Виджет Textarea
+            'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'class': 'form-control'}),
+            'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1, 'class': 'form-control'}),
+            'notes': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'class': 'form-control'}),                   # Dropdown
+            'conclusion': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'class': 'form-control'}),
+            'order_client': forms.Select(attrs={'class': 'form-control'}),
+            'executor': forms.Select(attrs={'class': 'form-control'}),
+            'time_away': forms.DateInput(format=('%d/%m/%Y'), attrs={'type': 'date', 'class': 'form-control'}),
+            'device': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'initial_price': forms.TextInput(attrs={'class': 'form-control'}),
+            'prepaid': forms.TextInput(attrs={'class': 'form-control'}),
+            'remain_to_pay': forms.TextInput(attrs={'class': 'form-control'}),
+            'total_price': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }

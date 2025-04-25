@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 import json
 
-from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm
+from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm, OrderForm
 from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work, TypicalWork
 
 WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
@@ -95,7 +95,7 @@ def get_typical_work_data(request):
 WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=0)
 class Show_and_edit_order(UpdateView):
     model = Order
-    fields = '__all__'
+    form_class = OrderForm
     template_name = 'fixorder/show_edit_order.html'
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
