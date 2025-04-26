@@ -203,6 +203,9 @@ class Order(models.Model):
 
 
     def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         old_order = None
         old_order = Order.objects.filter(pk=self.pk).last()
         if old_order and old_order.status.status != self.status.status:
