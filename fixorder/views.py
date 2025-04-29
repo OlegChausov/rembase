@@ -180,33 +180,51 @@ class AddOrder(CreateView):
 #возможно JS создал клиента через модальное окно (path('api/clients/create/', create_client, name='create_client'))
 #то при сохранении основной формы поля будут взяты ОТСЮДА
     def form_valid(self, form):
-        client_id = form.cleaned_data.get('client')[0]
-        client_name = form.cleaned_data.get('name')
+        # Логируем входящие данные формы
+        client_id = form.cleaned_data.get('client')  # Получаем ID клиента
+        client_name = form.cleaned_data.get('name')  # Логируем имя клиента
         client_phone = form.cleaned_data.get('phone')
         client_phone1 = form.cleaned_data.get('phone1')
         client_telegram = form.cleaned_data.get('telegram')
         client_viber = form.cleaned_data.get('viber')
         client_whatsapp = form.cleaned_data.get('whatsapp')
 
-        #изменение данных клиента в базе client.objects...
+        print(f"Received Client ID: {client_id}")  # Лог ID клиента
+        print(f"Received Client Name: {client_name}")  # Лог имени клиента
+        print(f"Received Client Data: phone={client_phone}, phone1={client_phone1}, "
+              f"telegram={client_telegram}, viber={client_viber}, whatsapp={client_whatsapp}")
+
         if client_id:
-            client = Client.objects.get(pk=client_id)
-            #client.name = client_name
-            client.phone = client_phone
-            client.phone1 = client_phone1
-            client.telegram = client_telegram
-            client.viber = client_viber
-            client.whatsapp = client_whatsapp
-            client.save()
-    #поле order_client есть у модели order и как следствие у формы, но мы его не выводим на экран
-    #но оно обязательно, поэтому требует что-то подставить, или будет значенеи default
-    #поэтому поле order_client конкретного экземпляра формы form.instance заполняется переменной client
-            form.instance.order_client = client
+            try:
+                # Пытаемся найти клиента по ID
+                client = Client.objects.get(pk=client_id)
+                print(f"Client found: {client}")  # Лог успешного поиска клиента
 
+                # Обновляем данные клиента, если они были переданы
+                client.phone = client_phone
+                client.phone1 = client_phone1
+                client.telegram = client_telegram
+                client.viber = client_viber
+                client.whatsapp = client_whatsapp
+                client.save()
 
+                print(f"Client updated: {client}")  # Лог успешного обновления клиента
+
+                # Привязываем клиента к заказу
+                form.instance.order_client = client
+            except Client.DoesNotExist:
+                # Логируем ошибку, если клиент не найден
+                print(f"Error: Client with ID {client_id} does not exist.")
+                form.add_error('client', 'Указанный клиент не найден в базе данных.')
+                return self.form_invalid(form)
         else:
-            form.add_error(None, 'Выберите клиента')
+            # Логируем случай, когда клиент не выбран
+            print("Error: No client selected.")
+            form.add_error('client', 'Поле "Клиент" не может быть пустым.')
+            return self.form_invalid(form)
 
+        # Лог успешного завершения метода
+        print("Form validation successful. Proceeding to save order.")
         return super().form_valid(form)
 
 
