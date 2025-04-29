@@ -21,13 +21,29 @@
     <p>Статус неизвестен.</p>
 {% endif %}
 
-           <div class="col-2">
+           <p>
                 <a href="{% url 'deleteemployee'  pk=form.instance.pk  %}" class="btn btn-outline-danger">Удалить</a>
-            </div>
-<br>
-                        <div class="col-2">
+
                 <a href="{% url 'fireemployee'  pk=form.instance.pk  %}" class="btn btn-warning">Уволить</a>
-            </div>
+
+</p>
+
+
+<ul class="list-group">
+       {% for ro in related_orders %}
+         <li class="list-group-item">
+             Устройство: {{ro.device}} | Принят: {{ro.time_create|date:"d-m-Y"}} | Статус: {% if ro.status.status == "Активен" %}<span class="text-primary"> {{ro.status}}</span>
+         {% elif ro.status.status == "Готов" %}<span class="text-success"> {{ro.status}}</span>
+        {% elif ro.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{ro.status}}</span>
+        {% elif ro.status.status == "Выдан" %}<span class="text-secondary"> {{ro.status}}</span> {% endif %}
+         {% if ro.time_away %} Выдан: {ro.time_away|date:"d-m-Y"} {% endif %}<p>
+             <a href="{{ ro.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>
+
+            {% endfor %}
+             </ul>
+    </div></li>
+
+    </ul>
 
 
 

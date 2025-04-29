@@ -4,26 +4,41 @@
     <a href="#" class="btn btn-outline-primary" id="openModalBtn">Создать клиента</a>
     <!-- Модальное окно (Modal) -->
 <div id="myModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 50vw; height: auto;">
     <!-- Контент модального окна -->
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Новый клиент</h2>
+        <h2  class="mb-4">Новый клиент</h2>
         <form id="clientForm">
+            <div class="mb-3">
             <label for="new-client-name">Имя:</label>
-            <input type="text" id="new-client-name" name="name"><br><br>
-            <label for="new-client-phone">Телефон:</label>
-            <input type="text" id="new-client-phone" name="phone"><br><br>
-            <label for="new-client-phone1">Дополнительный телефон:</label>
-            <input type="text" id="new-client-phone1" name="phone1"><br><br>
-            <label for="new-client-telegram">Telegram:</label>
-            <input type="text" id="new-client-telegram" name="telegram"><br><br>
-            <label for="new-client-viber">Viber:</label>
-            <input type="text" id="new-client-viber" name="viber"><br><br>
-            <label for="new-client-whatsapp">WhatsApp:</label>
-            <input type="text" id="new-client-whatsapp" name="whatsapp"><br><br>
-            <button type="button" id="saveClientBtn">Сохранить</button>
+            <input type="text" id="new-client-name" name="name"  class="form-control">
+                </div>
+            <div class="mb-3">
+            <label for="new-client-phone" class="form-label">Телефон:</label>
+            <input type="text" id="new-client-phone" name="phone"  class="form-control">
+                </div>
+                <div class="mb-3">
+            <label for="new-client-phone1" class="form-label">Дополнительный телефон:</label>
+            <input type="text" id="new-client-phone1" name="phone1"  class="form-control">
+                    </div>
+                    <div class="mb-3">
+            <label for="new-client-telegram" class="form-label">Telegram:</label>
+            <input type="text" id="new-client-telegram" name="telegram"  class="form-control">
+                        </div>
+                        <div class="mb-3">
+            <label for="new-client-viber" class="form-label">Viber:</label>
+            <input type="text" id="new-client-viber" name="viber"  class="form-control">
+                            </div>
+                            <div class="mb-3">
+            <label for="new-client-whatsapp" class="form-label">WhatsApp:</label>
+            <input type="text" id="new-client-whatsapp" name="whatsapp"  class="form-control">
+                                </div>
+            <button type="button" id="saveClientBtn" class="btn btn-outline-success">Сохранить</button>
+                </div>
         </form>
     </div>
+</div>
 </div>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}

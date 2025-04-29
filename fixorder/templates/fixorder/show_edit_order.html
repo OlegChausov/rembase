@@ -2,70 +2,50 @@
 {% block content %}
     {% load static %}
 
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+<style>
+    .hidden {
+        display: none; /* Полностью скрывает элемент */
+    }
+</style>
 
-{% if form.work3.value is not None or form.work4.value is not None or form.work5.value is not None or form.work6.value is not None %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-error">{{ form.non_field_errors }}</div>
-        {% for f in form %}
-            <label class="form-label" >{{ f.label }}&emsp; </label>{{ f }}
-            <div class="form-error">{{ f.errors }}</div>
+
+<div class="class=form-control">
+<form method="post" id="work-form-container" >
+    {% csrf_token %}
+    {{ form.as_p }}
+</div>
+    <h3>Выполненные работы</h3>
+    {{ work_formset.management_form }}
+
+    <div id="work-forms">
+        {% for form in work_formset %}
+            <div class="work-form">
+                {{ form.as_p }}
+            </div>
         {% endfor %}
-        <p><button type="submit">Обновить</button></p>
-    </form>
-{% else %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div id="block-1">
-            <div class="form-error">{{ form.non_field_errors }}</div>
-            <!-- Первые 24 элементов формы -->
-            {% for f in form %}
-                {% if forloop.counter0 >= 0 and forloop.counter0 < 24 %}
-                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
-                    <div class="form-error">{{ f.errors }}</div>
-                {% endif %}
-            {% endfor %}
-        </div>
+    </div>
+</div>
+    <button type="button" id="add-work-button" class="btn btn-primary">Добавить работу</button>
+    <button type="submit" class="btn btn-success mt-3">Сохранить</button>
+</form>
 
-        <!-- Кнопка для показа скрытого блока -->
-        <button type="button" id="toggle-button" class="btn btn-outline-primary" >Добавить еще работы</button>
-        <p></p>
+<div id="empty-form" style="display: none;">
+    {{ work_formset.empty_form.as_p }}
+</div>
 
-        <!-- Второй блок полей -->
-        <div id="block-2" class="hidden">
-            <!-- Поля формы от 24 до 37 -->
-            {% for f in form %}
-                {% if forloop.counter0 >= 26 and forloop.counter0 < 37 %}
-                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
-                    <div class="form-error">{{ f.errors }}</div>
-                {% endif %}
-            {% endfor %}
-        </div>
 
-        <!-- Третий блок полей -->
-        <div id="block-3">
-            <!-- Поля формы от 37 до 100 -->
-            {% for f in form %}
-                {% if forloop.counter0 >= 37 and forloop.counter0 < 100 %}
-                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}&emsp; </label>{{ f }}</p>
-                    <div class="form-error">{{ f.errors }}</div>
-                {% endif %}
-            {% endfor %}
-        </div>
+<!-- Модальное окно -->
+<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; width: 77.66vw; height: 27.33vh; border: 1px solid #ccc;">
+    {% csrf_token %}
+    <!-- Поле ввода на 2 строки -->
+    <textarea class="form-control" id="new_work_description_name" name="description"
+              placeholder="Описание новой работы" required></textarea>
+    <br>
+    <button id="submitModal" type="submit" class="btn btn-outline-success">Сохранить</button>
+  </form>
+  <button id="closeModal" class="btn btn-outline-danger">Закрыть</button>
+</div>
 
-        <p><button type="submit" class="btn btn-outline-success" >Обновить</button></p>
-    </form>
 
-{% endif %}
-
-<script src="{% static 'js/addnewworkfields.js' %}"></script>
-
-<p><a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
-<a href="{% url 'commingdoc' pk=form.instance.pk %}" class="btn btn-outline-success">Посмотреть/распечатать приемный лист</a>
-<a href="{% url 'delete' pk=form.instance.pk %}" class="btn btn-outline-danger">Удалить заказ</a></p>
+    <script src="{% static 'js/add_new_work.js' %}"></script>
 {% endblock %}

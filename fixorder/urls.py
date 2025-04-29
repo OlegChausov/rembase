@@ -1,7 +1,7 @@
 from django.urls import path
 
 from fixorder import views
-from fixorder.views import get_client_data, create_client
+from fixorder.views import get_client_data, create_client, typical_work_create, get_typical_work_data
 
 urlpatterns = [
                 path('', views.Show_orderlist.as_view(), name='orderlist'),
@@ -14,11 +14,15 @@ urlpatterns = [
                 path('delete/<int:pk>/', views.DeleteOrder.as_view(), name='delete'),
                 path('editclient/<int:pk>/', views.EditClient.as_view(), name='editclient'),
                 path('deleteclient/<int:pk>/', views.DeleteClient.as_view(), name='deleteclient'),
+                path('typical_works/', views.TypicalWorks.as_view(), name='typical_works'),
+                path('create_typical_work/', views.СreateTypicalWork.as_view(), name='create_typical_work'),
                 path('newemployee/', views.CreateEmployee.as_view(), name='newemployee'),
                 path('employees/', views.Show_Employees.as_view(), name='employees'),
                 path('editemployee/<int:pk>/', views.EditEmployee.as_view(), name='editemployee'),
                 path('deleteemployee/<int:pk>/', views.DeleteEmployee.as_view(), name='deleteemployee'),
                 path('fireemployee/<int:pk>/', views.FireEmployee.as_view(), name='fireemployee'),
+                path('api/typical_work_create/', typical_work_create, name='typical_work_create'),
+                path('api/typical_work_data/', get_typical_work_data, name='typical_work_data'),
                 path('api/clients/<int:client_id>/', get_client_data, name='get_client_data'),
                 path('api/clients/create/', create_client, name='create_client'),
 

@@ -5,6 +5,7 @@
 <!--делаем поиск-->
 {% include 'fixorder/search_without_checkbox.html' %}
 <!--сделали поиск -->
+<hr>
 
 
     {% for myc in my_clients %}
@@ -28,10 +29,10 @@
             {% endif %}
             <p>
             <div class="col-2">
-                <a href="{{ myc.get_absolute_url }}" class="btn btn-outline-primary">Редактировать/заказы</a>
+                <a href="{{ myc.get_absolute_url }}" class="btn btn-primary btn-sm">Редактировать/заказы</a>
             </div>
             <div class="col-2">
-                <a href="{% url 'deleteclient' myc.pk %}" class="btn btn-outline-danger">Удалить</a>
+                <a href="{% url 'deleteclient' myc.pk %}" class="btn btn-secondary btn-sm">Удалить</a>
             </div>
             </p>
              <hr>
