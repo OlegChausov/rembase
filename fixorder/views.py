@@ -109,17 +109,37 @@ class Show_and_edit_order(UpdateView):
         return context
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)  # Сохраняем Order, но ещё не пишем в БД
-        self.object.save()  # Теперь сохраняем Order
+        # Сохраняем объект Order
+        self.object = form.save(commit=False)
+        print("Сохранённый объект Order:", self.object)
+
+        # Получаем контекст и формсет
         context = self.get_context_data()
         work_formset = context["work_formset"]
+
+        # Выводим данные, которые пришли в formset
+        print("POST-данные для work_formset:", self.request.POST)
+
         if work_formset.is_valid():
+            # Выводим очищенные данные формсета
+            print("WorkFormSet очищенные данные:", [form.cleaned_data for form in work_formset])
             work_formset.instance = self.object
             work_formset.save()
+            print("Данные формсета успешно сохранены.")
         else:
-            return self.render_to_response(self.get_context_data(form=form))  # Если ошибки, перерисуем форму
+            # Если есть ошибки, выводим их
+            print("Ошибки в WorkFormSet:", work_formset.errors)
+            return self.render_to_response(self.get_context_data(form=form))
+
+        # Сохраняем Order
+        self.object.save()
+        print("Объект Order сохранён:", self.object)
+
+        print("POST данные для works:",
+              {key: value for key, value in self.request.POST.items() if key.startswith('works-')})
 
         return super().form_valid(form)
+
 
 class Show_clientlist(ListView):
     model = Client

@@ -174,4 +174,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error("Ошибка при запросе данных:", error);
             });
     }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Останавливаем стандартное поведение
+    
+        const formData = new FormData(form);
+        console.log("Данные перед отправкой:");
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+    });
 });
