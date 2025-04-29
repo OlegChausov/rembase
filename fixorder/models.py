@@ -193,7 +193,7 @@ class Order(models.Model):
     device_password = models.CharField(max_length=50, blank=True, null=True, verbose_name='Пароль')
     device_exterior = models.TextField(max_length=400, blank=True, null=True, verbose_name='Внешний вид')
     initial_price = models.CharField(max_length=10, blank=True, null=True, verbose_name='Ориентировочная стоимость')
-    prepaid = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Предоплата')
+    prepaid = models.FloatField(max_length=10, blank=True, null=True, verbose_name='Предоплата')
     notes = models.TextField(max_length=500, blank=True, null=True, verbose_name='Заметки')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0, verbose_name='Итоговая стоимость')
     status = models.ForeignKey(OrderStatus, on_delete=models.DO_NOTHING, default=4, related_name='related_order', verbose_name='Статус ремонта')
@@ -213,8 +213,8 @@ class Order(models.Model):
                 self.time_away = timezone.now()
             else:
                 self.time_away = None
-        # self.total_price = self.works.aggregate(total_price=Sum("price"))["total_price"] or 0
-        # self.remain_to_pay = self.total_price - (self.prepaid or 0)
+        self.total_price = self.works.aggregate(total_price=Sum("price"))["total_price"] or 0
+        self.remain_to_pay = self.total_price - (self.prepaid or 0)
         super().save(*args, **kwargs)
 
     def __str__(self):
