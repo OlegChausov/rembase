@@ -100,45 +100,38 @@ class Show_and_edit_order(UpdateView):
     success_url = reverse_lazy('orderlist')
     extra_context = {'title': 'Заказ', 'header': 'Просмотреть/изменить заказ'}
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(Order, pk=self.kwargs['pk'])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context["work_formset"] = WorkFormSet(self.request.POST, instance=self.object)
-        else:
-            context["work_formset"] = WorkFormSet(instance=self.object)
+        context['work_formset'] = WorkFormSet(instance=self.object)
         return context
 
-    def form_valid(self, form):
-        # Сохраняем объект Order
-        self.object = form.save(commit=False)
-        print("Сохранённый объект Order:", self.object)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        work_formset = WorkFormSet(request.POST, instance=self.object)
 
-        # Получаем контекст и формсет
-        context = self.get_context_data()
-        work_formset = context["work_formset"]
+        print("Данные POST запроса:", request.POST)  # Выведем все данные POST
+        print("Валидность основной формы:", form.is_valid())
+        print("Ошибки основной формы:", form.errors)
+        print("Валидность формсета работ:", work_formset.is_valid())
+        print("Ошибки формсета работ:", work_formset.errors)
+        print("Неформенные ошибки формсета:", work_formset.non_form_errors())
 
-        # Выводим данные, которые пришли в formset
-        print("POST-данные для work_formset:", self.request.POST)
-
-        if work_formset.is_valid():
-            # Выводим очищенные данные формсета
-            print("WorkFormSet очищенные данные:", [form.cleaned_data for form in work_formset])
-            work_formset.instance = self.object
-            work_formset.save()
-            print("Данные формсета успешно сохранены.")
+        if form.is_valid() and work_formset.is_valid():
+            self.object = form.save()
+            instances = work_formset.save()  # Сохраняем и получаем сохраненные экземпляры
+            print("Сохраненные экземпляры Work:", instances)
+            return redirect(self.success_url)
         else:
-            # Если есть ошибки, выводим их
-            print("Ошибки в WorkFormSet:", work_formset.errors)
-            return self.render_to_response(self.get_context_data(form=form))
-
-        # Сохраняем Order
-        self.object.save()
-        print("Объект Order сохранён:", self.object)
-
-        print("POST данные для works:",
-              {key: value for key, value in self.request.POST.items() if key.startswith('works-')})
-
-        return super().form_valid(form)
+            errors = {}
+            if form.errors:
+                errors['form_errors'] = form.errors.as_json()
+            if work_formset.errors:
+                errors['work_formset_errors'] = work_formset.errors
+            return JsonResponse({'success': False, 'error': errors}, status=400)
 
 
 class Show_clientlist(ListView):

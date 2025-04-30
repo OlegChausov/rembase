@@ -9,29 +9,32 @@
 </style>
 
 
-<div class="class=form-control">
-<form method="post" id="work-form-container" >
-    {% csrf_token %}
-    {{ form.as_p }}
-</div>
-    <h3>Выполненные работы</h3>
-    {{ work_formset.management_form }}
+    <h1>Редактирование заказа</h1>
 
-    <div id="work-forms">
-        {% for form in work_formset %}
+    <form method="post" id="work-form-container">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h3>Выполненные работы</h3>
+        {{ work_formset.management_form }}
+
+        <div id="work-forms">
+            {% for work_form in work_formset %}
+                <div class="work-form">
+                    {{ work_form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" id="add-work-button">Добавить работу</button>
+        <button type="submit">Сохранить</button>
+
+        <div id="empty-form" style="display: none;">
             <div class="work-form">
-                {{ form.as_p }}
+                {{ work_formset.empty_form.as_p }}
             </div>
-        {% endfor %}
-    </div>
-</div>
-    <button type="button" id="add-work-button" class="btn btn-primary">Добавить работу</button>
-    <button type="submit" class="btn btn-success mt-3">Сохранить</button>
-</form>
-
-<div id="empty-form" style="display: none;">
-    {{ work_formset.empty_form.as_p }}
-</div>
+        </div>
+    </form>
 
 
 <!-- Модальное окно -->

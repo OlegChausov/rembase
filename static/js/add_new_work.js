@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const emptyFormTemplate = document.getElementById('empty-form');
     const totalFormsInput = document.querySelector('#id_works-TOTAL_FORMS');
     const modal = document.getElementById("modal");
+    const form = document.getElementById('work-form-container');
 
-    if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput || !modal) {
+    if (!addWorkButton || !workFormsContainer || !emptyFormTemplate || !totalFormsInput || !modal || !form) {
         console.error("Ошибка: Один из необходимых элементов не найден!");
         return;
     }
@@ -15,15 +16,20 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Все необходимые элементы найдены.");
 
     function initializeSelect2WithEvents(selectElement) {
-        console.log("Инициализация Select2 для элемента:", selectElement);
+        console.log("Вызвана initializeSelect2WithEvents для элемента:", selectElement, selectElement ? selectElement.id : 'null');
         if (selectElement) {
+            if ($(selectElement).data('select2')) {
+                console.log("Уничтожаем существующий Select2 для элемента:", selectElement.id);
+                $(selectElement).select2('destroy');
+            }
             $(selectElement).select2({
                 width: '600px'
             }).on('select2:select', function (e) {
                 const selectedValue = e.params.data.id;
-                console.log(`Выбрано значение: ${selectedValue} в select с ID: ${this.id}`);
+                console.log(`Выбрано значение: ${selectedValue} в select ID: ${this.id}`);
                 handleSelectChange(this, selectedValue);
             });
+            console.log("Select2 успешно инициализирован для элемента:", selectElement.id);
         } else {
             console.error("Элемент <select> не найден для инициализации Select2.");
         }
@@ -33,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Поле price:", document.querySelector('#id_price'));
     console.log("Поле warranty:", document.querySelector('#id_warranty'));
 
-    const initialSelectFields = document.querySelectorAll('.work-form:not(.hidden) .form-control[id$="-description"]');
-    console.log("Найдено селектов для инициализации:", initialSelectFields.length);
+    const initialSelectFields = document.querySelectorAll('#work-forms .work-form:not(.hidden) .form-control[id$="-description"]');
+    console.log("Найдено селектов для инициализации при загрузке:", initialSelectFields.length);
     initialSelectFields.forEach(initializeSelect2WithEvents);
 
     addWorkButton.addEventListener('click', function () {
@@ -71,14 +77,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 formContainer.classList.toggle('hidden', isChecked);
 
                 const descriptionField = formContainer.querySelector('.form-control[id$="-description"]');
-                if (isChecked) {
-                    if ($(descriptionField).hasClass('select2-hidden-accessible')) {
+                if (descriptionField) {
+                    if (isChecked && $(descriptionField).data('select2')) {
                         $(descriptionField).select2('destroy');
                         console.log("Select2 уничтожен для скрытой формы description.");
+                    } else if (!isChecked && !$(descriptionField).data('select2')) {
+                        initializeSelect2WithEvents(descriptionField);
+                        console.log("Select2 инициализирован для показанной формы description.");
                     }
-                } else {
-                    initializeSelect2WithEvents(descriptionField);
-                    console.log("Select2 заново инициализирован для формы.");
                 }
             } else {
                 console.error("Контейнер формы не найден для чекбокса:", e.target);
@@ -104,22 +110,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('submitModal').addEventListener('click', function () {
         console.log("Кнопка 'Сохранить' нажата.");
-        
+
         const priceField = document.querySelector('#id_price');
         const warrantyField = document.querySelector('#id_warranty');
-        
+
         console.log("Перед отправкой формы:");
         console.log("price:", priceField ? priceField.value : "Элемент не найден");
         console.log("warranty:", warrantyField ? warrantyField.value : "Элемент не найден");
-        
+
         const requestData = {
             description: document.getElementById('new_work_description_name').value.trim(),
             price: priceField && priceField.value ? priceField.value : null,
             warranty: warrantyField && warrantyField.value ? warrantyField.value : null
         };
-        
+
         console.log("Данные, отправляемые в запрос:", requestData);
-        
+
         fetch('/api/typical_work_create/', {
             method: 'POST',
             headers: {
@@ -131,13 +137,10 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log("Ответ от сервера:", data);
-    
+
             if (data.success) {
-                // Закрываем модальное окно
                 document.getElementById('modal').style.display = 'none';
                 console.log("Модальное окно закрыто.");
-                
-                // Обновляем select-поля
                 updateSelectFields();
             } else {
                 console.error("Ошибка от сервера:", data.error);
@@ -147,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Ошибка при отправке данных:", error);
         });
     });
-    
+
 
     function updateSelectFields() {
         console.log("Запуск обновления всех select-полей...");
@@ -166,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                     $(selectElement).val(currentValue).trigger('change');
+                    initializeSelect2WithEvents(selectElement);
                 });
 
                 console.log("Все поля description успешно обновлены.");
@@ -177,11 +181,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Останавливаем стандартное поведение
-    
+
         const formData = new FormData(form);
-        console.log("Данные перед отправкой:");
+        console.log("Данные перед отправкой основной формы:");
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
+        this.submit(); // Раскомментируйте эту строку, чтобы отправлять форму
     });
 });
