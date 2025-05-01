@@ -113,19 +113,23 @@ class Order(models.Model):
 
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if self.status_id and not self.pk:
             super().save(*args, **kwargs)
 
         old_order = None
-        old_order = Order.objects.filter(pk=self.pk).last()
-        if old_order and old_order.status.status != self.status.status:
-            if self.status.status in ["Выдан", "Выдан без ремонта"]:
-                self.time_away = timezone.now()
-            else:
-                self.time_away = None
+        if self.pk:
+            old_order = Order.objects.filter(pk=self.pk).last()
+            if old_order and old_order.status_id != self.status_id:
+                if self.status.status in ["Выдан", "Выдан без ремонта"]:
+                    self.time_away = timezone.now()
+                else:
+                    self.time_away = None
+        super().save(*args, **kwargs)
+
+    def calculate_price(self):
         self.total_price = self.works.aggregate(total_price=Sum("price"))["total_price"] or 0
         self.remain_to_pay = self.total_price - (self.prepaid or 0)
-        super().save(*args, **kwargs)
+        self.save() # Сохраняем объект Order после пересчета цен
 
     def __str__(self):
         return f"{self.order_client.name} — {self.device}"
