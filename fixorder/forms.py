@@ -118,7 +118,10 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = '__all__'
         widgets = {
-            'time_demand': forms.DateInput(format=('%d/%m/%Y'), attrs={'type': 'date', 'class': 'form-control'}),  # Календарный виджет
+            'time_demand': forms.DateInput(
+                format='%Y-%m-%d',  # Попробуем стандартный формат HTML5
+                attrs={'type': 'date', 'class': 'form-control'},
+            ),  # Календарный виджет
             'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}), # Виджет Textarea
             'defect': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'class': 'form-control'}),
             'device_exterior': forms.Textarea(attrs={'cols': 40, 'rows': 1, 'class': 'form-control'}),
@@ -126,7 +129,10 @@ class OrderForm(forms.ModelForm):
             'conclusion': forms.Textarea(attrs={'cols': 40, 'rows': 2, 'class': 'form-control'}),
             'order_client': forms.Select(attrs={'class': 'form-control'}),
             'executor': forms.Select(attrs={'class': 'form-control'}),
-            'time_away': forms.DateInput(format=('%d/%m/%Y'), attrs={'type': 'date', 'class': 'form-control'}),
+            'time_away': forms.DateTimeInput(
+                format='%Y-%m-%dT%H:%M', # Для DateTimeField
+                attrs={'type': 'datetime-local', 'class': 'form-control'},
+            ),
             'device': forms.TextInput(attrs={'class': 'form-control'}),
             'password': forms.TextInput(attrs={'class': 'form-control'}),
             'initial_price': forms.TextInput(attrs={'class': 'form-control'}),

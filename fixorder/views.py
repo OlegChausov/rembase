@@ -112,13 +112,13 @@ class Show_and_edit_order(UpdateView):
         self.object = self.get_object()
         form = self.get_form()
         work_formset = WorkFormSet(request.POST, instance=self.object)
-
-        print("Данные POST запроса:", request.POST)  # Выведем все данные POST
-        print("Валидность основной формы:", form.is_valid())
-        print("Ошибки основной формы:", form.errors)
-        print("Валидность формсета работ:", work_formset.is_valid())
-        print("Ошибки формсета работ:", work_formset.errors)
-        print("Неформенные ошибки формсета:", work_formset.non_form_errors())
+        #
+        # print("Данные POST запроса:", request.POST)  # Выведем все данные POST
+        # print("Валидность основной формы:", form.is_valid())
+        # print("Ошибки основной формы:", form.errors)
+        # print("Валидность формсета работ:", work_formset.is_valid())
+        # print("Ошибки формсета работ:", work_formset.errors)
+        # print("Неформенные ошибки формсета:", work_formset.non_form_errors())
 
         if form.is_valid() and work_formset.is_valid():
             self.object = form.save()
