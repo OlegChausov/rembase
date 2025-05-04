@@ -110,22 +110,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('submitModal').addEventListener('click', function () {
         console.log("Кнопка 'Сохранить' нажата.");
-
-        const priceField = document.querySelector('#id_price');
-        const warrantyField = document.querySelector('#id_warranty');
-
-        console.log("Перед отправкой формы:");
-        console.log("price:", priceField ? priceField.value : "Элемент не найден");
-        console.log("warranty:", warrantyField ? warrantyField.value : "Элемент не найден");
-
+    
         const requestData = {
             description: document.getElementById('new_work_description_name').value.trim(),
-            price: priceField && priceField.value ? priceField.value : null,
-            warranty: warrantyField && warrantyField.value ? warrantyField.value : null
+            price: document.querySelector('#id_price')?.value || null,
+            warranty: document.querySelector('#id_warranty')?.value || null
         };
-
+    
         console.log("Данные, отправляемые в запрос:", requestData);
-
+    
         fetch('/api/typical_work_create/', {
             method: 'POST',
             headers: {
@@ -137,11 +130,15 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log("Ответ от сервера:", data);
-
+    
             if (data.success) {
+                const newWorkDescription = data.typicwork.description;
+    
                 document.getElementById('modal').style.display = 'none';
                 console.log("Модальное окно закрыто.");
-                updateSelectFields();
+    
+                // Обновление и выбор новой работы
+                updateSelectFieldsAndSetNewOption(newWorkDescription);
             } else {
                 console.error("Ошибка от сервера:", data.error);
             }
@@ -151,42 +148,99 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-    function updateSelectFields() {
-        console.log("Запуск обновления всех select-полей...");
-        fetch('/api/typical_work_data/')
-            .then(response => response.json())
-            .then(data => {
-                console.log("Полученные данные для обновления select:", data);
-
-                document.querySelectorAll('.form-control[id$="-description"]').forEach(selectElement => {
-                    const currentValue = selectElement.value;
-                    console.log(`Обновляем select ID: ${selectElement.id}, текущий выбранный элемент: ${currentValue}`);
-
+    function updateSelectFieldsAndSetNewOption(newWorkDescription) {
+        console.log("Обновление всех select-полей и установка новой опции...");
+    
+        document.querySelectorAll('.form-control[id$="-description"]').forEach(selectElement => {
+            fetch('/api/typical_work_data/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Полученные данные для обновления select:", data);
+    
+                    // Очищаем поле и добавляем новые опции
                     $(selectElement).empty();
                     data.forEach(([value, label]) => {
                         $(selectElement).append(`<option value="${value}">${label}</option>`);
                     });
-
-                    $(selectElement).val(currentValue).trigger('change');
-                    initializeSelect2WithEvents(selectElement);
+    
+                    if (selectElement.dataset.modalTriggered === "true") {
+                        console.log(`Пытаемся выбрать новую опцию: ${newWorkDescription}`);
+    
+                        // Добавляем новую опцию вручную, если её нет
+                        let optionExists = false;
+                        $(selectElement).find('option').each(function () {
+                            if ($(this).val() === newWorkDescription) {
+                                optionExists = true;
+                            }
+                        });
+    
+                        if (!optionExists) {
+                            const newOption = new Option(newWorkDescription, newWorkDescription, true, true);
+                            $(selectElement).append(newOption);
+                            console.log(`Добавлена вручную новая опция: ${newWorkDescription}`);
+                        }
+    
+                        // Явно устанавливаем значение перед пересозданием Select2
+                        $(selectElement).val(newWorkDescription);
+    
+                        // Полностью уничтожаем и пересоздаём Select2
+                        if ($(selectElement).data('select2')) {
+                            $(selectElement).select2('destroy');
+                        }
+    
+                        // Пересоздаём Select2 с обновлёнными данными
+                        $(selectElement).select2({
+                            width: '600px'
+                        });
+    
+                        console.log(`Выбрана новая работа "${newWorkDescription}" для select ID: ${selectElement.id}`);
+                        delete selectElement.dataset.modalTriggered;
+                    } else {
+                        console.log(`Сохраняем текущее значение для select ID: ${selectElement.id}`);
+                        $(selectElement).val(selectElement.value);
+    
+                        // Пересоздаём Select2
+                        if ($(selectElement).data('select2')) {
+                            $(selectElement).select2('destroy');
+                        }
+                        $(selectElement).select2({
+                            width: '600px'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Ошибка при запросе данных для обновления select:", error);
                 });
-
-                console.log("Все поля description успешно обновлены.");
-            })
-            .catch(error => {
-                console.error("Ошибка при запросе данных:", error);
-            });
+        });
     }
+    
+    
+    
+    
+
+    document.querySelectorAll('.form-control[id$="-description"]').forEach(selectElement => {
+        selectElement.addEventListener('select2:select', function (e) {
+            const selectedValue = e.params.data.id;
+    
+            if (selectedValue === "new") {
+                modal.style.display = "block";
+                console.log("Модальное окно открыто.");
+                this.dataset.modalTriggered = "true";
+            } else {
+                modal.style.display = "none";
+                console.log("Модальное окно скрыто.");
+            }
+        });
+    });
 
     form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Останавливаем стандартное поведение
+        event.preventDefault();
 
         const formData = new FormData(form);
         console.log("Данные перед отправкой основной формы:");
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-        this.submit(); // Раскомментируйте эту строку, чтобы отправлять форму
+        this.submit();
     });
 });
