@@ -17,3 +17,10 @@
 
 ## Скриншоты
 ![Screeshots of app](/assets/images/01.png)
+![Screeshots of app](/assets/images/02.png)
+![Screeshots of app](/assets/images/03.png)
+![Screeshots of app](/assets/images/04.png)
+![Screeshots of app](/assets/images/05.png)
+![Screeshots of app](/assets/images/06.png)
+![Screeshots of app](/assets/images/07.png)
+![Screeshots of app](/assets/images/08.png)
