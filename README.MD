@@ -24,3 +24,6 @@
 ![Screeshots of app](/assets/images/06.png)
 ![Screeshots of app](/assets/images/07.png)
 ![Screeshots of app](/assets/images/08.png)
+
+## Обратная связь
+@Sharky1111
