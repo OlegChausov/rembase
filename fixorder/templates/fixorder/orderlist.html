@@ -8,30 +8,82 @@
 {% include 'fixorder/search_with_checkbox.html' %}
 <!--поиск -->
 
-<ul>
+<!--<ul>-->
      <hr>
-	{% for myo in my_orders %}
-    		<li><div>
-	<p>Статус: {% if myo.status.status == "Активен" %}<span class="text-primary"> {{myo.status}}</span>
-         {% elif myo.status.status == "Готов" %}<span class="text-success"> {{myo.status}}</span>
-        {% elif myo.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{myo.status}}</span>
-        {% elif myo.status.status == "Выдан" %}<span class="text-secondary"> {{myo.status}}</span> {% endif %}
 
-                | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.order_client}} | {{myo.client_phone}}
-        {% if myo.initial_price %}
-                   | {{myo.initial_price}}
-				{% endif %}</p>
 
-	<p>Дата поступления заказа: {{myo.time_create|date:"d-m-Y"}} | Готовность до: {{myo.time_demand|date:"d-m-Y"}}</p>
 
-<p>
-<a href="{{ myo.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>
-<a href="{{ myo.get_warrantydoc_url }}" class="btn btn-outline-success">Посмотреть/распечатать гарантийку</a>
-<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>
-    <a href="{{ myo.get_delete_url }}" class="btn btn-outline-danger">Удалить заказ</a>
-</p>
-    </div></li>
- <hr>
-	{% endfor %}
-</ul>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+
+        <th scope="col">Редактировать</th>
+
+      <th scope="col">Статус</th>
+      <th scope="col">Устройство</th>
+      <th scope="col">Неисправность</th>
+      <th scope="col">Клиент</th>
+      <th scope="col">Дата поступления</th>
+        <th scope="col">Выполнить до:</th>
+        <th scope="col">Приёмный лист</th>
+        <th scope="col">Гарантийный талон</th>
+        <th scope="col">Удалить</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for myo in my_orders %}
+    {% if myo.status.status == "Активен" %}
+        <tr class="table-active">
+    {% elif myo.status.status == "Готов" %}
+       <tr class="table-info">
+      {% elif myo.status.status == "Выдан без ремонта" %}
+       <tr class="table-warning">
+      {% elif myo.status.status == "Выдан" %}
+       <tr class="table-warning">
+
+  {% endif %}
+
+
+
+
+      <td><a href="{{ myo.get_absolute_url }}" class="btn btn-outline-primary">Изменить</a></td>
+  <td>{{myo.status}}</td>
+      <td>{{myo.device}}</td>
+      <td>{{myo.defect}}</td>
+      <td>{{myo.order_client}}</td>
+      <td>{{myo.time_create|date:"d-m-Y"}}</td>
+      <td>{{myo.time_demand|date:"d-m-Y"}}</td>
+      <td><a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Приемная квитанция</a></td>
+      <td><a href="{{ myo.get_warrantydoc_url }}" class="btn btn-outline-success">Гарантийный талон</a></td>
+      <td> <a href="{{ myo.get_delete_url }}" class="btn btn-outline-danger">Удалить</a></td>
+  </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+<!--	{% for myo in my_orders %}-->
+<!--    		<li><div>-->
+<!--	<p>Статус: {% if myo.status.status == "Активен" %}<span class="text-primary"> {{myo.status}}</span>-->
+<!--         {% elif myo.status.status == "Готов" %}<span class="text-success"> {{myo.status}}</span>-->
+<!--        {% elif myo.status.status == "Выдан без ремонта" %}<span class="text-secondary"> {{myo.status}}</span>-->
+<!--        {% elif myo.status.status == "Выдан" %}<span class="text-secondary"> {{myo.status}}</span> {% endif %}-->
+
+<!--                | Устройство: {{myo.device}} | {{myo.defect}} | клиент: {{myo.order_client}} | {{myo.client_phone}}-->
+<!--        {% if myo.initial_price %}-->
+<!--                   | {{myo.initial_price}}-->
+<!--				{% endif %}</p>-->
+
+<!--	<p>Дата поступления заказа: {{myo.time_create|date:"d-m-Y"}} | Готовность до: {{myo.time_demand|date:"d-m-Y"}}</p>-->
+
+<!--<p>-->
+<!--<a href="{{ myo.get_absolute_url }}" class="btn btn-outline-primary">Смотреть/обработать заказ</a>-->
+<!--<a href="{{ myo.get_warrantydoc_url }}" class="btn btn-outline-success">Посмотреть/распечатать гарантийку</a>-->
+<!--<a href="{{ myo.get_commingdoc_url }}" class="btn btn-outline-primary">Посмотреть/распечатать приемный лист</a>-->
+<!--    <a href="{{ myo.get_delete_url }}" class="btn btn-outline-danger">Удалить заказ</a>-->
+<!--</p>-->
+<!--    </div></li>-->
+<!-- <hr>-->
+<!--	{% endfor %}-->
+<!--</ul>-->
 {% endblock %}
