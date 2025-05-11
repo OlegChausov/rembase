@@ -264,7 +264,7 @@ class Commingdoc(DetailView):
         return context
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
+        return get_object_or_404(Order.objects.all(), pk=self.kwargs[self.pk_url_kwarg])
 
 class DeleteOrder(DeleteView):
     model = Order

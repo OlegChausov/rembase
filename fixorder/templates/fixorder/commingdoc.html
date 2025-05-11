@@ -6,11 +6,11 @@
 <table class="table caption-top">
         <caption>Данные о заказе:</caption>
     <thead>
-    <tr><td>ФИО заказчика</td><td>{{ cm.client_name }}</td></tr>
-    <tr><td>Телефон заказчика</td><td>{{ cm.client_phone }}</td></tr>
-    {% if cm.client_telegram %}<tr><td>Телеграм заказчика</td><td>{{ cm.client_telegram }}</td></tr>{% endif %}
-    {% if cm.client_whatsapp %}<tr><td>WhatsApp заказчика</td><td>{{ cm.client_whatsapp }}</td></tr>{% endif %}
-    {% if cm.client_viber %}<tr><td>Viber заказчика</td><td>{{ cm.client_viber }}</td></tr>{% endif %}
+    <tr><td>ФИО заказчика</td><td>{{ cm.order_client.name }}</td></tr>
+    <tr><td>Телефон заказчика</td><td>{{ cm.order_client.phone }}{% if cm.order_client.phone1 %} ; {{ cm.order_client.phone1 }}{% endif %}</td></tr>
+    {% if cm.order_client.telegram %}<tr><td>Телеграм заказчика</td><td>{{ cm.order_client.telegram }}</td></tr>{% endif %}
+    {% if cm.order_client.whatsapp %}<tr><td>WhatsApp заказчика</td><td>{{ cm.order_client.whatsapp }}</td></tr>{% endif %}
+    {% if cm.order_client.viber %}<tr><td>Viber заказчика</td><td>{{ cm.order_client.viber }}</td></tr>{% endif %}
     <tr><td>Устройство</td><td>{{ cm.device }}</td></tr>
     <tr><td>Заявленная неисправность</td><td>{{ cm.defect }}</td></tr>
     {% if cm.device_exterior %}<tr><td>Внешний вид устройства</td><td>{{ cm.device_exterior }}</td></tr>{% endif %}
@@ -21,5 +21,5 @@
     {% if cm.notes %}<tr><td>Заметки</td><td>{{ cm.notes }}</td></tr>{% endif %}
     <tr><td>Дата и время приемки</td><td>{{ cm.time_create }}</td></tr>
 </table>
-<p>Исполнитель {{ cm.executor.name }}_________________  Заказчик {{ cm.order_client.name }}_________________</p>
+<p><b>Принял:</b> {{ cm.executor.name }}_________________  <b>Заказчик:</b>  {{ cm.order_client.name }}_________________  </p>
 {% endblock doccontent %}

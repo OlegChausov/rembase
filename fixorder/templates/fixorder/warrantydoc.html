@@ -7,13 +7,14 @@
 <table class="table caption-top">
     <caption>Данные о ремонте:</caption>
     <thead>
-    <tr><td>ФИО заказчика</td><td>{{ wr.client_name }}</td></tr>
-    <tr><td>Телефон заказчика</td><td>{{ wr.client_phone }}</td></tr>
+    <tr><td>ФИО заказчика</td><td>{{ wr.order_client.name }}</td></tr>
+    <tr><td>Телефон заказчика</td><td>{{ wr.order_client.phone }}{% if wr.order_client.phone1 %} ; {{ wr.order_client.phone1 }}{% endif %}</td></tr>
     <tr><td>Устройство</td><td>{{ wr.device }}</td></tr>
     <tr><td>Заявленная неисправность</td><td>{{ wr.defect }}</td></tr>
     <tr><td>Дата и время приемки</td><td>{{ wr.time_create }}</td></tr>
-    <tr><td>Дата и время выдачи</td><td>{{ wr.away }}</td></tr>
+    <tr><td>Дата и время выдачи</td><td>{{ wr.time_away }}</td></tr>
 </table>
+<!--
 {% if wr.work or wr.work1 or wr.work2 or wr.work3 or wr.work4 or wr.work5 or wr.work6 %}
 <table class="table caption-top">
     <caption>Выполненные работы</caption>
@@ -32,6 +33,35 @@
 {% else %}
 <h>Выполненных работ нет</h>
 {% endif %}
+-->
+
+
+<table class="table">
+  <thead>
+    <tr>
+
+      <th scope="col">Название</th>
+      <th scope="col">Цена, Руб</th>
+      <th scope="col">Гарантия</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for work in wr.works.all %}
+    <tr>
+
+      <td>{{ work.description }}</td>
+      <td>{{ work.price }}</td>
+      <td>{{ work.warranty }}</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+    <tr><td>Итоговая стоимость, Руб: </td><td>{{ wr.total_price }}</td><td></td></tr>
+    {% if wr.prepaid %}<tr><td>Предоплата:</td><td>{{ wr.prepaid }}</td><td></td></tr>{% endif %}
+<br>
 {% if wr.conclusion %}<p>Заключение о ремонте: {{ wr.conclusion }}</p>{% endif %}
-<p>Исполнитель {{ wr.executor.name }}_________________  Заказчик {{ wr.order_client.name }}_________________</p>
+<br>
+<p><b>Исполнитель</b>  {{ wr.executor.name }}_________________  <b>Заказчик</b> {{ wr.order_client.name }}_________________  </p>
 {% endblock doccontent %}
