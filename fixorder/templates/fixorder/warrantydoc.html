@@ -55,12 +55,21 @@
     </tr>
   {% endfor %}
 
+      <tr>
+
+      <td>Итоговая стоимость, Руб: </td>
+      <td>{{ wr.total_price }}</td>
+      <td></td>
+    </tr>
+
+
   </tbody>
 </table>
 
-    <tr><td>Итоговая стоимость, Руб: </td><td>{{ wr.total_price }}</td><td></td></tr>
-    {% if wr.prepaid %}<tr><td>Предоплата:</td><td>{{ wr.prepaid }}</td><td></td></tr>{% endif %}
-<br>
+
+    {% if wr.prepaid %}<p>Предоплата: {{ wr.prepaid }}</p>{% endif %}
+    <p><b>К оплате:, Руб: {{ wr.remain_to_pay }}</b></p>
+
 {% if wr.conclusion %}<p>Заключение о ремонте: {{ wr.conclusion }}</p>{% endif %}
 <br>
 <p><b>Исполнитель</b>  {{ wr.executor.name }}_________________  <b>Заказчик</b> {{ wr.order_client.name }}_________________  </p>
