@@ -19,7 +19,7 @@ def filled_fields_verbose(pk):
     instance = Company.objects.get(pk=pk)
     field_dict = {}
     for field in instance._meta.fields:
-        if field.name not in ['id', 'photo']:  # Исключаем поля 'id' и 'photo'
+        if field.name not in ['id', 'photo', 'warranty_data', 'income_data']:  # Исключаем поля которые не нужно отображать в доках
             value = getattr(instance, field.name)
             if value:
                 field_dict[field.verbose_name] = value

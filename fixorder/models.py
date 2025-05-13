@@ -47,6 +47,8 @@ class Company(models.Model):
     adress = models.CharField(max_length=255, blank=True, null=True, unique=True, db_index=True, verbose_name='Адрес')
     postal_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Почтовый адрес')
     official_adress = models.CharField(max_length=255, blank=True, null=True, unique=True, verbose_name='Юридический адрес')
+    income_data = models.TextField(max_length=20000, blank=True, null=True, verbose_name='Общая информация для приемной квитанции')
+    warranty_data = models.TextField(max_length=20000, blank=True, null=True, verbose_name='Общая информация для приемной квитанции')
     photo = models.ImageField(upload_to="static/img/", blank=True, null=True, verbose_name="Логотип компании")
 
     def __str__(self):
