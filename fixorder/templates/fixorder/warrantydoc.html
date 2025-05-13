@@ -4,7 +4,7 @@
 {% block doccontent %}
 <h1>{{ title }}</h1>
 
-<table class="table caption-top">
+<table class="table caption-top" style="font-size: 12px;">
     <caption>Данные о ремонте:</caption>
     <thead>
     <tr><td>ФИО заказчика</td><td>{{ wr.order_client.name }}</td></tr>
@@ -35,8 +35,8 @@
 {% endif %}
 -->
 
-
-<table class="table">
+<b>Выполненные работы:</b>
+<table class="table" style="font-size: 12px;">
   <thead>
     <tr>
 
@@ -73,4 +73,5 @@
 {% if wr.conclusion %}<p>Заключение о ремонте: {{ wr.conclusion }}</p>{% endif %}
 <br>
 <p><b>Исполнитель</b>  {{ wr.executor.name }}_________________  <b>Заказчик</b> {{ wr.order_client.name }}_________________  </p>
+<p style="font-size: 10px;">{{ warranty_data }}</p>
 {% endblock doccontent %}

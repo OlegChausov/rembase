@@ -245,7 +245,7 @@ class Warrantydoc(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Акт выполненных работ'
-        # context["time_away"] = datetime.now()
+        context["warranty_data"] = Company.objects.last().warranty_data if Company.objects.last() else None
         return context
 
     def get_object(self, queryset=None):
@@ -295,6 +295,7 @@ class Commingdoc(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Приемная квитанция'
+        context["income_data"] = Company.objects.last().income_data if Company.objects.last() else None
         return context
 
     def get_object(self, queryset=None):

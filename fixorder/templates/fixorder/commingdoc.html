@@ -3,7 +3,7 @@
 {% block doccontent %}
 <h1>{{ title }}</h1>
 
-<table class="table caption-top">
+<table class="table caption-top" style="font-size: 12px;">
         <caption>Данные о заказе:</caption>
     <thead>
     <tr><td>ФИО заказчика</td><td>{{ cm.order_client.name }}</td></tr>
@@ -22,4 +22,6 @@
     <tr><td>Дата и время приемки</td><td>{{ cm.time_create }}</td></tr>
 </table>
 <p><b>Принял:</b> {{ cm.executor.name }}_________________  <b>Заказчик:</b>  {{ cm.order_client.name }}_________________  </p>
+<p style="font-size: 10px;">{{ income_data }}</p>
 {% endblock doccontent %}
+
