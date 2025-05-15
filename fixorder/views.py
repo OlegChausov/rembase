@@ -233,6 +233,12 @@ class AddOrder(CreateView):
         print("Form validation successful. Proceeding to save order.")
         return super().form_valid(form)
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})  # Добавляем form-control ко всем полям
+        return form
+
 
 
 
@@ -280,6 +286,12 @@ class CompanyView(UpdateView):
   #  context_object_name = 'form'
     extra_context = {'title': 'Профиль компании'}
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})  # Добавляем form-control ко всем полям
+        return form
+
     def get_object(self, queryset=None):
         pk=1
         obj = get_object_or_404(Company, pk=pk)
@@ -322,6 +334,12 @@ class EditClient(UpdateView):
         self.object = form.save(commit=False)
         self.object.save()
         return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})  # Добавляем form-control ко всем полям
+        return form
 
 
 
