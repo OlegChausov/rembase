@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView, ListView, CreateView, TemplateView, DetailView, DeleteView
 import json
 
-from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm, OrderForm
+from fixorder.forms import AddOrderForm, AddClientForm, AddEmployeeForm, WorkForm, OrderForm, TypicalWorkForm
 from fixorder.models import Order, OrderStatus, Company, Client, Employee, Work, TypicalWork
 
 WorkFormSet = inlineformset_factory(Order, Work, form=WorkForm, extra=1)
@@ -442,7 +442,7 @@ class TypicalWorks(ListView):
 
 class СreateTypicalWork(CreateView):
     model = TypicalWork
-    fields = '__all__'
+    form_class = TypicalWorkForm
     template_name = 'fixorder/new_typical_work.html'
     success_url = reverse_lazy('typical_works')
     extra_context = {'title': 'Добавить новую работу', 'header': 'Добавление новой работы'}

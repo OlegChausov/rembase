@@ -141,3 +141,9 @@ class OrderForm(forms.ModelForm):
             'total_price': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class TypicalWorkForm(forms.ModelForm):
+    class Meta:
+        model = TypicalWork
+        fields = '__all__'
+        widgets = {'description': forms.TextInput(attrs={"class": "form-control", "placeholder": "Описание новой работы"})}
