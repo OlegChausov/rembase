@@ -110,7 +110,10 @@ class AddEmployeeForm(forms.ModelForm):
         model = Employee
         fields = ['name', 'position', 'status', ]
         widgets = {
-            'time_fire': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'name': forms.TextInput(attrs={"class": "form-control", "placeholder": "Имя нового работника"}),
+            'position': forms.TextInput(attrs={"class": "form-control", "placeholder": "Должность"}),
+            'status': forms.Select(attrs={"class": "form-control"}),
+            # 'time_fire': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
 
 class OrderForm(forms.ModelForm):
