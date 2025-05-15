@@ -2,6 +2,9 @@
   #printPageButton {
     display: none;
   }
+    #IndexPageButton {
+    display: none;
+  }
 }
 
 .worksel {

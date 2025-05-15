@@ -116,6 +116,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         if self.status_id and not self.pk:
+            self.remain_to_pay = (self.total_price or 0) - (self.prepaid or 0)
             super().save(*args, **kwargs)
 
         old_order = None
@@ -130,7 +131,7 @@ class Order(models.Model):
 
     def calculate_price(self):
         self.total_price = self.works.aggregate(total_price=Sum("price"))["total_price"] or 0
-        self.remain_to_pay = self.total_price - (self.prepaid or 0)
+        self.remain_to_pay = (self.total_price or 0) - (self.prepaid or 0)
         self.save() # Сохраняем объект Order после пересчета цен
 
     def __str__(self):

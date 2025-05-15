@@ -137,7 +137,7 @@ class OrderForm(forms.ModelForm):
                 attrs={'type': 'datetime-local', 'class': 'form-control'},
             ),
             'device': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.TextInput(attrs={'class': 'form-control'}),
+            'device_password': forms.TextInput(attrs={'class': 'form-control'}),
             'initial_price': forms.TextInput(attrs={'class': 'form-control'}),
             'prepaid': forms.TextInput(attrs={'class': 'form-control'}),
             'remain_to_pay': forms.TextInput(attrs={'class': 'form-control'}),

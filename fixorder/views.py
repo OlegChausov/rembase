@@ -21,6 +21,7 @@ def get_client_data(request, client_id):
     data = {
         'name': client.name,
         'phone': client.phone,
+        'phone1': client.phone1,
         'telegram': client.telegram,
         'viber': client.viber,
         'whatsapp': client.whatsapp,
@@ -34,6 +35,7 @@ def create_client(request):
         data = json.loads(request.body)
         name = data.get('name')
         phone = data.get('phone')
+        phone1 = data.get('phone1')
         telegram = data.get('telegram')
         viber = data.get('viber')
         whatsapp = data.get('whatsapp')
@@ -42,6 +44,7 @@ def create_client(request):
         client = Client.objects.create(
             name=name,
             phone=phone,
+            phone1=phone1,
             telegram=telegram,
             viber=viber,
             whatsapp=whatsapp
@@ -53,6 +56,7 @@ def create_client(request):
                 'id': client.id,
                 'name': client.name,
                 'phone': client.phone,
+                'phone1': client.phone1,
                 'telegram': client.telegram,
                 'viber': client.viber,
                 'whatsapp': client.whatsapp
