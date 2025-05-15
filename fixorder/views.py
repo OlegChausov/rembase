@@ -434,6 +434,11 @@ class EditEmployee(UpdateView):
         context['related_orders'] = Order.objects.filter(executor=self.object)
         return context
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})  # Добавляем form-control ко всем полям
+        return form
 
 class TypicalWorks(ListView):
     model = TypicalWork
