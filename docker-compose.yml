@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+    depends_on:
+      - sqlite_studio
+
+  sqlite_studio:
+    image: lscr.io/linuxserver/sqlitebrowser
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./db.sqlite3:/config/db.sqlite3
