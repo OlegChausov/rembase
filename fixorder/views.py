@@ -1,4 +1,4 @@
-from datetime import datetime
+
 
 from django.conf.urls import handler404
 from django.db.models import Q, Sum, ProtectedError
@@ -262,19 +262,6 @@ class Warrantydoc(DetailView):
         return get_object_or_404(Order.objects, pk=self.kwargs[self.pk_url_kwarg])
 
 
-class Commingdoc(DetailView):
-    # model = Order
-    template_name = "fixorder/commingdoc.html"
-    pk_url_kwarg = 'pk'
-    context_object_name = 'cm'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'Приемная квитанция'
-        return context
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Order.objects.all(), pk=self.kwargs[self.pk_url_kwarg])
 
 class DeleteOrder(DeleteView):
     model = Order

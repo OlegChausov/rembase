@@ -10,22 +10,18 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
-<!--<ul>
-    <img src="{% logo_url %}" alt="FixOrder" height="100">
-    {% filled_fields_verbose 1 as fields_verbose %}
-    {% for verbose_name, value in fields_verbose.items %}
-        <li>{{ value }}</li>
-    {% endfor %}
-</ul>-->
-
+<div class="container">
 <table>
 	<tbody>
 	<tr>
 			<td rowspan="5"><img src="{% logo_url %}" alt="FixOrder" height="100"></td>
     {% filled_fields_verbose 1 as fields_verbose %}
     {% for verbose_name, value in fields_verbose.items %}
-		<td colspan="4">{{ value }}</td>
+        {% if verbose_name == "Telegram" or variable == "Vibe" or variable == "WhatsUp" %}
+		<td colspan="4">{{verbose_name}}: {{ value }}</td>
+        {% else %}
+        <td colspan="4">{{ value }}</td>
+        {% endif%}
 		</tr>
     {% endfor %}
     </table>
@@ -39,5 +35,6 @@
 
 <p><input  id="printPageButton" type="submit" value="Печатать" class="btn btn-outline-success" onClick="window.print();">
 <a id="IndexPageButton" href="/" class="btn btn-outline-primary">На главную</a></p>
+</div>
 </body>
 </html>
