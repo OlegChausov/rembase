@@ -1,0 +1,1649 @@
+{
+    "type": "database",
+    "name": "db",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_client",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_client\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"phone\" varchar(20) NOT NULL, \"phone1\" varchar(20) NULL, \"telegram\" varchar(40) NULL, \"viber\" varchar(20) NULL, \"whatsapp\" varchar(20) NULL, \"name\" varchar(255) NOT NULL UNIQUE)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "phone",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "phone1",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "telegram",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "viber",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "whatsapp",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "нет",
+                    null,
+                    null,
+                    null,
+                    null,
+                    "не выбран"
+                ],
+                [
+                    38,
+                    "8888",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Зетник"
+                ],
+                [
+                    39,
+                    "9999",
+                    null,
+                    "",
+                    "",
+                    "",
+                    "keke"
+                ],
+                [
+                    40,
+                    "12345677888",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Красти Крабс"
+                ],
+                [
+                    41,
+                    "+375293665544",
+                    null,
+                    "",
+                    "",
+                    "",
+                    "Бубач Анг"
+                ],
+                [
+                    42,
+                    "77543",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Боба Бин"
+                ],
+                [
+                    43,
+                    "77777",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Поруччик Голицын"
+                ],
+                [
+                    44,
+                    "567898765",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Туту Рутуту"
+                ],
+                [
+                    45,
+                    "87654567",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Джек Спарровец"
+                ],
+                [
+                    46,
+                    "98765",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Люден Дорф"
+                ],
+                [
+                    47,
+                    "+351226688",
+                    "+373332288",
+                    "@dasilva77",
+                    "+351226688",
+                    "+351226688",
+                    "Трусов Петр Да Силва"
+                ],
+                [
+                    48,
+                    "998877112",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Тестовый Дядёк"
+                ],
+                [
+                    49,
+                    "12436778980",
+                    null,
+                    "@Hogha",
+                    "",
+                    "",
+                    "Ходжа Насреддин"
+                ],
+                [
+                    50,
+                    "99663325",
+                    "32564788",
+                    "@Nobunaga",
+                    "",
+                    "45785",
+                    "Эдо Нобунага"
+                ],
+                [
+                    51,
+                    "Такаято",
+                    "7578589549",
+                    "",
+                    "",
+                    "4г4",
+                    "Света"
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_company",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_company\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"brand_name\" varchar(255) NOT NULL UNIQUE, \"official_name\" varchar(255) NULL UNIQUE, \"unp\" decimal NULL, \"phone\" varchar(20) NOT NULL UNIQUE, \"phone1\" varchar(20) NULL UNIQUE, \"phone2\" varchar(20) NULL UNIQUE, \"telegram\" varchar(40) NULL, \"viber\" varchar(20) NULL, \"whatsapp\" varchar(20) NULL, \"email\" varchar(50) NULL, \"adress\" varchar(255) NULL UNIQUE, \"postal_adress\" varchar(255) NULL UNIQUE, \"official_adress\" varchar(255) NULL UNIQUE, \"photo\" varchar(100) NULL, \"income_data\" text NULL, \"warranty_data\" text NULL)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "brand_name",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "official_name",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "unp",
+                    "type": "decimal",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "phone",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "phone1",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "phone2",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "telegram",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "viber",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "whatsapp",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "email",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "adress",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "postal_adress",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "official_adress",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "photo",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "income_data",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "warranty_data",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "Моя новая компания",
+                    null,
+                    null,
+                    "123456",
+                    null,
+                    null,
+                    "@tytyty",
+                    "43235634563456",
+                    null,
+                    "example@example.com",
+                    null,
+                    null,
+                    null,
+                    "logo.png",
+                    "<br>1. Технический центр не несёт ответственности за возможную потерю данных в памяти устройства, связанную с заменой плат, установкой\r\nпрограммного обеспечения, заменой носителя информации.\r\n<br>2. Заказчик принимает на себя риск возможной полной или частичной утраты работоспособности устройства в процессе ремонта (тепловой\r\nобработки), в случае грубых нарушений пользователем условий эксплуатации, наличий следов попадания токопроводящей жидкости\r\n(коррозии), либо механических повреждений.\r\n<br>3. На восстановленные после попадания жидкости на устройство гарантия не распространяется и не продлевается.\r\n<br>4. Срок бесплатного хранения устройства составляет 30 дней с момента приёма его в ремонт. В случае, если по истечении указанного срока\r\nклиентом не заявлено требование о выдаче устройства, оно принимается на ответственное хранение. Стоимость услуг по ответственному\r\nхранению составляет ___ руб в сутки. Максимальный срок ответственного хранения составляет 30 дней. В случае, если в течение указанного\r\nсрока Клиент не требует возврата устройства (либо с Клиентом не представляется возможным связаться по указанному в квитанции\r\nтелефону), устройство утилизируется без компенсации его стоимости клиенту.\r\n<br>5. В случае отказа заказчика от ремонта устройства стоимость диагностики неисправности платная.\r\n<br>6. В случае утери квитанции, устройство выдаётся по предъявлению паспорта на имя заказчика.",
+                    "Вердикт:\r\nВышеперечисленные услуги выполнены полностью и в срок. Заказчик претензий по\r\nобъему, качеству и срокам оказания услуг не имеет."
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_employee",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_employee\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"name\" varchar(255) NOT NULL, \"position\" varchar(100) NOT NULL, \"status\" varchar(10) NOT NULL, \"time_fire\" date NULL, \"time_hire\" date NOT NULL, \"company_id\" bigint NOT NULL REFERENCES \"fixorder_company\" (\"id\") DEFERRABLE INITIALLY DEFERRED)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "name",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "position",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "status",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "time_fire",
+                    "type": "date",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "time_hire",
+                    "type": "date",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "company_id",
+                    "type": "bigint",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES \"fixorder_company\" (\"id\") "
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "Болтун Болт",
+                    "Мастер",
+                    "2",
+                    null,
+                    "2025-03-25",
+                    1
+                ],
+                [
+                    2,
+                    "Роботун Раб",
+                    "Манагер",
+                    "1",
+                    null,
+                    "2025-03-25",
+                    1
+                ],
+                [
+                    10,
+                    "Пыяльников Разбойников",
+                    "Бегунок",
+                    "1",
+                    null,
+                    "2025-03-31",
+                    1
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_order",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_order\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"time_create\" datetime NOT NULL, \"time_update\" datetime NOT NULL, \"time_demand\" date NULL, \"device\" varchar(255) NOT NULL, \"defect\" text NOT NULL, \"device_password\" varchar(50) NULL, \"device_exterior\" text NULL, \"initial_price\" varchar(10) NULL, \"notes\" text NULL, \"status_id\" bigint NOT NULL REFERENCES \"fixorder_orderstatus\" (\"id\") DEFERRABLE INITIALLY DEFERRED, \"time_away\" datetime NULL, \"total_price\" decimal NOT NULL, \"conclusion\" text NULL, \"remain_to_pay\" decimal NULL, \"order_client_id\" bigint NULL REFERENCES \"fixorder_client\" (\"id\") DEFERRABLE INITIALLY DEFERRED, \"executor_id\" bigint NULL REFERENCES \"fixorder_employee\" (\"id\") DEFERRABLE INITIALLY DEFERRED, \"prepaid\" decimal NULL)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "time_create",
+                    "type": "datetime",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "time_update",
+                    "type": "datetime",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "time_demand",
+                    "type": "date",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "device",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "defect",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "device_password",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "device_exterior",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "initial_price",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "notes",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "status_id",
+                    "type": "bigint",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES \"fixorder_orderstatus\" (\"id\") "
+                        }
+                    ]
+                },
+                {
+                    "name": "time_away",
+                    "type": "datetime",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "total_price",
+                    "type": "decimal",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "conclusion",
+                    "type": "text",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "remain_to_pay",
+                    "type": "decimal",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "order_client_id",
+                    "type": "bigint",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES \"fixorder_client\" (\"id\") "
+                        }
+                    ]
+                },
+                {
+                    "name": "executor_id",
+                    "type": "bigint",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL "
+                        },
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES \"fixorder_employee\" (\"id\") "
+                        }
+                    ]
+                },
+                {
+                    "name": "prepaid",
+                    "type": "decimal",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    59,
+                    "2025-04-29 18:50:26.349257",
+                    "2025-04-29 18:50:26.362494",
+                    "2025-04-29",
+                    "вв",
+                    "вв",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    null,
+                    0,
+                    38,
+                    null,
+                    null
+                ],
+                [
+                    60,
+                    "2025-04-29 18:51:12.429058",
+                    "2025-04-29 18:51:28.713520",
+                    null,
+                    "ньокия",
+                    "но коннекшн пипл",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    "",
+                    0,
+                    40,
+                    null,
+                    null
+                ],
+                [
+                    61,
+                    "2025-04-29 19:03:15.309240",
+                    "2025-05-11 22:53:13.840312",
+                    null,
+                    "фен",
+                    "Сломан весь",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    24,
+                    "",
+                    13,
+                    42,
+                    2,
+                    11
+                ],
+                [
+                    62,
+                    "2025-04-29 20:11:35.170880",
+                    "2025-05-05 19:08:14.741913",
+                    null,
+                    "нннн",
+                    "нннн",
+                    null,
+                    "",
+                    null,
+                    "",
+                    2,
+                    "2025-05-05 19:08:14.727925",
+                    801,
+                    "",
+                    801,
+                    43,
+                    null,
+                    null
+                ],
+                [
+                    63,
+                    "2025-04-30 21:59:01.709369",
+                    "2025-04-30 21:59:32.621204",
+                    null,
+                    "xdcfvbgvfd",
+                    "sdfgvfcdx",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    "",
+                    0,
+                    44,
+                    null,
+                    null
+                ],
+                [
+                    64,
+                    "2025-05-01 08:38:15.729075",
+                    "2025-05-01 08:38:29.441280",
+                    null,
+                    "павапр",
+                    "орпапр",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    "",
+                    0,
+                    45,
+                    null,
+                    null
+                ],
+                [
+                    66,
+                    "2025-05-01 10:26:01.717872",
+                    "2025-05-01 10:26:39.243462",
+                    "2025-05-01",
+                    "па",
+                    "пав",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    "",
+                    0,
+                    43,
+                    null,
+                    null
+                ],
+                [
+                    67,
+                    "2025-05-01 10:35:01.429651",
+                    "2025-05-05 19:08:06.059273",
+                    "2025-05-01",
+                    "ff",
+                    "ff",
+                    null,
+                    "",
+                    null,
+                    "",
+                    3,
+                    null,
+                    0,
+                    "",
+                    0,
+                    44,
+                    null,
+                    null
+                ],
+                [
+                    68,
+                    "2025-05-11 18:11:35.123588",
+                    "2025-05-11 18:40:34.522010",
+                    "2025-05-11",
+                    "Iphone X",
+                    "Не разряжается",
+                    "123456",
+                    "Покоцан",
+                    "160",
+                    "Мутный",
+                    4,
+                    null,
+                    0,
+                    "",
+                    -25,
+                    47,
+                    2,
+                    25
+                ],
+                [
+                    69,
+                    "2025-05-15 19:34:24.900051",
+                    "2025-05-15 19:41:22.297117",
+                    "2025-05-17",
+                    "NEC",
+                    "не горит лампа",
+                    "00_)укуца",
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    43.28,
+                    "",
+                    10.28,
+                    50,
+                    10,
+                    33
+                ],
+                [
+                    70,
+                    "2025-05-15 19:48:28.705679",
+                    "2025-05-15 19:58:05.858692",
+                    "2025-05-15",
+                    "YJT",
+                    "dfghjhgf",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    65,
+                    "",
+                    43,
+                    46,
+                    null,
+                    22
+                ],
+                [
+                    71,
+                    "2025-05-15 19:52:36.890762",
+                    "2025-05-15 19:56:59.118747",
+                    "2025-05-15",
+                    "gyhgfd",
+                    "sdfgf",
+                    null,
+                    "",
+                    null,
+                    "",
+                    1,
+                    "2025-05-15 19:56:59.072749",
+                    0,
+                    "",
+                    -77,
+                    48,
+                    null,
+                    77
+                ],
+                [
+                    72,
+                    "2025-05-15 19:59:22.356442",
+                    "2025-05-15 19:59:22.376448",
+                    "2025-05-15",
+                    "zsdf",
+                    "fdsasdf",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    null,
+                    0,
+                    47,
+                    null,
+                    44
+                ],
+                [
+                    73,
+                    "2025-05-15 20:03:14.849968",
+                    "2025-05-15 20:04:16.410685",
+                    "2025-05-15",
+                    "глна",
+                    "пмнргол",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    456,
+                    "",
+                    0,
+                    42,
+                    null,
+                    456
+                ],
+                [
+                    74,
+                    "2025-05-22 20:23:11.495319",
+                    "2025-05-22 20:23:11.510321",
+                    "2025-05-22",
+                    "Айфон 15 про макс",
+                    "sdffg",
+                    null,
+                    "",
+                    null,
+                    "",
+                    4,
+                    null,
+                    0,
+                    null,
+                    0,
+                    51,
+                    null,
+                    null
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_orderstatus",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_orderstatus\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"status\" varchar(100) NOT NULL UNIQUE)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "status",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "Выдан без ремонта"
+                ],
+                [
+                    2,
+                    "Выдан"
+                ],
+                [
+                    3,
+                    "Готов"
+                ],
+                [
+                    4,
+                    "Активен"
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_typicalwork",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_typicalwork\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"description\" varchar(255) NOT NULL)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "description",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "Замена дисплея"
+                ],
+                [
+                    2,
+                    "Замена задней крышки"
+                ],
+                [
+                    3,
+                    "Замена стекла экрана"
+                ],
+                [
+                    4,
+                    "Замена разъема зярядного"
+                ],
+                [
+                    5,
+                    "Замена коннектра"
+                ],
+                [
+                    6,
+                    "Замена гнезда наушников"
+                ],
+                [
+                    7,
+                    "Замена разъема зярядного"
+                ],
+                [
+                    8,
+                    "Замена корпуса"
+                ],
+                [
+                    9,
+                    "Замена шлейфа"
+                ],
+                [
+                    10,
+                    "Замена нижней платы"
+                ],
+                [
+                    11,
+                    "Замена датчика"
+                ],
+                [
+                    12,
+                    "Замена кнопок"
+                ],
+                [
+                    13,
+                    "Замена рамки корпуса"
+                ],
+                [
+                    14,
+                    "Замена тачскрина"
+                ],
+                [
+                    15,
+                    "Замена межплатного шлейфа"
+                ],
+                [
+                    17,
+                    "мытье кита"
+                ],
+                [
+                    18,
+                    "Измерение жирафа"
+                ],
+                [
+                    19,
+                    "перекидка данных"
+                ],
+                [
+                    20,
+                    "Замена лампы"
+                ],
+                [
+                    21,
+                    "Замена лампы"
+                ],
+                [
+                    22,
+                    "Восстановление гнезда наушников"
+                ],
+                [
+                    23,
+                    "Восстановление разъема зярядного"
+                ],
+                [
+                    24,
+                    "Восстановление шлейфа"
+                ],
+                [
+                    25,
+                    "Восстановление нижней платы"
+                ],
+                [
+                    26,
+                    "Восстановление датчика"
+                ],
+                [
+                    27,
+                    "Восстановление кнопок"
+                ],
+                [
+                    28,
+                    "Восстановление тачскрина"
+                ],
+                [
+                    29,
+                    "Восстановление межплатного шлейфа"
+                ],
+                [
+                    30,
+                    "Восстановление процессора"
+                ],
+                [
+                    31,
+                    "Восстановление микросхемы"
+                ],
+                [
+                    32,
+                    "Восстановление чипа памяти"
+                ],
+                [
+                    33,
+                    "Восстановление контроллера"
+                ],
+                [
+                    34,
+                    "Перепайка разъема зярядного"
+                ],
+                [
+                    35,
+                    "Перепайка коннектра"
+                ],
+                [
+                    36,
+                    "Перепайка гнезда наушников"
+                ],
+                [
+                    37,
+                    "Перепайка разъема зярядного"
+                ],
+                [
+                    38,
+                    "Перепайка шлейфа"
+                ],
+                [
+                    39,
+                    "Перепайка нижней платы"
+                ],
+                [
+                    40,
+                    "Перепайка кнопок"
+                ],
+                [
+                    41,
+                    "Перепайка рамки корпуса"
+                ],
+                [
+                    42,
+                    "Перепайка межплатного шлейфа"
+                ],
+                [
+                    43,
+                    "Перепайка процессора"
+                ],
+                [
+                    44,
+                    "Перепайка микросхемы"
+                ],
+                [
+                    45,
+                    "Перепайка чипа памяти"
+                ],
+                [
+                    46,
+                    "Перепайка контроллера"
+                ],
+                [
+                    47,
+                    "Чистка от влаги"
+                ],
+                [
+                    48,
+                    "Восстановление после воды"
+                ],
+                [
+                    49,
+                    "Диагностика"
+                ],
+                [
+                    50,
+                    "Сохранение данных"
+                ],
+                [
+                    51,
+                    "Сброс пароля"
+                ],
+                [
+                    52,
+                    "Восстановление доступа к аккаунту"
+                ],
+                [
+                    53,
+                    "Восстановление доступа к устройству"
+                ],
+                [
+                    54,
+                    "Еаклейка защитного стекла"
+                ],
+                [
+                    55,
+                    "Наклейка защитной пленки"
+                ],
+                [
+                    101,
+                    "Замена процессора"
+                ],
+                [
+                    102,
+                    "Замена микросхемы"
+                ],
+                [
+                    103,
+                    "Замена чипа памяти"
+                ],
+                [
+                    104,
+                    "Замена контроллера"
+                ],
+                [
+                    105,
+                    "Восстановление разъема зярядного"
+                ],
+                [
+                    106,
+                    "Восстановление коннектра"
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "fixorder_work",
+            "withoutRowId": false,
+            "strict": false,
+            "ddl": "CREATE TABLE \"fixorder_work\" (\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT, \"description\" varchar(255) NOT NULL, \"price\" decimal NULL, \"order_id\" bigint NOT NULL REFERENCES \"fixorder_order\" (\"id\") DEFERRABLE INITIALLY DEFERRED, \"warranty\" varchar(20) NULL)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY AUTOINCREMENT"
+                        }
+                    ]
+                },
+                {
+                    "name": "description",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "price",
+                    "type": "decimal",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                },
+                {
+                    "name": "order_id",
+                    "type": "bigint",
+                    "constraints": [
+                        {
+                            "type": "NOT NULL",
+                            "definition": "NOT NULL "
+                        },
+                        {
+                            "type": "FOREIGN KEY",
+                            "definition": "REFERENCES \"fixorder_order\" (\"id\") "
+                        }
+                    ]
+                },
+                {
+                    "name": "warranty",
+                    "type": "varchar",
+                    "constraints": [
+                        {
+                            "type": null,
+                            "definition": "NULL"
+                        }
+                    ]
+                }
+            ],
+            "rows": [
+                [
+                    1,
+                    "Ремонт зарядки",
+                    13,
+                    62,
+                    "13"
+                ],
+                [
+                    6,
+                    "Ремонт зарядки",
+                    666,
+                    62,
+                    "666"
+                ],
+                [
+                    7,
+                    "Полировка стекла",
+                    122,
+                    62,
+                    "122"
+                ],
+                [
+                    8,
+                    "Полировка стекла",
+                    17,
+                    63,
+                    ""
+                ],
+                [
+                    9,
+                    "Ремонт рессоры",
+                    18,
+                    63,
+                    "18"
+                ],
+                [
+                    10,
+                    "Полировка стекла",
+                    16,
+                    64,
+                    "16"
+                ],
+                [
+                    19,
+                    "Ремонт рессоры",
+                    11,
+                    61,
+                    "12"
+                ],
+                [
+                    20,
+                    "Полировка стекла",
+                    13,
+                    61,
+                    "14"
+                ],
+                [
+                    22,
+                    "Замена лампы",
+                    43.28,
+                    69,
+                    "13"
+                ],
+                [
+                    23,
+                    "Ремонт рессоры",
+                    65,
+                    70,
+                    "23"
+                ],
+                [
+                    24,
+                    "Чистка сапог",
+                    55,
+                    73,
+                    "0"
+                ],
+                [
+                    25,
+                    "мытье кита",
+                    401,
+                    73,
+                    "32"
+                ]
+            ]
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_cl_name_cc36cc_idx",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_cl_name_cc36cc_idx\" ON \"fixorder_client\" (\"name\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_client_phone1_b073ee0f",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_client_phone1_b073ee0f\" ON \"fixorder_client\" (\"phone1\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_client_phone_e759862d",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_client_phone_e759862d\" ON \"fixorder_client\" (\"phone\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_employee_company_id_a292806b",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_employee_company_id_a292806b\" ON \"fixorder_employee\" (\"company_id\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_or_status__fed1c7_idx",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_or_status__fed1c7_idx\" ON \"fixorder_order\" (\"status_id\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_or_time_cr_d84a42_idx",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_or_time_cr_d84a42_idx\" ON \"fixorder_order\" (\"time_create\" DESC)"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_order_executor_id_ce05b146",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_order_executor_id_ce05b146\" ON \"fixorder_order\" (\"executor_id\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_order_order_client_id_2770f2fb",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_order_order_client_id_2770f2fb\" ON \"fixorder_order\" (\"order_client_id\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_order_status_id_3262bac5",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_order_status_id_3262bac5\" ON \"fixorder_order\" (\"status_id\")"
+        },
+        {
+            "type": "index",
+            "database": null,
+            "name": "fixorder_work_order_id_dd4ad786",
+            "unique": false,
+            "ddl": "CREATE INDEX \"fixorder_work_order_id_dd4ad786\" ON \"fixorder_work\" (\"order_id\")"
+        }
+    ]
+}

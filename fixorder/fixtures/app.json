@@ -1,0 +1,1725 @@
+[
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add Заказы",
+    "content_type": 7,
+    "codename": "add_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change Заказы",
+    "content_type": 7,
+    "codename": "change_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete Заказы",
+    "content_type": 7,
+    "codename": "delete_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view Заказы",
+    "content_type": 7,
+    "codename": "view_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add order status",
+    "content_type": 8,
+    "codename": "add_orderstatus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change order status",
+    "content_type": 8,
+    "codename": "change_orderstatus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete order status",
+    "content_type": 8,
+    "codename": "delete_orderstatus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view order status",
+    "content_type": 8,
+    "codename": "view_orderstatus"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add company",
+    "content_type": 9,
+    "codename": "add_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change company",
+    "content_type": 9,
+    "codename": "change_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete company",
+    "content_type": 9,
+    "codename": "delete_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view company",
+    "content_type": 9,
+    "codename": "view_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add client",
+    "content_type": 10,
+    "codename": "add_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change client",
+    "content_type": 10,
+    "codename": "change_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete client",
+    "content_type": 10,
+    "codename": "delete_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view client",
+    "content_type": 10,
+    "codename": "view_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add employee",
+    "content_type": 11,
+    "codename": "add_employee"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change employee",
+    "content_type": 11,
+    "codename": "change_employee"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete employee",
+    "content_type": 11,
+    "codename": "delete_employee"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view employee",
+    "content_type": 11,
+    "codename": "view_employee"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add work",
+    "content_type": 12,
+    "codename": "add_work"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change work",
+    "content_type": 12,
+    "codename": "change_work"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete work",
+    "content_type": 12,
+    "codename": "delete_work"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view work",
+    "content_type": 12,
+    "codename": "view_work"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add typical work",
+    "content_type": 13,
+    "codename": "add_typicalwork"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change typical work",
+    "content_type": 13,
+    "codename": "change_typicalwork"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete typical work",
+    "content_type": 13,
+    "codename": "delete_typicalwork"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view typical work",
+    "content_type": 13,
+    "codename": "view_typicalwork"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "order"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "orderstatus"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "company"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "client"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "employee"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "work"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "fixorder",
+    "model": "typicalwork"
+  }
+},
+{
+  "model": "fixorder.orderstatus",
+  "pk": 1,
+  "fields": {
+    "status": "Выдан без ремонта"
+  }
+},
+{
+  "model": "fixorder.orderstatus",
+  "pk": 2,
+  "fields": {
+    "status": "Выдан"
+  }
+},
+{
+  "model": "fixorder.orderstatus",
+  "pk": 3,
+  "fields": {
+    "status": "Готов"
+  }
+},
+{
+  "model": "fixorder.orderstatus",
+  "pk": 4,
+  "fields": {
+    "status": "Активен"
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 1,
+  "fields": {
+    "name": "не выбран",
+    "phone": "нет",
+    "phone1": null,
+    "telegram": null,
+    "viber": null,
+    "whatsapp": null
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 38,
+  "fields": {
+    "name": "Зетник",
+    "phone": "8888",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 39,
+  "fields": {
+    "name": "keke",
+    "phone": "9999",
+    "phone1": null,
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 40,
+  "fields": {
+    "name": "Красти Крабс",
+    "phone": "12345677888",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 41,
+  "fields": {
+    "name": "Бубач Анг",
+    "phone": "+375293665544",
+    "phone1": null,
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 42,
+  "fields": {
+    "name": "Боба Бин",
+    "phone": "77543",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 43,
+  "fields": {
+    "name": "Поруччик Голицын",
+    "phone": "77777",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 44,
+  "fields": {
+    "name": "Туту Рутуту",
+    "phone": "567898765",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 45,
+  "fields": {
+    "name": "Джек Спарровец",
+    "phone": "87654567",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 46,
+  "fields": {
+    "name": "Люден Дорф",
+    "phone": "98765",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 47,
+  "fields": {
+    "name": "Трусов Петр Да Силва",
+    "phone": "+351226688",
+    "phone1": "+373332288",
+    "telegram": "@dasilva77",
+    "viber": "+351226688",
+    "whatsapp": "+351226688"
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 48,
+  "fields": {
+    "name": "Тестовый Дядёк",
+    "phone": "998877112",
+    "phone1": "",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 49,
+  "fields": {
+    "name": "Ходжа Насреддин",
+    "phone": "12436778980",
+    "phone1": null,
+    "telegram": "@Hogha",
+    "viber": "",
+    "whatsapp": ""
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 50,
+  "fields": {
+    "name": "Эдо Нобунага",
+    "phone": "99663325",
+    "phone1": "32564788",
+    "telegram": "@Nobunaga",
+    "viber": "",
+    "whatsapp": "45785"
+  }
+},
+{
+  "model": "fixorder.client",
+  "pk": 51,
+  "fields": {
+    "name": "Света",
+    "phone": "Такаято",
+    "phone1": "7578589549",
+    "telegram": "",
+    "viber": "",
+    "whatsapp": "4г4"
+  }
+},
+{
+  "model": "fixorder.company",
+  "pk": 1,
+  "fields": {
+    "brand_name": "Моя новая компания",
+    "official_name": null,
+    "unp": null,
+    "phone": "123456",
+    "phone1": null,
+    "phone2": null,
+    "telegram": "@tytyty",
+    "viber": "43235634563456",
+    "whatsapp": null,
+    "email": "example@example.com",
+    "adress": null,
+    "postal_adress": null,
+    "official_adress": null,
+    "income_data": "<br>1. Технический центр не несёт ответственности за возможную потерю данных в памяти устройства, связанную с заменой плат, установкой\r\nпрограммного обеспечения, заменой носителя информации.\r\n<br>2. Заказчик принимает на себя риск возможной полной или частичной утраты работоспособности устройства в процессе ремонта (тепловой\r\nобработки), в случае грубых нарушений пользователем условий эксплуатации, наличий следов попадания токопроводящей жидкости\r\n(коррозии), либо механических повреждений.\r\n<br>3. На восстановленные после попадания жидкости на устройство гарантия не распространяется и не продлевается.\r\n<br>4. Срок бесплатного хранения устройства составляет 30 дней с момента приёма его в ремонт. В случае, если по истечении указанного срока\r\nклиентом не заявлено требование о выдаче устройства, оно принимается на ответственное хранение. Стоимость услуг по ответственному\r\nхранению составляет ___ руб в сутки. Максимальный срок ответственного хранения составляет 30 дней. В случае, если в течение указанного\r\nсрока Клиент не требует возврата устройства (либо с Клиентом не представляется возможным связаться по указанному в квитанции\r\nтелефону), устройство утилизируется без компенсации его стоимости клиенту.\r\n<br>5. В случае отказа заказчика от ремонта устройства стоимость диагностики неисправности платная.\r\n<br>6. В случае утери квитанции, устройство выдаётся по предъявлению паспорта на имя заказчика.",
+    "warranty_data": "Вердикт:\r\nВышеперечисленные услуги выполнены полностью и в срок. Заказчик претензий по\r\nобъему, качеству и срокам оказания услуг не имеет.",
+    "photo": "logo.png"
+  }
+},
+{
+  "model": "fixorder.employee",
+  "pk": 1,
+  "fields": {
+    "company": 1,
+    "name": "Болтун Болт",
+    "position": "Мастер",
+    "time_hire": "2025-03-25",
+    "time_fire": null,
+    "status": "2"
+  }
+},
+{
+  "model": "fixorder.employee",
+  "pk": 2,
+  "fields": {
+    "company": 1,
+    "name": "Роботун Раб",
+    "position": "Манагер",
+    "time_hire": "2025-03-25",
+    "time_fire": null,
+    "status": "1"
+  }
+},
+{
+  "model": "fixorder.employee",
+  "pk": 10,
+  "fields": {
+    "company": 1,
+    "name": "Пыяльников Разбойников",
+    "position": "Бегунок",
+    "time_hire": "2025-03-31",
+    "time_fire": null,
+    "status": "1"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 59,
+  "fields": {
+    "order_client": 38,
+    "executor": null,
+    "time_create": "2025-04-29T18:50:26.349Z",
+    "time_update": "2025-04-29T18:50:26.362Z",
+    "time_demand": "2025-04-29",
+    "time_away": null,
+    "device": "вв",
+    "defect": "вв",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": null,
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 60,
+  "fields": {
+    "order_client": 40,
+    "executor": null,
+    "time_create": "2025-04-29T18:51:12.429Z",
+    "time_update": "2025-04-29T18:51:28.713Z",
+    "time_demand": null,
+    "time_away": null,
+    "device": "ньокия",
+    "defect": "но коннекшн пипл",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 61,
+  "fields": {
+    "order_client": 42,
+    "executor": 2,
+    "time_create": "2025-04-29T19:03:15.309Z",
+    "time_update": "2025-05-11T22:53:13.840Z",
+    "time_demand": null,
+    "time_away": null,
+    "device": "фен",
+    "defect": "Сломан весь",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "11.00",
+    "notes": "",
+    "total_price": "24.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "13.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 62,
+  "fields": {
+    "order_client": 43,
+    "executor": null,
+    "time_create": "2025-04-29T20:11:35.170Z",
+    "time_update": "2025-05-05T19:08:14.741Z",
+    "time_demand": null,
+    "time_away": "2025-05-05T19:08:14.727Z",
+    "device": "нннн",
+    "defect": "нннн",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "801.00",
+    "status": 2,
+    "conclusion": "",
+    "remain_to_pay": "801.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 63,
+  "fields": {
+    "order_client": 44,
+    "executor": null,
+    "time_create": "2025-04-30T21:59:01.709Z",
+    "time_update": "2025-04-30T21:59:32.621Z",
+    "time_demand": null,
+    "time_away": null,
+    "device": "xdcfvbgvfd",
+    "defect": "sdfgvfcdx",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 64,
+  "fields": {
+    "order_client": 45,
+    "executor": null,
+    "time_create": "2025-05-01T08:38:15.729Z",
+    "time_update": "2025-05-01T08:38:29.441Z",
+    "time_demand": null,
+    "time_away": null,
+    "device": "павапр",
+    "defect": "орпапр",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 66,
+  "fields": {
+    "order_client": 43,
+    "executor": null,
+    "time_create": "2025-05-01T10:26:01.717Z",
+    "time_update": "2025-05-01T10:26:39.243Z",
+    "time_demand": "2025-05-01",
+    "time_away": null,
+    "device": "па",
+    "defect": "пав",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 67,
+  "fields": {
+    "order_client": 44,
+    "executor": null,
+    "time_create": "2025-05-01T10:35:01.429Z",
+    "time_update": "2025-05-05T19:08:06.059Z",
+    "time_demand": "2025-05-01",
+    "time_away": null,
+    "device": "ff",
+    "defect": "ff",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 3,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 68,
+  "fields": {
+    "order_client": 47,
+    "executor": 2,
+    "time_create": "2025-05-11T18:11:35.123Z",
+    "time_update": "2025-05-11T18:40:34.522Z",
+    "time_demand": "2025-05-11",
+    "time_away": null,
+    "device": "Iphone X",
+    "defect": "Не разряжается",
+    "device_password": "123456",
+    "device_exterior": "Покоцан",
+    "initial_price": "160",
+    "prepaid": "25.00",
+    "notes": "Мутный",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "-25.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 69,
+  "fields": {
+    "order_client": 50,
+    "executor": 10,
+    "time_create": "2025-05-15T19:34:24.900Z",
+    "time_update": "2025-05-15T19:41:22.297Z",
+    "time_demand": "2025-05-17",
+    "time_away": null,
+    "device": "NEC",
+    "defect": "не горит лампа",
+    "device_password": "00_)укуца",
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "33.00",
+    "notes": "",
+    "total_price": "43.28",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "10.28"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 70,
+  "fields": {
+    "order_client": 46,
+    "executor": null,
+    "time_create": "2025-05-15T19:48:28.705Z",
+    "time_update": "2025-05-15T19:58:05.858Z",
+    "time_demand": "2025-05-15",
+    "time_away": null,
+    "device": "YJT",
+    "defect": "dfghjhgf",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "22.00",
+    "notes": "",
+    "total_price": "65.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "43.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 71,
+  "fields": {
+    "order_client": 48,
+    "executor": null,
+    "time_create": "2025-05-15T19:52:36.890Z",
+    "time_update": "2025-05-15T19:56:59.118Z",
+    "time_demand": "2025-05-15",
+    "time_away": "2025-05-15T19:56:59.072Z",
+    "device": "gyhgfd",
+    "defect": "sdfgf",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "77.00",
+    "notes": "",
+    "total_price": "0.00",
+    "status": 1,
+    "conclusion": "",
+    "remain_to_pay": "-77.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 72,
+  "fields": {
+    "order_client": 47,
+    "executor": null,
+    "time_create": "2025-05-15T19:59:22.356Z",
+    "time_update": "2025-05-15T19:59:22.376Z",
+    "time_demand": "2025-05-15",
+    "time_away": null,
+    "device": "zsdf",
+    "defect": "fdsasdf",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "44.00",
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": null,
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 73,
+  "fields": {
+    "order_client": 42,
+    "executor": null,
+    "time_create": "2025-05-15T20:03:14.849Z",
+    "time_update": "2025-05-15T20:04:16.410Z",
+    "time_demand": "2025-05-15",
+    "time_away": null,
+    "device": "глна",
+    "defect": "пмнргол",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": "456.00",
+    "notes": "",
+    "total_price": "456.00",
+    "status": 4,
+    "conclusion": "",
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.order",
+  "pk": 74,
+  "fields": {
+    "order_client": 51,
+    "executor": null,
+    "time_create": "2025-05-22T20:23:11.495Z",
+    "time_update": "2025-05-22T20:23:11.510Z",
+    "time_demand": "2025-05-22",
+    "time_away": null,
+    "device": "Айфон 15 про макс",
+    "defect": "sdffg",
+    "device_password": null,
+    "device_exterior": "",
+    "initial_price": null,
+    "prepaid": null,
+    "notes": "",
+    "total_price": "0.00",
+    "status": 4,
+    "conclusion": null,
+    "remain_to_pay": "0.00"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 1,
+  "fields": {
+    "order": 62,
+    "description": "Ремонт зарядки",
+    "price": "13.00",
+    "warranty": "13"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 6,
+  "fields": {
+    "order": 62,
+    "description": "Ремонт зарядки",
+    "price": "666.00",
+    "warranty": "666"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 7,
+  "fields": {
+    "order": 62,
+    "description": "Полировка стекла",
+    "price": "122.00",
+    "warranty": "122"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 8,
+  "fields": {
+    "order": 63,
+    "description": "Полировка стекла",
+    "price": "17.00",
+    "warranty": ""
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 9,
+  "fields": {
+    "order": 63,
+    "description": "Ремонт рессоры",
+    "price": "18.00",
+    "warranty": "18"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 10,
+  "fields": {
+    "order": 64,
+    "description": "Полировка стекла",
+    "price": "16.00",
+    "warranty": "16"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 19,
+  "fields": {
+    "order": 61,
+    "description": "Ремонт рессоры",
+    "price": "11.00",
+    "warranty": "12"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 20,
+  "fields": {
+    "order": 61,
+    "description": "Полировка стекла",
+    "price": "13.00",
+    "warranty": "14"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 22,
+  "fields": {
+    "order": 69,
+    "description": "Замена лампы",
+    "price": "43.28",
+    "warranty": "13"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 23,
+  "fields": {
+    "order": 70,
+    "description": "Ремонт рессоры",
+    "price": "65.00",
+    "warranty": "23"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 24,
+  "fields": {
+    "order": 73,
+    "description": "Чистка сапог",
+    "price": "55.00",
+    "warranty": "0"
+  }
+},
+{
+  "model": "fixorder.work",
+  "pk": 25,
+  "fields": {
+    "order": 73,
+    "description": "мытье кита",
+    "price": "401.00",
+    "warranty": "32"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 1,
+  "fields": {
+    "description": "Замена дисплея"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 2,
+  "fields": {
+    "description": "Замена задней крышки"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 3,
+  "fields": {
+    "description": "Замена стекла экрана"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 4,
+  "fields": {
+    "description": "Замена разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 5,
+  "fields": {
+    "description": "Замена коннектра"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 6,
+  "fields": {
+    "description": "Замена гнезда наушников"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 7,
+  "fields": {
+    "description": "Замена разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 8,
+  "fields": {
+    "description": "Замена корпуса"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 9,
+  "fields": {
+    "description": "Замена шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 10,
+  "fields": {
+    "description": "Замена нижней платы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 11,
+  "fields": {
+    "description": "Замена датчика"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 12,
+  "fields": {
+    "description": "Замена кнопок"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 13,
+  "fields": {
+    "description": "Замена рамки корпуса"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 14,
+  "fields": {
+    "description": "Замена тачскрина"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 15,
+  "fields": {
+    "description": "Замена межплатного шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 17,
+  "fields": {
+    "description": "мытье кита"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 18,
+  "fields": {
+    "description": "Измерение жирафа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 19,
+  "fields": {
+    "description": "перекидка данных"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 20,
+  "fields": {
+    "description": "Замена лампы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 21,
+  "fields": {
+    "description": "Замена лампы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 22,
+  "fields": {
+    "description": "Восстановление гнезда наушников"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 23,
+  "fields": {
+    "description": "Восстановление разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 24,
+  "fields": {
+    "description": "Восстановление шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 25,
+  "fields": {
+    "description": "Восстановление нижней платы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 26,
+  "fields": {
+    "description": "Восстановление датчика"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 27,
+  "fields": {
+    "description": "Восстановление кнопок"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 28,
+  "fields": {
+    "description": "Восстановление тачскрина"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 29,
+  "fields": {
+    "description": "Восстановление межплатного шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 30,
+  "fields": {
+    "description": "Восстановление процессора"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 31,
+  "fields": {
+    "description": "Восстановление микросхемы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 32,
+  "fields": {
+    "description": "Восстановление чипа памяти"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 33,
+  "fields": {
+    "description": "Восстановление контроллера"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 34,
+  "fields": {
+    "description": "Перепайка разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 35,
+  "fields": {
+    "description": "Перепайка коннектра"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 36,
+  "fields": {
+    "description": "Перепайка гнезда наушников"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 37,
+  "fields": {
+    "description": "Перепайка разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 38,
+  "fields": {
+    "description": "Перепайка шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 39,
+  "fields": {
+    "description": "Перепайка нижней платы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 40,
+  "fields": {
+    "description": "Перепайка кнопок"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 41,
+  "fields": {
+    "description": "Перепайка рамки корпуса"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 42,
+  "fields": {
+    "description": "Перепайка межплатного шлейфа"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 43,
+  "fields": {
+    "description": "Перепайка процессора"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 44,
+  "fields": {
+    "description": "Перепайка микросхемы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 45,
+  "fields": {
+    "description": "Перепайка чипа памяти"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 46,
+  "fields": {
+    "description": "Перепайка контроллера"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 47,
+  "fields": {
+    "description": "Чистка от влаги"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 48,
+  "fields": {
+    "description": "Восстановление после воды"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 49,
+  "fields": {
+    "description": "Диагностика"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 50,
+  "fields": {
+    "description": "Сохранение данных"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 51,
+  "fields": {
+    "description": "Сброс пароля"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 52,
+  "fields": {
+    "description": "Восстановление доступа к аккаунту"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 53,
+  "fields": {
+    "description": "Восстановление доступа к устройству"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 54,
+  "fields": {
+    "description": "Еаклейка защитного стекла"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 55,
+  "fields": {
+    "description": "Наклейка защитной пленки"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 101,
+  "fields": {
+    "description": "Замена процессора"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 102,
+  "fields": {
+    "description": "Замена микросхемы"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 103,
+  "fields": {
+    "description": "Замена чипа памяти"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 104,
+  "fields": {
+    "description": "Замена контроллера"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 105,
+  "fields": {
+    "description": "Восстановление разъема зярядного"
+  }
+},
+{
+  "model": "fixorder.typicalwork",
+  "pk": 106,
+  "fields": {
+    "description": "Восстановление коннектра"
+  }
+}
+]
