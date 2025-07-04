@@ -1,16 +1,39 @@
+
 services:
-  web:
+  django:
     build: .
+    container_name: django_app
+    volumes:
+      - app_data:/app
+    depends_on:
+      - db
+    env_file:
+      - .env
     ports:
       - "8000:8000"
-    volumes:
-      - ./db.sqlite3:/app/db.sqlite3
-    depends_on:
-      - sqlite_studio
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
-  sqlite_studio:
-    image: lscr.io/linuxserver/sqlitebrowser
-    ports:
-      - "8080:3000"
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
     volumes:
-      - ./db.sqlite3:/config/db.sqlite3
+      - pg_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: adminer_ui
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  app_data:
+  pg_data:
