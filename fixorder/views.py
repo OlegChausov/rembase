@@ -168,13 +168,20 @@ class Show_orderlist(ListView):
                 query = query.replace("\\", "")
                 # return Order.objects.filter(client_phone__icontains=query) #должно работать на PosgreSQL
                 return Order.objects.filter(
-                    Q(order_client__phone__iregex=query) | Q(order_client__name__iregex=query) | Q(
-                        order_client__telegram__iregex=query))  # для PosgreSQL можно использовать __icontains
+                    Q(order_client__phone__iregex=query) |
+                    Q(order_client__name__iregex=query) |
+                    Q(order_client__telegram__iregex=query) |
+                    Q(device=query)
+                )
+                # для PosgreSQL можно использовать __icontains
             return super().get_queryset()
         else:
             return Order.objects.filter(status__status="Активен").filter(
-                    Q(order_client__phone__iregex=query) | Q(order_client__name__iregex=query) |
-            Q(order_client__telegram__iregex=query))
+                    Q(order_client__phone__iregex=query) |
+                    Q(order_client__name__iregex=query) |
+                    Q(order_client__telegram__iregex=query) |
+                    Q(device=query)
+                )
 
 
 
